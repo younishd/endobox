@@ -1,0 +1,16 @@
+{
+    "name": "younishd/endobox",
+    "description": "Good things come in small boxes.",
+    "version": "1.0",
+    "type": "library",
+    "keywords": ["box", "view", "framework"],
+    "homepage": "http://github.com/younishd/endobox",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "YouniS Bensalah",
+            "email": "younis.bensalah@riseup.net",
+            "homepage": "http://younishd.fr"
+        }
+    ]
+}
