@@ -55,6 +55,7 @@ abstract class Box implements Renderable {
     protected function append(Renderable $r)
     {
         $this->renderables[] = $r;
+        return $this;
     }
     
     /**
@@ -63,7 +64,8 @@ abstract class Box implements Renderable {
      */
     protected function prepend(Renderable $r)
     {
-        array_unshift($this->renderables, $r);
+        \array_unshift($this->renderables, $r);
+        return $this;
     }
     
     /**
@@ -74,7 +76,7 @@ abstract class Box implements Renderable {
     {
         $this->load();
         foreach ($this->renderables as $r) {
-            $this->$code .= $r->render();
+            $this->code .= $r->render();
         }
         $this->build();
         return $this->code;

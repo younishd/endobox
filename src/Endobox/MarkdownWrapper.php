@@ -27,7 +27,7 @@ class MarkdownWrapper implements Parser {
     
     public function parse($code)
     {
-        $this->instance->parse($code);
+        return $this->instance->parse($code);
     }
     
 }

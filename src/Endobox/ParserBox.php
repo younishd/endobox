@@ -29,7 +29,7 @@ class ParserBox extends Box {
     
     public function build()
     {
-        $this->code = $this->parser($this->code);
+        $this->code = $this->parser->parse($this->code);
     }
     
 }
