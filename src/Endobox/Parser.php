@@ -11,6 +11,9 @@
 
 namespace Endobox;
 
+/**
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 interface Parser {
     
     public function parse($code);

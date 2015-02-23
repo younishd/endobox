@@ -11,8 +11,13 @@
 
 namespace Endobox;
 
+/**
+ * A raw renderable is just plain text.
+ * 
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 class Raw implements Renderable {
-
+    
     private $text;
 
     public function __construct($text)

@@ -11,6 +11,11 @@
 
 namespace Endobox;
 
+/**
+ * This is just a wrapper class for a markdown parser class.
+ * 
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 class MarkdownWrapper implements Parser {
     
     private $instance = null;

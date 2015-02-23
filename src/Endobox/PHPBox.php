@@ -11,16 +11,23 @@
 
 namespace Endobox;
 
+/**
+ * PHPBox evaluates the rendered code as PHP until there is no opening PHP tag left.
+ * 
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 class PHPBox extends Box {
     
-    public function load()
-    {
-        
-    }
+    public function load() {}
     
     public function build()
     {
-        // eval php code
+        ob_start();
+        while (strpos($this->code, '<?php') !== false) {
+            eval('?>' .  $this->code);
+            $this->code = ob_get_contents();
+        }
+        ob_end_clean();
     }
     
 }

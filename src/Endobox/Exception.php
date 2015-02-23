@@ -11,4 +11,7 @@
 
 namespace Endobox;
 
+/**
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 class Exception extends \Exception {}

@@ -11,6 +11,11 @@
 
 namespace Endobox;
 
+/**
+ * ParserBox passes the rendered code through a given parser before returning it.
+ * 
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 class ParserBox extends Box {
     
     private $parser = null;
@@ -20,10 +25,7 @@ class ParserBox extends Box {
         $this->parser = $parser;
     }
     
-    public function load()
-    {
-        
-    }
+    public function load() {}
     
     public function build()
     {

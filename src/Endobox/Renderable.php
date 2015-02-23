@@ -11,6 +11,9 @@
 
 namespace Endobox;
 
+/**
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 interface Renderable {
     
     public function render();

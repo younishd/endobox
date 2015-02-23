@@ -6,11 +6,20 @@
     "keywords": ["box", "view", "framework"],
     "homepage": "http://github.com/younishd/endobox",
     "license": "MIT",
-    "authors": [
+    "authors":
+    [
         {
             "name": "YouniS Bensalah",
             "email": "younis.bensalah@riseup.net",
             "homepage": "http://younishd.fr"
         }
-    ]
+    ],
+    "require":
+    {
+        "erusev/parsedown": "dev-master"
+    },
+    "autoload":
+    {
+        "psr-4": {"Endobox\\": "src/Endobox/"}
+    }
 }

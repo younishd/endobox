@@ -11,35 +11,69 @@
 
 namespace Endobox;
 
+/**
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 abstract class Box implements Renderable {
+   
+    /**
+     * @var \Endobox\Renderable Sorted array (linked list) of renderable objects that have been
+     * appended or prepended to this box.
+     */
+    private $renderables = [];
     
-    private $interior = [];
-    
+    /**
+     * @var string The rendered code.
+     */
     protected $code = '';
 
+    /**
+     * Load the box, i.e., initialize the renderables. This method gets executed before rendering.
+     * This is where you normally append the renderable objects to this box or assign the data.
+     */
     protected abstract function load();
     
+    /**
+     * This method gets executed after rendering, so the code attribute will be set and it is possible to apply
+     * some modifications to the code to finalize the render process (e.g., parsing, wrapping).
+     */
     protected abstract function build();
     
+    /**
+     * Cast to string.
+     * @return string Result of render.
+     */
     public function __toString()
     {
         return $this->render();
     }
     
+    /**
+     * Append a renderable object to this box.
+     * @param \Endobox\Renderable Some renderable object.
+     */
     protected function append(Renderable $r)
     {
-        $this->interior[] = $r;
+        $this->renderables[] = $r;
     }
     
+    /**
+     * Prepend a renderable object to this box.
+     * @param \Endobox\Renderable Some renderable object.
+     */
     protected function prepend(Renderable $r)
     {
-        array_unshift($this->interior, $r);
+        array_unshift($this->renderables, $r);
     }
     
+    /**
+     * Render this box and return the code.
+     * @return string Rendered code.
+     */
     public function render()
     {
         $this->load();
-        foreach ($this->interior as $r) {
+        foreach ($this->renderables as $r) {
             $this->$code .= $r->render();
         }
         $this->build();

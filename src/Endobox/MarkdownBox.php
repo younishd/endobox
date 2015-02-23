@@ -11,6 +11,11 @@
 
 namespace Endobox;
 
+/**
+ * MarkdownBox parses the rendered code as markdown before returning it using some markdown parser.
+ * 
+ * @author YouniS Bensalah <younis.bensalah@riseup.net>
+ */
 class MarkdownBox extends ParserBox {
     
     public function __construct()
