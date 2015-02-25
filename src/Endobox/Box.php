@@ -51,6 +51,7 @@ abstract class Box implements Renderable {
     /**
      * Append a renderable object to this box.
      * @param \Endobox\Renderable Some renderable object.
+     * @return This very instance.
      */
     protected function append(Renderable $r)
     {
@@ -61,6 +62,7 @@ abstract class Box implements Renderable {
     /**
      * Prepend a renderable object to this box.
      * @param \Endobox\Renderable Some renderable object.
+     * @return This very instance.
      */
     protected function prepend(Renderable $r)
     {
