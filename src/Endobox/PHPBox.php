@@ -43,7 +43,7 @@ class PHPBox extends Box {
      * 
      * @param mixed|array $key The data key or an array of data.
      * @param mixed|null $value The data value or null.
-     * @return This very instance.
+     * @return \Endobox\PHPBox This very instance.
      */
     public function assign($key, $value = null)
     {
