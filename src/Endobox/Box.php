@@ -12,8 +12,6 @@
 namespace Endobox;
 
 /**
- * 
- * 
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 abstract class Box implements Renderable {
@@ -71,10 +69,8 @@ abstract class Box implements Renderable {
     public function render()
     {
         $code = '';
-        $b = $this->head();
-        while ($b !== null) {
+        for ($b = $this->head(); $b !== null; $b = $b->next) {
             $code .= $b->render_inner();
-            $b = $b->next;
         }
         return $code;
     }
