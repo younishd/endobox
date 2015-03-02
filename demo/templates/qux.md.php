@@ -1,4 +1,4 @@
-# Just an Endobox example
+# Just an endobox example
 
 <?php echo 'This is some _demo_ using __Markdown__ and __PHP__.'; ?>
 
