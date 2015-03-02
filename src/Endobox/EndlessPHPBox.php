@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Endobox.
+ * This file is part of endobox.
  * 
  * (c) 2015 YouniS Bensalah <younis.bensalah@riseup.net>
  * 
@@ -12,34 +12,27 @@
 namespace Endobox;
 
 /**
- * PHPBox evaluates the rendered code as PHP until there is no opening PHP tag left.
+ * EndlessPHPBox evaluates the rendered code using an EndlessPHPParser.
  * 
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
-class PHPBox extends Box {
+class EndlessPHPBox extends ParserBox {
     
     protected $data = [];
-
-    public function load() {}
     
-    public function build()
+    public function __construct()
     {
-        ob_start();
-        while (strpos($this->code, '<?php') !== false) {
-            eval('?>' .  $this->code);
-            $this->code = ob_get_contents();
-        }
-        ob_end_clean();
+        parent::__construct(new EndlessPHPParser());
     }
     
     /**
      * Assign some data to this box.
      * 
-     * The data is stored in an array and can be accessed via the $this->data property
+     * The data is stored in an assoc array and can be accessed via the $this->data property
      * from within the evaluated PHP code.
      * 
      * It is possible to assign a single key-value couple or a whole array of data at once
-     * by omitting the second argument.
+     * by passing an array as key instead and omitting the second value argument.
      * 
      * @param mixed|array $key The data key or an array of data.
      * @param mixed|null $value The data value or null.
@@ -47,13 +40,12 @@ class PHPBox extends Box {
      */
     public function assign($key, $value = null)
     {
-        if (is_array($key) === true) {
+        if (\is_array($key)) {
             $this->data = \array_merge($this->data, $key);
         }
         else {
             $this->data[$key] = $value;
         }
-        
         return $this;
     }
     

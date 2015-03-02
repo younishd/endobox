@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Endobox.
+ * This file is part of endobox.
  * 
  * (c) 2015 YouniS Bensalah <younis.bensalah@riseup.net>
  * 
@@ -20,7 +20,7 @@ class MarkdownBox extends ParserBox {
     
     public function __construct()
     {
-        parent::__construct(new MarkdownWrapper());
+        parent::__construct(new MarkdownParser());
     }
     
 }

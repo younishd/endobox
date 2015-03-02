@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Endobox.
+ * This file is part of endobox.
  * 
  * (c) 2015 YouniS Bensalah <younis.bensalah@riseup.net>
  * 
@@ -16,7 +16,7 @@ namespace Endobox;
  * 
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
-class MarkdownWrapper implements Parser {
+class MarkdownParser implements Parser {
     
     private $instance = null;
     

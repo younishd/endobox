@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Endobox.
+ * This file is part of endobox.
  * 
  * (c) 2015 YouniS Bensalah <younis.bensalah@riseup.net>
  * 

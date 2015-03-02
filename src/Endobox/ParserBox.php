@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Endobox.
+ * This file is part of endobox.
  * 
  * (c) 2015 YouniS Bensalah <younis.bensalah@riseup.net>
  * 
@@ -20,16 +20,23 @@ class ParserBox extends Box {
     
     private $parser = null;
     
+    /**
+     * @param \Endobox\Parser $parser The parser instance.
+     */
     public function __construct(Parser $parser)
     {
         $this->parser = $parser;
     }
     
-    public function load() {}
-    
-    public function build()
+    /**
+     * Run the code through the parser and return the result.
+     * 
+     * @param string $code The initial code.
+     * @return string The parsed code.
+     */
+    protected function build($code)
     {
-        $this->code = $this->parser->parse($this->code);
+        return $this->parser->parse($code);
     }
     
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Endobox.
+ * This file is part of endobox.
  * 
  * (c) 2015 YouniS Bensalah <younis.bensalah@riseup.net>
  * 
@@ -19,7 +19,10 @@ namespace Endobox;
 class Raw implements Renderable {
     
     private $text;
-
+    
+    /**
+     * @param string $text Some text.
+     */
     public function __construct($text)
     {
         $this->text = (string)$text;
