@@ -39,7 +39,7 @@ prepend_inner( Renderable $r )
 
 Note that these two methods are protected and _not_ public, so you have to call them using the `load()` [callback method](#callback-methods).
 
-### Link boxes together
+### Link _Boxes_ together
 
 A _Box_ represents a __linked list element__ itself. It keeps track of its __previous__ and __next__ _Box_ object in the __outer list__.
 
@@ -52,7 +52,7 @@ append( Box $b )
 prepend( Box $b )
 ```
 
-### Render the box
+### Render the _Box_
 
 The point of all this linked list magic should become clear now...
 
@@ -80,7 +80,7 @@ Now each _Box_ will be rendered separately by calling `render_inner()` as it say
 
 ### load
 
-The `load()` callback method gets executed right before the [inner rendering](#inner-rendering) starts.
+The `load()` callback method gets executed right __before__ the [inner rendering](#inner-rendering) starts.
 
 It is where you normally append or prepend the inner _Renderable_ objects to this box using `append_inner()` or `prepend_inner()`.
 
@@ -88,7 +88,7 @@ Note that the default `load()` method does nothing.
 
 ### build
 
-The `build()` callback method gets executed right after the [inner rendering](#inner-rendering) finishes. It receives the rendered code as argument and is supposed to return it in some way or another.
+The `build()` callback method gets executed right __after__ the [inner rendering](#inner-rendering) finishes. It receives the rendered code as argument and is supposed to return it in some way or another.
 
 This allows you to alter the rendered inner code before finally returning it (e.g., implementing some kind of parser or wrapper Box).
 
