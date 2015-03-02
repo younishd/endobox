@@ -1,6 +1,6 @@
 {
     "name": "younishd/endobox",
-    "description": "Good things come in small boxes.",
+    "description": "A fancy linked list data structure that allows building larger things from smaller things.",
     "version": "1.0",
     "type": "library",
     "keywords": ["box", "view", "framework"],
