@@ -1,1 +1,0 @@
-# endobox - Documentation
