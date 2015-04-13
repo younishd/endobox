@@ -19,14 +19,14 @@ abstract class Box implements Renderable {
     /**
      * @var array Linked list of inner renderable objects.
      */
-    private $interior = [];
+    protected $interior = [];
             
     /**
      * @var \Endobox\Box $next Next outer box object.
      * @var \Endobox\Box $prev Previous outer box object.
      */
-    private $next = null;
-    private $prev = null;
+    protected $next = null;
+    protected $prev = null;
     
     /**
      * Do stuff before inner rendering.
