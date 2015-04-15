@@ -22,7 +22,7 @@ class EndlessPHPBox extends ParserBox {
     
     public function __construct()
     {
-        parent::__construct(new EndlessPHPParser());
+        parent::__construct(new EndlessPHPParser($this->data));
     }
     
     /**
@@ -42,8 +42,7 @@ class EndlessPHPBox extends ParserBox {
     {
         if (\is_array($key)) {
             $this->data = \array_merge($this->data, $key);
-        }
-        else {
+        } else {
             $this->data[$key] = $value;
         }
         return $this;

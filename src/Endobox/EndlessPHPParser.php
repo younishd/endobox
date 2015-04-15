@@ -20,6 +20,16 @@ namespace Endobox;
  */
 class EndlessPHPParser implements Parser {
     
+    private $data;
+    
+    public function __construct(&$data)
+    {
+        if ($data === null) {
+            throw new \InvalidArgumentException('Data array is null.');
+        }
+        $this->data =& $data;
+    }
+    
     public function parse($code)
     {
         \ob_start();
