@@ -22,7 +22,7 @@ class EndlessPHPParser implements Parser {
     
     private $data;
     
-    public function __construct(&$data)
+    public function __construct(array &$data)
     {
         if ($data === null) {
             throw new \InvalidArgumentException('Data array is null.');
