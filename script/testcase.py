@@ -28,7 +28,7 @@ TEMPLATE = """\
 
 class {} extends PHPUnit_Framework_TestCase {{
 
-    test_foobar()
+    public function test_something()
     {{
         //
     }}
