@@ -11,9 +11,18 @@
 
 class RawTest extends PHPUnit_Framework_TestCase {
 
-    public function test_something()
+    public function test_empty_string()
     {
-        //
+        $test = '';
+        $raw = new Endobox\Raw($test);
+        $this->assertSame($test, $raw->render());
+    }
+    
+    public function test_sample_string()
+    {
+        $test = 'Writing Tests for PHPUnit';
+        $raw = new Endobox\Raw($test);
+        $this->assertSame($test, $raw->render());
     }
 
 }
