@@ -14,7 +14,7 @@ namespace Endobox;
 /**
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
-abstract class Box implements Renderable {
+class Box implements Renderable {
     
     /**
      * @var array Linked list of inner renderable objects.
@@ -27,34 +27,6 @@ abstract class Box implements Renderable {
      */
     protected $next = null;
     protected $prev = null;
-    
-    /**
-     * Do stuff before inner rendering.
-     * 
-     * This callback method gets executed right BEFORE the inner rendering of the box.
-     * It is where you normally append or prepend the inner renderable objects to this box.
-     * 
-     * The default load method does nothing.
-     */
-    protected function load() {}
-    
-    /**
-     * Do stuff after inner rendering.
-     * 
-     * This callback method gets executed right AFTER the inner rendering of the box.
-     * It allows you to alter the rendered inner code before finally returning it to the caller.
-     * So this callback method takes the rendered code as argument and is supposed to return the altered version of it.
-     * E.g., implementing some kind of parser or wrapper function.
-     * 
-     * The default build method just returns the code argument as is.
-     * 
-     * @param string $code The rendered inner code.
-     * @return string $code The modified code.
-     */
-    protected function build($code)
-    {
-        return $code;
-    }
     
     public function __toString()
     {
@@ -131,6 +103,48 @@ abstract class Box implements Renderable {
     }
     
     /**
+     * Fast-forward and return last box of the outer linked list.
+     * 
+     * @return \Endobox\Box The tail box.
+     */
+    public function tail()
+    {
+        for ($b = $this; $b->next !== null; $b = $b->next);
+        return $b;
+    }
+    
+    /**
+     * Rewind and return first box of the outer linked list.
+     * 
+     * @return \Endobox\Box The head box.
+     */
+    public function head()
+    {
+        for ($b = $this; $b->prev !== null; $b = $b->prev);
+        return $b;
+    }
+    
+    /**
+     * Get the next box of the outer linked list.
+     * 
+     * @return \Endobox\Box The next box.
+     */
+    public function next()
+    {
+        return $this->next;
+    }
+    
+    /**
+     * Get the previous box of the outer linked list.
+     * 
+     * @return \Endobox\Box The previous box.
+     */
+    public function prev()
+    {
+        return $this->prev;
+    }
+    
+    /**
      * Append a renderable object to the end of the inner list.
      * 
      * @param \Endobox\Renderable $r The renderable object to be added.
@@ -155,25 +169,31 @@ abstract class Box implements Renderable {
     }
     
     /**
-     * Rewind and return first box of the outer linked list.
+     * Do stuff before inner rendering.
      * 
-     * @return \Endobox\Box The head box.
+     * This callback method gets executed right BEFORE the inner rendering of the box.
+     * It is where you normally append or prepend the inner renderable objects to this box.
+     * 
+     * The default load method does nothing.
      */
-    public function head()
-    {
-        for ($b = $this; $b->prev !== null; $b = $b->prev);
-        return $b;
-    }
+    protected function load() {}
     
     /**
-     * Fast-forward and return last box of the outer linked list.
+     * Do stuff after inner rendering.
      * 
-     * @return \Endobox\Box The tail box.
+     * This callback method gets executed right AFTER the inner rendering of the box.
+     * It allows you to alter the rendered inner code before finally returning it to the caller.
+     * So this callback method takes the rendered code as argument and is supposed to return the altered version of it.
+     * E.g., implementing some kind of parser or wrapper function.
+     * 
+     * The default build method just returns the code argument as is.
+     * 
+     * @param string $code The rendered inner code.
+     * @return string $code The modified code.
      */
-    public function tail()
+    protected function build($code)
     {
-        for ($b = $this; $b->next !== null; $b = $b->next);
-        return $b;
+        return $code;
     }
 
 }
