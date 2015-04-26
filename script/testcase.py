@@ -62,7 +62,7 @@ def main():
         test_file_path = TEST_DIR + test_file_name
         if os.path.isfile(test_file_path):
             print("Skip existing test case '{}'.".format(test_file_name))
-            break
+            continue
         print("Create test case '{}'.".format(test_file_name))
         test_file = open(test_file_path, 'w+')
         code = TEMPLATE.format(test_class_name)
