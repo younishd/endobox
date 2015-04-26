@@ -25,9 +25,6 @@ class ParserBox extends Box {
      */
     public function __construct(Parser $parser)
     {
-        if ($parser === null) {
-            throw new \InvalidArgumentException('Parser instance is null.');
-        }
         $this->parser = $parser;
     }
     
