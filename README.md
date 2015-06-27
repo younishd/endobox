@@ -1,101 +1,95 @@
 # endobox
 
-Good things come in small boxes. :package:
-
-## What is a _Box_
-
-A _Box_ is a data structure that allows building larger things from smaller things.
-
-You can think of it as a fancy linked list.
-
-## What are _Renderable_ objects
-
-A _Renderable_ object implements a `render()` method returning some text.
-
-Note that a _Box_ is also a _Renderable_ object itself.
-
-(Things will become clear. Just keep that in mind for now.)
-
-## What can I do with a _Box_
-
-- Put _Renderable_ objects into the _Box_.
-
-- Link _Boxes_ together.
-
-- Render the _Box_.
-
-### Put _Renderable_ objects into the _Box_
-
-A _Box_ has an __inner linked list__ of _Renderable_ objects.
-
-You may __append__ or __prepend__ any _Renderable_ to this __inner list__.
-
-```php
-append_inner( Renderable $r )
-```
-```php
-prepend_inner( Renderable $r )
-```
-
-Note that these two methods are protected and _not_ public, so you have to call them using the `load()` [callback method](#callback-methods).
-
-### Link _Boxes_ together
-
-A _Box_ represents a __linked list element__ itself. It keeps track of its __previous__ and __next__ _Box_ object in the __outer list__.
-
-You may __append__ or __prepend__ any _Box_ to this __outer list__.
-
-```php
-append( Box $b )
-```
-```php
-prepend( Box $b )
-```
-
-### Render the _Box_
-
-The point of all this linked list magic should become clear now...
-
-When you __render__ a _Box_ (i.e., call the `render()` method on a _Box_ instance), the following things will happen:
-
-- Loop through all _Boxes_ of the __outer list__.
-
-- Render each _Box_ separately calling `render_inner()`.
-
-- Concatenate the resulting codes and return that.
-
-#### Inner rendering
-
-Now each _Box_ will be rendered separately by calling `render_inner()` as it says in the 2nd step. This simply means the following:
-
-- Call the `load()` callback method.
-
-- Loop through all _Renderables_ of the __inner list__.
-
-- Render each _Renderable_.
-
-- Concatenate the resulting codes, give it to the `build()` callback method and return that.
-
-## Callback methods
-
-### load
-
-The `load()` callback method gets executed right __before__ the [inner rendering](#inner-rendering) starts.
-
-It is where you normally append or prepend the inner _Renderable_ objects to this box using `append_inner()` or `prepend_inner()`.
-
-Note that the default `load()` method does nothing.
-
-### build
-
-The `build()` callback method gets executed right __after__ the [inner rendering](#inner-rendering) finishes. It receives the rendered code as argument and is supposed to return it in some way or another.
-
-This allows you to alter the rendered inner code before finally returning it (e.g., implementing some kind of parser or wrapper Box).
-
-Note that the default `build()` method just returns the code argument as is.
+A useful toolkit for building PHP template-based dynamic web pages.
 
 ## Usage
 
-Just extend the `Box` base class and override the `load()` and `build()` callback methods.
+### What is a Box
 
-_More documentation coming soon..._
+A _Box_ is a data structure that allows building larger things from smaller things. It's a kind of fancy linked list.
+
+### What can I do with a Box
+
+- Put other boxes inside a box.
+
+- Link boxes together.
+
+- Render the box.
+
+### Box Flavors
+
+- __Markdown flavored box__
+
+This flavor allows you to parse the box content as a __Markdown template__.
+
+- __PHP flavored box__
+
+With a PHP flavored box you can parse __PHP templates__.
+
+- __Template box__
+
+A template box allows you to append template files of different types (e.g., Markdown and PHP). The type is usually determined by the file extension.
+
+- __Vanilla box__
+
+This box type does not alter its content.
+
+## Demo
+
+```php
+// sample code here...
+```
+
+## Building API
+
+### `vanilla()`
+
+Get a vanilla box.
+
+```php
+$foo = endobox::vanilla();
+```
+
+### `with()` and `get()`
+
+These methods allows you to get a flavored box.
+
+The syntax is always the following:
+
+```php
+$bar = endobox::with()->...->get();
+```
+
+> Note that `...` replaces one or more chained method calls that describe the box you want to build.
+
+#### PHP flavor
+
+You can produce a PHP flavored box using `php()`.
+
+```php
+$bar = endobox::with()->php()->get();
+```
+
+#### Markdown flavor
+
+You can produce a Markdown flavored box using `markdown()`.
+
+```php
+$bar = endobox::with()->markdown()->get();
+```
+
+#### Template flavor
+
+You can enable the template flavor using the `template()` flag.
+
+```php
+$bar = endobox::with()->markdown()->php()->template()->get();
+```
+
+## Box API
+
+Coming soon...
+
+## License
+
+The endobox framework is open-sourced software licensed under the [MIT license](LICENSE).
