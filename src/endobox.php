@@ -9,13 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Endobox;
+namespace endobox;
 
-/**
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
- */
-interface Parser {
+abstract class endobox {
     
-    public function parse($code);
+    public static function vanilla()
+    {
+        return new core\VanillaBox();
+    }
+    
+    public static function with()
+    {
+        return new builder\BoxBuilder();
+    }
     
 }

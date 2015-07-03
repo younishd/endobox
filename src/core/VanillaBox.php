@@ -9,11 +9,19 @@
  * file that was distributed with this source code.
  */
 
-class MarkdownParserTest extends PHPUnit_Framework_TestCase {
+namespace endobox\core;
 
-    public function test_something()
+class VanillaBox extends Box {
+    
+    
+    protected function build($code)
     {
-        //
+        
+    }
+
+    protected function load()
+    {
+        
     }
 
 }

@@ -1,10 +1,10 @@
 {
     "name": "younishd/endobox",
-    "description": "A fancy linked list data structure that allows building larger things from smaller things.",
-    "version": "1.0",
+    "description": "A useful toolkit for building PHP template-based dynamic web pages.",
+    "version": "1.0.0-dev",
     "type": "library",
-    "keywords": ["box", "view", "framework"],
-    "homepage": "http://github.com/younishd/endobox",
+    "keywords": ["box", "view", "framework", "toolkit", "template"],
+    "homepage": "https://github.com/younishd/endobox",
     "license": "MIT",
     "authors":
     [
@@ -20,6 +20,6 @@
     },
     "autoload":
     {
-        "psr-4": {"Endobox\\": "src/Endobox/"}
+        "psr-4": {"endobox\\": "src/"}
     }
 }

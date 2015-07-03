@@ -1,7 +1,3 @@
-vendor/
-nbproject/
-.settings/
-.project
-.buildpath
-.brackets.json
+/vendor/
+/nbproject/private/
 .directory
