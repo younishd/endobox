@@ -14,14 +14,12 @@ namespace endobox\core;
 class VanillaBox extends Box {
     
     
+    
+    protected function load() {}
+    
     protected function build($code)
     {
-        
-    }
-
-    protected function load()
-    {
-        
+        return $code;
     }
 
 }
