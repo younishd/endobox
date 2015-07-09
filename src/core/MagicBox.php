@@ -24,11 +24,22 @@ namespace endobox\core;
  *
  * Of course you're able to assign data to this box which will then be accessible to all PHP templates.
  * That's why it's called a magic box...
- *
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 class MagicBox extends TemplateBox {
 
+    public function append_template($t)
+    {
 
+    }
+
+    public function prepend_template($t)
+    {
+
+    }
+
+    protected function build($code)
+    {
+
+    }
 
 }

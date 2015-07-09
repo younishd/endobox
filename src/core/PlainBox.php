@@ -13,11 +13,22 @@ namespace endobox\core;
 
 /**
  * A PlainBox allows you to append or prepend plain text files as templates. Their content won't be touched.
- *
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 class PlainBox extends TemplateBox {
 
+    public function append_template($t)
+    {
 
+    }
+
+    public function prepend_template($t)
+    {
+
+    }
+
+    protected function build($code)
+    {
+
+    }
 
 }

@@ -14,8 +14,6 @@ namespace endobox\core;
 /**
  * A VanillaBox is basically just the plain box structure without anything special.
  * What you put in comes out.
- *
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 class VanillaBox extends Box {
 

@@ -14,8 +14,6 @@ namespace endobox\core;
 /**
  * A Box is a data structure that allows building larger things from smaller things.
  * It's a kind of fancy linked list that helps you build up your template-based web page.
- *
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 abstract class Box {
 

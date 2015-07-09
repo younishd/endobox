@@ -13,13 +13,25 @@ namespace endobox\core;
 
 /**
  * A PHPBox allows you to append or prepend PHP templates which will then get evaluated.
+ *
  * Note that this box allows data assignment via the assign() method.
  * The assigned data is accessible inside a template through the data[] attribute.
- *
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 class PHPBox extends TemplateBox {
 
+    public function append_template($t)
+    {
 
+    }
+
+    public function prepend_template($t)
+    {
+
+    }
+
+    protected function build($code)
+    {
+
+    }
 
 }

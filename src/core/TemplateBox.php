@@ -14,8 +14,6 @@ namespace endobox\core;
 /**
  * A TemplateBox is a box that allows you to append or prepend template files which will be parsed in some way
  * (depending on the concrete implementation of this abstract class).
- *
- * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
 abstract class TemplateBox extends Box {
 
@@ -41,5 +39,7 @@ abstract class TemplateBox extends Box {
         }
         return $this;
     }
+
+    protected function load() {}
 
 }
