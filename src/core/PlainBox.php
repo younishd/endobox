@@ -12,18 +12,12 @@
 namespace endobox\core;
 
 /**
- * A VanillaBox is basically just the plain box structure without anything special.
- * What you put in comes out.
+ * A PlainBox allows you to append or prepend plain text files as templates. Their content won't be touched.
  *
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
-class VanillaBox extends Box {
+class PlainBox extends TemplateBox {
 
-    protected function load() {}
 
-    protected function build($code)
-    {
-        return $code;
-    }
 
 }

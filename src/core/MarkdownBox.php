@@ -12,18 +12,12 @@
 namespace endobox\core;
 
 /**
- * A VanillaBox is basically just the plain box structure without anything special.
- * What you put in comes out.
+ * A MarkdownBox allows you to append or prepend Markdown templates which will then get parsed to HTML code.
  *
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
-class VanillaBox extends Box {
+class MarkdownBox extends TemplateBox {
 
-    protected function load() {}
 
-    protected function build($code)
-    {
-        return $code;
-    }
 
 }

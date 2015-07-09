@@ -12,18 +12,14 @@
 namespace endobox\core;
 
 /**
- * A VanillaBox is basically just the plain box structure without anything special.
- * What you put in comes out.
+ * A PHPBox allows you to append or prepend PHP templates which will then get evaluated.
+ * Note that this box allows data assignment via the assign() method.
+ * The assigned data is accessible inside a template through the data[] attribute.
  *
  * @author YouniS Bensalah <younis.bensalah@riseup.net>
  */
-class VanillaBox extends Box {
+class PHPBox extends TemplateBox {
 
-    protected function load() {}
 
-    protected function build($code)
-    {
-        return $code;
-    }
 
 }
