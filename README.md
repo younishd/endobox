@@ -13,7 +13,7 @@ There are two main box flavors...
 
 ### `VanillaBox`
 
-A VanillaBox is basically just the plain box structure without anything special.
+A _VanillaBox_ is basically just the plain box structure without anything special.
 What you put in comes out.
 
 ### `TemplateBox`
