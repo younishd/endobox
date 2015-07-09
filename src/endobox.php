@@ -11,7 +11,22 @@
 
 namespace endobox;
 
-abstract class endobox {
+// add some function shortcuts here
+
+class endobox {
+    
+    private $flags;
+    
+    public function __construct()
+    {
+        $this->flags = [
+            'template' => false,
+            'php' => false,
+            'markdown' => false,
+            'plain' => false,
+            'endless' => false
+        ];
+    }
     
     public static function vanilla()
     {
@@ -20,7 +35,32 @@ abstract class endobox {
     
     public static function with()
     {
-        return new builder\BoxBuilder();
+        return new static();
+    }
+    
+    public function get()
+    {
+        
+    }
+    
+    public function php()
+    {
+        
+    }
+    
+    public function markdown()
+    {
+        
+    }
+    
+    public function plain()
+    {
+        
+    }
+    
+    public function endless()
+    {
+        
     }
     
 }
