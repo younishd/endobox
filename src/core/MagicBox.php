@@ -27,12 +27,19 @@ namespace endobox\core;
  */
 class MagicBox extends TemplateBox {
 
+    private $endless = false;
+
     public function append_template($t)
     {
 
     }
 
     public function prepend_template($t)
+    {
+
+    }
+
+    public function set_endless($endless = true)
     {
 
     }
