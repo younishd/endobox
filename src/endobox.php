@@ -35,11 +35,6 @@ class endobox {
         return new core\VanillaBox();
     }
 
-    public function plain()
-    {
-        return new core\TemplateBox();
-    }
-
     public function markdown()
     {
         return new core\MarkdownBox();
@@ -99,13 +94,6 @@ if (!\function_exists('endobox\\markdown')) {
     function markdown()
     {
         return endobox::get()->markdown();
-    }
-}
-
-if (!\function_exists('endobox\\plain')) {
-    function plain()
-    {
-        return endobox::get()->plain();
     }
 }
 
