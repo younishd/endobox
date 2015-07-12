@@ -15,7 +15,7 @@ namespace endobox\core;
  * A Box is a data structure that allows building larger things from smaller things.
  * It's a kind of fancy linked list that helps you build up your template-based web page.
  */
-abstract class Box {
+abstract class Box implements Renderable {
 
     protected $interior = [];
 
@@ -99,13 +99,13 @@ abstract class Box {
         return $this->build($code);
     }
 
-    protected function append_inner(Box $box)
+    protected function append_inner(Renderable $box)
     {
         $this->interior[] = $r;
         return $this;
     }
 
-    protected function prepend_inner(Box $box)
+    protected function prepend_inner(Renderable $box)
     {
         \array_unshift($this->interior, $r);
         return $this;
