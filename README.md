@@ -13,7 +13,7 @@ There are three types of boxes: `Box`, `VanillaBox`, and `TemplateBox`.
 
 First of all you should know that `Box` is base class of `VanillaBox` which is in turn base class of `TemplateBox`.
 
-- ### `Box`
+### `Box`
 
 A `Box` is the most general type. It is basically just the plain structure without anything template-related.
 
@@ -43,7 +43,7 @@ head() : Box
 tail() : Box
 ```
 
-- ### `VanillaBox`
+### `VanillaBox`
 
 A `VanillaBox` allows you to append or prepend plain text files as templates.
 
@@ -59,7 +59,7 @@ append_template( string $t ) : Box
 prepend_template( string $t ) : Box
 ```
 
-- ### `TemplateBox`
+### `TemplateBox`
 
 A `TemplateBox` lets you append or prepend template files and assign data to the box.
 
