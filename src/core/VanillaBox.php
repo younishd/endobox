@@ -12,8 +12,7 @@
 namespace endobox\core;
 
 /**
- * A VanillaBox is basically just the plain box structure without anything special.
- * It allows you to append or prepend plain text files as templates.
+ * A VanillaBox allows you to append or prepend plain text files as templates.
  * Their content won't be touched. What you put in comes out.
  *
  * However, this class can be used as a base class to implement
