@@ -29,24 +29,34 @@ class MagicBox extends TemplateBox {
 
     private $endless = false;
 
+    public function set_endless($endless = true)
+    {
+        $this->endless = (bool)$endless;
+    }
+
     public function append_template($t)
     {
-
+        //
     }
 
     public function prepend_template($t)
     {
-
+        //
     }
 
-    public function set_endless($endless = true)
+    private function get_box($path)
     {
-
-    }
-
-    protected function build($code)
-    {
-
+        if (preg_match('/\.md\.php$/', $path)) {
+            //
+        }
+        if (preg_match('/\.php$/', $path)) {
+            //
+        }
+        if (preg_match('/\.md$/', $path)) {
+            //
+        }
+        //
+        
     }
 
 }

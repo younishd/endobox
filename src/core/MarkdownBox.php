@@ -14,21 +14,21 @@ namespace endobox\core;
 /**
  * A MarkdownBox allows you to append or prepend Markdown templates which will then get parsed to HTML code.
  */
-class MarkdownBox extends TemplateBox {
+class MarkdownBox extends VanillaBox {
 
-    public function append_template($t)
-    {
-
-    }
-
-    public function prepend_template($t)
-    {
-
-    }
+    private static $parser = null;
 
     protected function build($code)
     {
+        return self::parse($code);
+    }
 
+    private static function parse($code)
+    {
+        if (self::$parser === null) {
+            self::$parser = \Parsedown::instance();
+        }
+        return self::$parser->parse($code);
     }
 
 }

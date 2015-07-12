@@ -37,7 +37,7 @@ class endobox {
 
     public function plain()
     {
-        return new core\PlainBox();
+        return new core\TemplateBox();
     }
 
     public function markdown()

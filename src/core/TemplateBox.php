@@ -12,16 +12,15 @@
 namespace endobox\core;
 
 /**
- * A TemplateBox is a box that allows you to append or prepend template files which will be parsed in some way
- * (depending on the concrete implementation of this abstract class).
+ * A TemplateBox is a box that allows you to append/prepend template files and assign data.
+ * The data array can (optionally) be passed by reference to the constructor.
+ *
+ * This could for instance be useful to pass some shared data array to several template boxes.
+ * (This concept is being used in the MagicBox class.)
  */
-abstract class TemplateBox extends Box {
+abstract class TemplateBox extends VanillaBox {
 
     protected $data = [];
-
-    public abstract function append_template($t);
-
-    public abstract function prepend_template($t);
 
     public function __construct(array &$data = null)
     {
@@ -39,7 +38,5 @@ abstract class TemplateBox extends Box {
         }
         return $this;
     }
-
-    protected function load() {}
 
 }
