@@ -21,24 +21,26 @@ class PHPBox extends TemplateBox {
 
     private $endless = false;
 
-    public function append_template($t)
-    {
-
-    }
-
-    public function prepend_template($t)
-    {
-
-    }
-
     public function set_endless($endless = true)
     {
-
+        $this->endless = (bool)$endless;
     }
 
     protected function build($code)
     {
-
+        \ob_start();
+        if (\strpos($code, '<?php') !== false) {
+            eval('?>' . $code);
+            $code = \ob_get_contents();
+            if ($this->endless) {
+                while (\strpos($code, '<?php') !== false) {
+                    eval('?>' . $code);
+                    $code = \ob_get_contents();
+                }
+            }
+        }
+        \ob_end_clean();
+        return $code;
     }
 
 }
