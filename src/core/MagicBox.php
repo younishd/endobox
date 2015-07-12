@@ -36,27 +36,36 @@ class MagicBox extends TemplateBox {
 
     public function append_template($t)
     {
-        //
+        return $this->append_inner($this->get_box($t));
     }
 
     public function prepend_template($t)
     {
-        //
+        return $this->prepend_inner($this->get_box($t));
     }
 
-    private function get_box($path)
+    private function get_box($t)
     {
-        if (preg_match('/\.md\.php$/', $path)) {
-            //
+        if (preg_match('/\.md\.php$/', $t)) {
+            $mdbox = new MarkdownBox();
+            $phpbox = new PHPBox();
+            $phpbox->set_endless($this->endless);
+            $phpbox->append_template($t);
+            $mdbox->append_inner($phpbox);
+            return $mdbox;
         }
-        if (preg_match('/\.php$/', $path)) {
-            //
+        if (preg_match('/\.php$/', $t)) {
+            $phpbox = new PHPBox();
+            $phpbox->set_endless($this->endless);
+            $phpbox->append_template($t);
+            return $phpbox;
         }
-        if (preg_match('/\.md$/', $path)) {
-            //
+        if (preg_match('/\.md$/', $t)) {
+            $mdbox = new MarkdownBox();
+            $mdbox->append_template($t);
+            return $mdbox;
         }
-        //
-        
+        return new File($t);
     }
 
 }
