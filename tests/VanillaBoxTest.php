@@ -101,8 +101,37 @@ class VanillaBoxTest extends PHPUnit_Framework_TestCase {
     public function test_render_empty()
     {
         $box = endobox\endobox::get()->vanilla();
-
         $this->assertSame('', $box->render());
+    }
+
+    public function test_append_template()
+    {
+        $box = endobox\endobox::get()->vanilla();
+
+        $box->append_template(__DIR__ . '/resources/template.txt');
+        $box->append_template(__DIR__ . '/resources/whatever.php');
+        $box->append_template(__DIR__ . '/resources/markdown.md');
+
+        $expected = "hellowz\ni iz a plain text.\nlulz\n<h1>lel</h1>\n<h2>"
+            . '<?php echo $this->data[\'foo\']; ?>'
+            . "</h2>\n# hi.\n\ni iz a __markdown__.";
+
+        $this->assertEquals($expected, trim($box->render()));
+    }
+
+    public function test_prepend_template()
+    {
+        $box = endobox\endobox::get()->vanilla();
+
+        $box->prepend_template(__DIR__ . '/resources/markdown.md');
+        $box->prepend_template(__DIR__ . '/resources/whatever.php');
+        $box->prepend_template(__DIR__ . '/resources/template.txt');
+
+        $expected = "hellowz\ni iz a plain text.\nlulz\n<h1>lel</h1>\n<h2>"
+            . '<?php echo $this->data[\'foo\']; ?>'
+            . "</h2>\n# hi.\n\ni iz a __markdown__.";
+
+        $this->assertEquals($expected, trim($box->render()));
     }
 
 }

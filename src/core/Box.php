@@ -99,13 +99,13 @@ abstract class Box implements Renderable {
         return $this->build($code);
     }
 
-    protected function append_inner(Renderable $box)
+    protected function append_inner(Renderable $r)
     {
         $this->interior[] = $r;
         return $this;
     }
 
-    protected function prepend_inner(Renderable $box)
+    protected function prepend_inner(Renderable $r)
     {
         \array_unshift($this->interior, $r);
         return $this;
