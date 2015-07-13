@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-class VanillaBoxTest extends PHPUnit_Framework_TestCase {
+class VanillaTest extends PHPUnit_Framework_TestCase {
 
     public function test_empty()
     {
@@ -112,11 +112,11 @@ class VanillaBoxTest extends PHPUnit_Framework_TestCase {
         $box->append_template(__DIR__ . '/resources/whatever.php');
         $box->append_template(__DIR__ . '/resources/markdown.md');
 
-        $expected = "hellowz\ni iz a plain text.\nlulz\n<h1>lel</h1>\n<h2>"
-            . '<?php echo $this->data[\'foo\']; ?>'
-            . "</h2>\n# hi.\n\ni iz a __markdown__.";
+        $expected = file_get_contents(__DIR__ . '/resources/template.txt')
+            . file_get_contents(__DIR__ . '/resources/whatever.php')
+            . file_get_contents(__DIR__ . '/resources/markdown.md');
 
-        $this->assertEquals($expected, trim($box->render()));
+        $this->assertEquals(trim($expected), trim($box->render()));
     }
 
     public function test_prepend_template()
@@ -127,11 +127,11 @@ class VanillaBoxTest extends PHPUnit_Framework_TestCase {
         $box->prepend_template(__DIR__ . '/resources/whatever.php');
         $box->prepend_template(__DIR__ . '/resources/template.txt');
 
-        $expected = "hellowz\ni iz a plain text.\nlulz\n<h1>lel</h1>\n<h2>"
-            . '<?php echo $this->data[\'foo\']; ?>'
-            . "</h2>\n# hi.\n\ni iz a __markdown__.";
+        $expected = file_get_contents(__DIR__ . '/resources/template.txt')
+            . file_get_contents(__DIR__ . '/resources/whatever.php')
+            . file_get_contents(__DIR__ . '/resources/markdown.md');
 
-        $this->assertEquals($expected, trim($box->render()));
+        $this->assertEquals(trim($expected), trim($box->render()));
     }
 
 }
