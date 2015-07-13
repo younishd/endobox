@@ -104,6 +104,8 @@ Append or prepend plain text files. Their content won't be touched.
 
 ### Magic
 
+- Box type: [`TemplateBox`](#vanillabox)
+
 Dynamically append or prepend PHP, Markdown, or plain text templates, as well as a combination of both PHP and Markdown.
 
 The template type will be determined by the template file extension:
