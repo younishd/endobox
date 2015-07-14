@@ -48,14 +48,14 @@ class MagicBox extends TemplateBox {
     {
         if (preg_match('/\.md\.php$/', $t)) {
             $mdbox = new MarkdownBox();
-            $phpbox = new PHPBox();
+            $phpbox = new PHPBox($this->data);
             $phpbox->set_endless($this->endless);
             $phpbox->append_template($t);
             $mdbox->append_inner($phpbox);
             return $mdbox;
         }
         if (preg_match('/\.php$/', $t)) {
-            $phpbox = new PHPBox();
+            $phpbox = new PHPBox($this->data);
             $phpbox->set_endless($this->endless);
             $phpbox->append_template($t);
             return $phpbox;
