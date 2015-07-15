@@ -116,7 +116,7 @@ class VanillaTest extends PHPUnit_Framework_TestCase {
             . file_get_contents(__DIR__ . '/resources/whatever.php')
             . file_get_contents(__DIR__ . '/resources/markdown.md');
 
-        $this->assertEquals(trim($expected), trim($box->render()));
+        $this->assertEquals($expected, $box->render());
     }
 
     public function test_prepend_template()
@@ -131,7 +131,7 @@ class VanillaTest extends PHPUnit_Framework_TestCase {
             . file_get_contents(__DIR__ . '/resources/whatever.php')
             . file_get_contents(__DIR__ . '/resources/markdown.md');
 
-        $this->assertEquals(trim($expected), trim($box->render()));
+        $this->assertEquals($expected, $box->render());
     }
 
 }
