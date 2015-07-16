@@ -34,6 +34,7 @@ class PHPBox extends TemplateBox {
             $code = \ob_get_contents();
             if ($this->endless) {
                 while (\strpos($code, '<?php') !== false) {
+                    ob_clean();
                     eval('?>' . $code);
                     $code = \ob_get_contents();
                 }
