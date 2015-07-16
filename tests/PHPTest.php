@@ -66,7 +66,12 @@ class PHPTest extends PHPUnit_Framework_TestCase {
 
     public function test_endless()
     {
-        //
+        $box = endobox\endobox::get()->endless()->php();
+        $box->append_template(__DIR__ . '/resources/endless.php');
+
+        $expected = 'Hello';
+
+        $this->assertEquals($expected, $box->render());
     }
 
 }
