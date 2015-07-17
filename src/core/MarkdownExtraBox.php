@@ -26,7 +26,7 @@ class MarkdownExtraBox extends VanillaBox {
     private static function parse($code)
     {
         if (self::$parser === null) {
-            self::$parser = \ParsedownExtra::instance();
+            self::$parser = new \ParsedownExtra();
         }
         return self::$parser->parse($code);
     }

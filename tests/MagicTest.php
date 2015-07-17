@@ -11,7 +11,32 @@
 
 class MagicTest extends PHPUnit_Framework_TestCase {
 
-    public function test_()
+    public function test_php()
+    {
+        //
+    }
+
+    public function test_markdown()
+    {
+        //
+    }
+
+    public function test_markdown_extra()
+    {
+        //
+    }
+
+    public function test_plaintext()
+    {
+        //
+    }
+
+    public function test_php_markdown()
+    {
+        //
+    }
+
+    public function test_php_markdown_extra()
     {
         //
     }

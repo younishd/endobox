@@ -16,7 +16,7 @@
     ],
     "require":
     {
-        "erusev/parsedown": "dev-master",
+        "erusev/parsedown": "@dev",
         "erusev/parsedown-extra": "dev-master"
     },
     "autoload":
