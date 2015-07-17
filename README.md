@@ -79,7 +79,8 @@ assign( $key [, $value = null] ) : Box
 
 Flavors are settings that control the __behavior__ of the box instance you want to create.
 
-> Note that the public __API__ of a box is _always_ dictated by one of the three [box types](#box-types) discussed above.
+> Note that the public __API__ of a box is _always_ dictated by one of the three
+[box types](#box-types) discussed above.
 So in practice, all you need to know about a flavor is _what does it do?_ and _what box type will I get?_
 
 ### PHP
@@ -88,7 +89,8 @@ So in practice, all you need to know about a flavor is _what does it do?_ and _w
 
 Append or prepend PHP templates which will then get evaluated.
 
-This flavor can be combined with the [`endless`](#endless) flag. When enabled, the code will get evaluated as long as there are opening `<?php` tags left.
+This flavor can be combined with the [`endless`](#endless) flag. When enabled,
+the code will get evaluated as long as there are opening `<?php` tags left.
 
 ### Markdown
 
@@ -109,14 +111,18 @@ Append or prepend plain text files. Their content won't be touched.
 Dynamically append or prepend PHP, Markdown, or plain text templates, as well as a combination of both PHP and Markdown.
 
 The template type will be determined by the template file extension:
-- `.md` files will be parsed as Markdown templates.
-- `.php` files will be evaluated as PHP templates.
-- `.md.php` files will first be evaluated as PHP, then parsed as Markdown templates.
-- Anything else will be returned as is (i.e., plain text).
+- `.md` files will be parsed as __Markdown__ templates.
+- `.mdx` files will be parsed as __Markdown Extra__ templates.
+- `.php` files will be evaluated as __PHP__ templates.
+- `.md.php` files will first be evaluated as __PHP__, then parsed as __Markdown__ templates.
+- `.mdx.php` files will first be evaluated as __PHP__, then parsed as __Markdown__ __Extra__ templates.
+- Anything else will be returned as is (i.e., __plain text__).
 
-This flavor can be combined with the [`endless`](#endless) flag. When enabled, the PHP code parts will get evaluated as long as there are opening `<?php` tags left.
+This flavor can be combined with the [`endless`](#endless) flag. When enabled,
+the PHP code parts will get evaluated as long as there are opening `<?php` tags left.
 
-Of course you're able to assign data to this box which will then be accessible to all PHP templates. That's why it's magic...
+Of course you're able to assign data to this box which will then be accessible to all PHP templates.
+That's why it's magic...
 
 ### Endless
 
@@ -134,11 +140,6 @@ $b = endobox\endobox::get()->php();
 ```
 
 ```php
-// Get an endless PHP box
-$b = endobox\endobox::get()->endless()->php();
-```
-
-```php
 // Get a Markdown box
 $b = endobox\endobox::get()->markdown();
 ```
@@ -153,9 +154,23 @@ $b = endobox\endobox::get()->vanilla();
 $b = endobox\endobox::get()->magic();
 ```
 
+The same shit with the __endless__ flag set:
+
+```php
+// Get an endless PHP box
+$b = endobox\endobox::get()->endless()->php();
+```
+
 ```php
 // Get an endless magic box
 $b = endobox\endobox::get()->endless()->magic();
+```
+
+With __Markdown Extra__:
+
+```php
+// Get a Markdown Extra box
+$b = endobox\endobox::get()->markdownextra();
 ```
 
 ### Functional way
@@ -165,11 +180,6 @@ The same using functions:
 ```php
 // Get a PHP box
 $b = endobox\php();
-```
-
-```php
-// Get an endless PHP box
-$b = endobox\php_e();
 ```
 
 ```php
@@ -187,14 +197,33 @@ $b = endobox\vanilla();
 $b = endobox\magic();
 ```
 
+With __endless__ flag:
+
+```php
+// Get an endless PHP box
+$b = endobox\php_e();
+```
+
 ```php
 // Get an endless magic box
 $b = endobox\magic_e();
 ```
 
+With __Markdown Extra__:
+
+```php
+// Get a Markdown Extra box
+$b = endobox\markdownextra();
+```
+
 ## Dependencies
 
-- [Parsedown](https://github.com/erusev/parsedown) for Markdown templates
+- [parsedown](https://github.com/erusev/parsedown)
+- [parsedown-extra](https://github.com/erusev/parsedown)
+
+## Contributors
+
+Thanks to [fabienwang](https://github.com/fabienwang) for testing and improvements.
 
 ## License
 
