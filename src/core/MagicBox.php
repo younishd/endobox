@@ -17,9 +17,9 @@ namespace endobox\core;
  *
  * The template type will be determined by the template file extension:
  *
- *     - '.md' files will be parsed as Markdown templates.
+ *     - '.md[x]' files will be parsed as Markdown [Extra] templates.
  *     - '.php' files will be evaluated as PHP templates.
- *     - '.md.php' files will first be evaluated as PHP, then parsed as Markdown templates.
+ *     - '.md[x].php' files will first be evaluated as PHP, then parsed as Markdown [Extra] templates.
  *     - Anything else will be returned as is (i.e., plain text).
  *
  * Of course you're able to assign data to this box which will then be accessible to all PHP templates.
@@ -46,7 +46,8 @@ class MagicBox extends TemplateBox {
 
     private function get_box($t)
     {
-        if (preg_match('/\.md\.php$/', $t)) {
+        // matches /\.md\.php$/
+        if (\substr(\strrev($t), 0, 7) === 'php.dm.') {
             $mdbox = new MarkdownBox();
             $phpbox = new PHPBox($this->data);
             $phpbox->set_endless($this->endless);
@@ -54,17 +55,40 @@ class MagicBox extends TemplateBox {
             $mdbox->append_inner($phpbox);
             return $mdbox;
         }
-        if (preg_match('/\.php$/', $t)) {
+
+        // matches /\.mdx\.php$/
+        if (\substr(\strrev($t), 0, 8) === 'php.xdm.') {
+            $mdxbox = new MarkdownExtraBox();
+            $phpbox = new PHPBox($this->data);
+            $phpbox->set_endless($this->endless);
+            $phpbox->append_template($t);
+            $mdxbox->append_inner($phpbox);
+            return $mdxbox;
+        }
+
+        // matches /\.php$/
+        if (\substr(\strrev($t), 0, 4) === 'php.') {
             $phpbox = new PHPBox($this->data);
             $phpbox->set_endless($this->endless);
             $phpbox->append_template($t);
             return $phpbox;
         }
-        if (preg_match('/\.md$/', $t)) {
+
+        // matches /\.md$/
+        if (\substr(\strrev($t), 0, 3) === 'dm.') {
             $mdbox = new MarkdownBox();
             $mdbox->append_template($t);
             return $mdbox;
         }
+
+        // matches /\.mdx$/
+        if (\substr(\strrev($t), 0, 4) === 'xdm.') {
+            $mdxbox = new MarkdownExtraBox();
+            $mdxbox->append_template($t);
+            return $mdxbox;
+        }
+
+        // default to plain text
         return new File($t);
     }
 

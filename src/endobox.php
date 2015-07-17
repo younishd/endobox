@@ -40,6 +40,11 @@ class endobox {
         return new core\MarkdownBox();
     }
 
+    public function markdownextra()
+    {
+        return new core\MarkdownExtraBox();
+    }
+
     public function php()
     {
         $x = new core\PHPBox();
@@ -94,6 +99,13 @@ if (!\function_exists('endobox\\markdown')) {
     function markdown()
     {
         return endobox::get()->markdown();
+    }
+}
+
+if (!\function_exists('endobox\\markdownextra')) {
+    function markdownextra()
+    {
+        return endobox::get()->markdownextra();
     }
 }
 
