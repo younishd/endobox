@@ -218,7 +218,8 @@ $b = endobox\markdownextra();
 
 ## Dependencies
 
-- [parsedown-extra](https://github.com/erusev/parsedown)
+- [parsedown](https://github.com/erusev/parsedown)
+- [parsedown-extra](https://github.com/erusev/parsedown-extra)
 
 ## Contributors
 
