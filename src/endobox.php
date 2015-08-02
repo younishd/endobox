@@ -12,7 +12,7 @@
 namespace endobox;
 
 /**
- * This class helps you build box instances of different flavors.
+ * This is a facade that helps you build box instances of different flavors.
  */
 class endobox {
 
@@ -67,51 +67,37 @@ class endobox {
 
 }
 
-if (!\function_exists('endobox\\magic')) {
-    function magic()
-    {
-        return endobox::get()->magic();
-    }
+function magic()
+{
+    return endobox::get()->magic();
 }
 
-if (!\function_exists('endobox\\magic_e')) {
-    function magic_e()
-    {
-        return endobox::get()->endless()->magic();
-    }
+function magic_e()
+{
+    return endobox::get()->endless()->magic();
 }
 
-if (!\function_exists('endobox\\php')) {
-    function php()
-    {
-        return endobox::get()->php();
-    }
+function php()
+{
+    return endobox::get()->php();
 }
 
-if (!\function_exists('endobox\\php_e')) {
-    function php_e()
-    {
-        return endobox::get()->endless()->php();
-    }
+function php_e()
+{
+    return endobox::get()->endless()->php();
 }
 
-if (!\function_exists('endobox\\markdown')) {
-    function markdown()
-    {
-        return endobox::get()->markdown();
-    }
+function markdown()
+{
+    return endobox::get()->markdown();
 }
 
-if (!\function_exists('endobox\\markdownextra')) {
-    function markdownextra()
-    {
-        return endobox::get()->markdownextra();
-    }
+function markdownextra()
+{
+    return endobox::get()->markdownextra();
 }
 
-if (!\function_exists('endobox\\vanilla')) {
-    function vanilla()
-    {
-        return endobox::get()->vanilla();
-    }
+function vanilla()
+{
+    return endobox::get()->vanilla();
 }

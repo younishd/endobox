@@ -132,7 +132,7 @@ __Use with caution!__ Especially, do not enable this at a level where user input
 
 ## Get a Box
 
-Now you probably want to know how to get all these boxes. Here you go:
+Now you probably want to know how to get all these boxes. The answer is a nice facade class. Here you go:
 
 ```php
 // Get a PHP box
