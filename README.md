@@ -1,230 +1,99 @@
 # endobox
 
-A useful toolkit for building PHP template-based dynamic web pages.
+_Simple PHP template engine._
 
-## What the hell is a Box
+---
 
-A _Box_ is a data structure that allows building larger things from smaller things.
-It's a kind of fancy linked list that helps you build up your template-based web page.
+## About
 
-## Box Types
+_endobox_ is a really simple template engine that uses native PHP as syntax.
 
-There are three types of boxes: `Box`, `VanillaBox`, and `TemplateBox`.
+## Usage
 
-First of all you should know that `Box` is base class of `VanillaBox` which is in turn base class of `TemplateBox`.
-
-### `Box`
-
-A `Box` is the most general type. It is basically just the plain structure without anything template-related.
-
-> Also note that `Box` itself is an abstract class.
-
-#### API
-
-Append/prepend a box.
-
-```
-append( Box $b ) : Box
-prepend( Box $b ) : Box
-```
-
-Render everything and return the code.
-
-```
-render() : string
-```
-
-Basic linked list getters: _next_, _previous_, _head_, and _tail_.
-
-```
-next() : Box
-prev() : Box
-head() : Box
-tail() : Box
-```
-
-### `VanillaBox`
-
-A `VanillaBox` allows you to append or prepend plain text files as templates.
-
-This class is used either to add plain text templates or as a base class for more complex template boxes
-(e.g., Markdown) that fire the content through a parser before returning it.
-
-#### API
-
-Append/prepend a template file.
-
-```
-append_template( string $t ) : Box
-prepend_template( string $t ) : Box
-```
-
-### `TemplateBox`
-
-A `TemplateBox` lets you append or prepend template files and assign data to the box.
-
-#### API
-
-Assign some data.
-
-You can either assign a key-value couple or pass a whole array as key argument (and omit the value).
-
-```
-assign( $key [, $value = null] ) : Box
-```
-
-> The main idea of all this is that you should only worry about the public API of these three classes.
-
-## Flavors
-
-Flavors are settings that control the __behavior__ of the box instance you want to create.
-
-> Note that the public __API__ of a box is _always_ dictated by one of the three
-[box types](#box-types) discussed above.
-So in practice, all you need to know about a flavor is _what does it do?_ and _what box type will I get?_
-
-### PHP
-
-- Box type: [`TemplateBox`](#templatebox)
-
-Append or prepend PHP templates which will then get evaluated.
-
-This flavor can be combined with the [`endless`](#endless) flag. When enabled,
-the code will get evaluated as long as there are opening `<?php` tags left.
-
-### Markdown
-
-- Box type: [`VanillaBox`](#vanillabox)
-
-Append or prepend Markdown templates which will then get parsed to HTML code.
-
-### Plain text
-
-- Box type: [`VanillaBox`](#vanillabox)
-
-Append or prepend plain text files. Their content won't be touched.
-
-### Magic
-
-- Box type: [`TemplateBox`](#vanillabox)
-
-Dynamically append or prepend PHP, Markdown, or plain text templates, as well as a combination of both PHP and Markdown.
-
-The template type will be determined by the template file extension:
-- `.md` files will be parsed as __Markdown__ templates.
-- `.mdx` files will be parsed as __Markdown Extra__ templates.
-- `.php` files will be evaluated as __PHP__ templates.
-- `.md.php` files will first be evaluated as __PHP__, then parsed as __Markdown__ templates.
-- `.mdx.php` files will first be evaluated as __PHP__, then parsed as __Markdown__ __Extra__ templates.
-- Anything else will be returned as is (i.e., __plain text__).
-
-This flavor can be combined with the [`endless`](#endless) flag. When enabled,
-the PHP code parts will get evaluated as long as there are opening `<?php` tags left.
-
-Of course you're able to assign data to this box which will then be accessible to all PHP templates.
-That's why it's magic...
-
-### Endless
-
-This flag allows parsing some box content multiple times (usually until there is nothing left to parse).
-
-__Use with caution!__ Especially, do not enable this at a level where user input is involved.
-
-## Get a Box
-
-Now you probably want to know how to get all these boxes. The answer is a nice facade class. Here you go:
+### _Hello world_
 
 ```php
-// Get a PHP box
-$b = endobox\endobox::get()->php();
+$endobox = new endobox\endobox('path/to/templates');
+
+$box = $endobox('hello'); // omit extension
+
+echo $box->render();
 ```
+
+Simply print the content of `hello.html`.
+
+### _Chaining boxes_
 
 ```php
-// Get a Markdown box
-$b = endobox\endobox::get()->markdown();
+$box = $endobox('first')('second')('third');
+
+$box('fourth')('fifth');
+
+$box->render();
 ```
+
+Concatenate some template boxes together and print the result.
+
+### _Assign data_
 
 ```php
-// Get a plain text box
-$b = endobox\endobox::get()->vanilla();
+$box->assign([ 'foo' => 'bar' ]);
 ```
+
+The assigned data is shared between all chained or nested template boxes.
+
+### _Accessing data from within template_
 
 ```php
-// Get a magic box
-$b = endobox\endobox::get()->magic();
+<p>
+<?php= $foo ?>
+</p>
 ```
 
-The same shit with the __endless__ flag set:
+Data is accessible via simple variables where the variable names correspond to the assigned array keys.
+
+### _Nesting_
 
 ```php
-// Get an endless PHP box
-$b = endobox\endobox::get()->endless()->php();
+$box = $endobox('first');
+$another = $endobox('second');
+
+$box->assign([ 'foo' => $another ]);
 ```
+
+You can assign another template box like you'd do with simple data.
+
+### _Markdown_
 
 ```php
-// Get an endless magic box
-$b = endobox\endobox::get()->endless()->magic();
+# Lorem ipsum
+<?php= $foo ?>
 ```
 
-With __Markdown Extra__:
+This template will first print the content of `$foo` then everything is parsed as Markdown.
 
-```php
-// Get a Markdown Extra box
-$b = endobox\endobox::get()->markdownextra();
-```
+### _Template file extensions_
 
-### Functional way
+- `template.html` plain text
 
-The same using functions:
+- `template.md` parse as Markdown
 
-```php
-// Get a PHP box
-$b = endobox\php();
-```
+- `template.mdx` parse as Markdown Extra
 
-```php
-// Get a Markdown box
-$b = endobox\markdown();
-```
+- `template.php` eval() as PHP
 
-```php
-// Get a plain text box
-$b = endobox\vanilla();
-```
+- `template.md.php` eval() as PHP then parse as Markdown
 
-```php
-// Get a magic box
-$b = endobox\magic();
-```
+- `template.mdx.php` eval() as PHP then parse as Markdown Extra
 
-With __endless__ flag:
+## Highlights
 
-```php
-// Get an endless PHP box
-$b = endobox\php_e();
-```
-
-```php
-// Get an endless magic box
-$b = endobox\magic_e();
-```
-
-With __Markdown Extra__:
-
-```php
-// Get a Markdown Extra box
-$b = endobox\markdownextra();
-```
-
-## Dependencies
-
-- [parsedown](https://github.com/erusev/parsedown)
-- [parsedown-extra](https://github.com/erusev/parsedown-extra)
-
-## Contributors
-
-Thanks to [fabienwang](https://github.com/fabienwang) for testing and improvements.
+- Nesting and chaining
+- Shared data across templates
+- Native PHP syntax
+- [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
+[Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
 
 ## License
 
-The endobox framework is open-sourced software licensed under the [MIT license](LICENSE).
+_endobox_ is open-sourced software licensed under the [MIT license](LICENSE).
