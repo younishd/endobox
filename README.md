@@ -10,8 +10,9 @@ _endobox_ is a really simple template engine that uses native PHP as syntax.
 
 ## Highlights
 
+- [Merging](#merging) and [Chaining](#chaining)
 - Shared data across templates
-- [Nesting](#nesting), [Chaining](#chaining), [Merging](#merging)
+- [Nesting](#nesting)
 - Native PHP syntax
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
 [Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
