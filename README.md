@@ -11,7 +11,7 @@ _endobox_ is a really simple template engine that uses native PHP as syntax.
 ## Highlights
 
 - Shared data across templates
-- [Nesting](#Nesting), [Chaining](#Chaining), [Merging](#Merging)
+- [Nesting](#nesting), [Chaining](#chaining), [Merging](#merging)
 - Native PHP syntax
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
 [Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
@@ -62,7 +62,7 @@ echo $first->render();
 
 Concatenate some boxes together and print the result.
 
-> Note that data is __not__ shared between chained boxes. (See [Merging](#Merging) for more info.)
+> Note that data is __not__ shared between chained boxes. (See [Merging](#merging) for more info.)
 
 #### _Assign data_
 
@@ -124,7 +124,7 @@ Both the first and second template have now access to the assigned data.
 
 Note that `$first` is now the merged box whereas `$second` remains unchanged.
 
-> The key difference between _merging_ and [_chaining_](#Chaining) is that the former will result in one single box
+> The key difference between _merging_ and [_chaining_](#chaining) is that the former will result in one single box
 containing the combined templates with all data being shared whereas the latter will only link several boxes together
 while each box remains isolated and still has its own data.
 
