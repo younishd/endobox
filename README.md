@@ -131,11 +131,11 @@ while each box remains isolated and still has its own data.
 ##### A shortcut...
 
 ```
-$box = $endobox('first')('second');
+$box = $endobox('first')('second'); // create box with multiple templates
 
 $box->assign('foo' => 'bar');
 
-echo $first->render();
+echo $box->render();
 ```
 
 This is equivalent to the code above.
