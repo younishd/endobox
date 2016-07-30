@@ -132,7 +132,7 @@ while each box remains isolated and still has its own data.
 
 ##### A shortcut...
 
-```
+```php
 $box = $endobox('first')('second'); // create box with multiple templates
 
 $box->assign('foo' => 'bar');
@@ -144,7 +144,7 @@ This is equivalent to the code above.
 
 ##### Merge a chain
 
-```
+```php
 $first = $endobox('first');
 $second = $endobox('second');
 $third = $endobox('third');
