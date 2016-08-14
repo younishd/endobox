@@ -32,9 +32,7 @@ _endobox_ decides how to render a template according to the _file extension_:
 
 - `.md.php` (`.mdx.php`) is first eval()'d as __PHP__ template then parsed as __Markdown__ (Extra) template.
 
-### Examples
-
-#### _Hello world_
+### Hello world
 
 ```php
 $endobox = new endobox\Engine('path/to/templates');
@@ -50,23 +48,7 @@ The template `hello.php` could look like this:
 <h1>Hello <?php= $subject ?></h1>
 ```
 
-#### _Chaining_
-
-```php
-$first = $endobox('first');
-$second = $endobox('second');
-$third = $endobox('third');
-
-$first($second)($third); // chaining boxes
-
-echo $first->render();
-```
-
-Concatenate some boxes together and print the result.
-
-> Note that data is __not__ shared between chained boxes. (See [Merging](#merging) for more info.)
-
-#### _Assign data_
+### Assign data
 
 ```php
 $box->assign([ 'foo' => 'bar' ]);
@@ -84,7 +66,7 @@ echo $box->render([ 'qux' => 'xyz' ]); // this is also possible
 
 `render()` accepts an optional data array.
 
-#### _Accessing data from within template_
+### Accessing data from within template
 
 `template.php`
 
@@ -96,18 +78,23 @@ echo $box->render([ 'qux' => 'xyz' ]); // this is also possible
 
 Data is accessible via simple variables where the variable names correspond to the assigned array keys.
 
-#### _Nesting_
+### Chaining
 
 ```php
-$outer = $endobox('outer');
-$inner = $endobox('inner');
+$first = $endobox('first');
+$second = $endobox('second');
+$third = $endobox('third');
 
-$outer->assign([ 'foo' => $inner ]);
+$first($second)($third); // chaining boxes
+
+echo $first->render();
 ```
 
-You can assign another template box like you'd do with simple data.
+Concatenate some boxes together and print the result.
 
-#### _Merging_
+> Note that data is __not__ shared between chained boxes. (See [Merging](#merging) for more info.)
+
+### Merging
 
 Merging is combining multiple boxes into one single box and make all of their data shared.
 
@@ -130,7 +117,7 @@ Note that `$first` is now the merged box whereas `$second` remains unchanged.
 containing the combined templates with all data being shared whereas the latter will only link several boxes together
 while each box remains isolated and still has its own data.
 
-##### A shortcut...
+#### A shortcut...
 
 ```php
 $box = $endobox('first')('second'); // create box with multiple templates
@@ -142,7 +129,7 @@ echo $box->render();
 
 This is equivalent to the code above.
 
-##### Merge a chain
+#### Merge a chain
 
 ```php
 $first = $endobox('first');
@@ -156,7 +143,18 @@ $first->merge(); // merging
 
 Merge a chain of boxes into one box.
 
-#### _Markdown_
+### Nesting
+
+```php
+$outer = $endobox('outer');
+$inner = $endobox('inner');
+
+$outer->assign([ 'foo' => $inner ]);
+```
+
+You can assign another template box like you'd do with simple data.
+
+### Markdown
 
 `template.md.php`
 
@@ -169,7 +167,7 @@ This template will first print the content of `$foo` then everything is parsed a
 
 > The same goes for _Markdown Extra_.
 
-#### _One-liner_
+### One-liner
 
 ```php
 echo (new endobox\Engine('path/to/templates'))('lorem')('ipsum')('dolor')->render([ 'sit' => 'amet' ]);
