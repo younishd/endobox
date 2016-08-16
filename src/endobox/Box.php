@@ -11,7 +11,10 @@
 
 namespace endobox;
 
-class Box implements \IteratorAggregate
+/**
+ *
+ */
+class Box implements Renderable, \IteratorAggregate
 {
 
     private $interior;
@@ -20,6 +23,13 @@ class Box implements \IteratorAggregate
 
     private $data = [];
 
+    private $next = null;
+
+    private $prev = null;
+
+    /**
+     *
+     */
     public function __construct(Renderable $interior, Renderer $renderer = null, array &$data = null)
     {
         $this->interior = $interior;
@@ -29,16 +39,25 @@ class Box implements \IteratorAggregate
         }
     }
 
+    /**
+     *
+     */
     public function __invoke(Box $b) : Box
     {
         return $this->append($b);
     }
 
+    /**
+     *
+     */
     public function __toString() : string
     {
         return $this->render();
     }
 
+    /**
+     *
+     */
     public function render() : string
     {
         $result = '';
@@ -48,46 +67,86 @@ class Box implements \IteratorAggregate
         return $result;
     }
 
+    /**
+     *
+     */
     public function append(Box $b) : Box
     {
 
     }
 
+    /**
+     *
+     */
     public function prepend(Box $b) : Box
     {
 
     }
 
+    /**
+     *
+     */
     public function merge() : Box
     {
+        $b = clone $this;
 
+        if ($this->prev !== null) {
+            $this->prev->next = $b;
+        }
+        if ($this->next !== null) {
+            $this->next->prev = $b;
+        }
+
+        $this->prev = $this->next = null;
+        $this->interior = $b;
+        $this->renderer = new NullRenderer();
+
+        return $this;
     }
 
+    /**
+     *
+     */
     public function assign(array $data) : Box
     {
 
     }
 
+    /**
+     *
+     */
     public function next() : Box
     {
-
+        return $this->next;
     }
 
+    /**
+     *
+     */
     public function prev() : Box
     {
-
+        return $this->prev;
     }
 
+    /**
+     *
+     */
     public function head() : Box
     {
 
     }
 
+    /**
+     *
+     */
     public function tail() : Box
     {
 
     }
 
+    /**
+     *
+     */
     public function getIterator()
     {
         return new BoxIterator($this);
