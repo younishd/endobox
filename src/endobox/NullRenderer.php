@@ -11,9 +11,15 @@
 
 namespace endobox;
 
+/**
+ *
+ */
 class NullRenderer implements Renderer
 {
 
+    /**
+     * 
+     */
     public function render(Renderable $input, array &$data = null) : string
     {
         return $input->render();

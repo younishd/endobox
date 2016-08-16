@@ -11,9 +11,15 @@
 
 namespace endobox;
 
+/**
+ *
+ */
 class MarkdownExtraRendererDecorator extends RendererDecorator
 {
 
+    /**
+     * 
+     */
     public function render(Renderable $input, array &$data = null) : string
     {
         return \ParsedownExtra::instance()->text(parent::render($input, $data));

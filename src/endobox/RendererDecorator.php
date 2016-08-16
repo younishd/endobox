@@ -11,16 +11,25 @@
 
 namespace endobox;
 
+/**
+ *
+ */
 abstract class RendererDecorator implements Renderer
 {
 
     private $renderer;
 
+    /**
+     *
+     */
     public function __construct(Renderer $renderer)
     {
         $this->renderer = $renderer;
     }
 
+    /**
+     * 
+     */
     public function render(Renderable $input, array &$data = null) : string
     {
         return $this->renderer->render($input, $data);

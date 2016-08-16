@@ -11,9 +11,15 @@
 
 namespace endobox;
 
+/**
+ *
+ */
 class EvalRendererDecorator extends RendererDecorator
 {
 
+    /**
+     * 
+     */
     public function render(Renderable $input, array &$data = null) : string
     {
         $code = parent::render($input, $data);

@@ -11,27 +11,50 @@
 
 namespace endobox;
 
+/**
+ * A Box factory that decides how to render a template based on their file extension.
+ */
 class Engine
 {
 
-    private $path;
+    private $paths = [];
 
-    public function __construct($path)
+    /**
+     * Construct an Engine that looks into the given path for template files.
+     */
+    public function __construct(string $path)
     {
-        if (!is_dir($path)) {
-            throw new \RuntimeException(sprintf('The path "%s" does not exist or is not a directory.', $path));
+        if (!\is_dir($path)) {
+            throw new \RuntimeException(\sprintf('The path "%s" does not exist or is not a directory.', $path));
         }
-        $this->path = $path;
+        $this->paths[] = $path;
     }
 
-    public function __invoke($template) : Box
+    /**
+     * Shortcut for make().
+     */
+    public function __invoke(string $template) : Box
     {
-        return $this->spawn($template);
+        return $this->make($template);
     }
 
-    public function spawn($template) : Box
+    /**
+     * Make a Box based on the given template and return it.
+     */
+    public function make(string $template) : Box
     {
 
+    }
+
+    /**
+     * Add another folder to the list of template paths.
+     */
+    public function add_folder(string $path)
+    {
+        if (!\is_dir($path)) {
+            throw new \RuntimeException(\sprintf('The path "%s" does not exist or is not a directory.', $path));
+        }
+        $this->paths[] = $path;
     }
 
 }

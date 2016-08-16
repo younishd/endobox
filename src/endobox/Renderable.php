@@ -11,11 +11,21 @@
 
 namespace endobox;
 
+/**
+ * A Renderable can be rendered to a string.
+ */
 interface Renderable
 {
 
-    public function __toString();
-    
-    public function render();
+    /**
+     * This is called when the Renderable object is treated like a string.
+     * Should probably just delegate the task to the render() method.
+     */
+    public function __toString() : string;
+
+    /**
+     * Render and return result.
+     */
+    public function render() : string;
 
 }

@@ -10,24 +10,35 @@
  */
 
 namespace endobox;
-
+/**
+ *
+ */
 class Template implements Renderable
 {
     private $filename;
 
+    /**
+     * 
+     */
     public function __construct(string $filename)
     {
 
     }
 
+    /**
+     * 
+     */
     public function __toString()
     {
 
     }
 
+    /**
+     * 
+     */
     public function render()
     {
-        
+
     }
 
 }
