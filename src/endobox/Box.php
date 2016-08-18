@@ -62,7 +62,7 @@ class Box implements Renderable, \IteratorAggregate
     {
         $result = '';
         foreach ($this as $box) {
-            $result .= $box->render();
+            $result .= $box->renderer->render($box->interior, $box->data);
         }
         return $result;
     }
