@@ -40,10 +40,12 @@ class BoxTest extends TestCase
     {
         // simple append
         $box = $this->endobox->make('first')->append($this->endobox->make('second'));
+        $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n", $result);
 
         // simple prepend
         $box = $this->endobox->make('first')->prepend($this->endobox->make('second'));
+        $result = $box->render();
         $this->assertSame("<p>Second</p>\n<p>First</p>\n", $result);
 
         // chained append
@@ -70,7 +72,7 @@ class BoxTest extends TestCase
             ->append($this->endobox->make('second'))
             ->prepend($this->endobox->make('second'))
             ->append($this->endobox->make('first'))
-            ->prepend($this->endobox->make('thrid'))
+            ->prepend($this->endobox->make('third'))
             ->append($this->endobox->make('third'));
         $result = $box->render();
         $this->assertSame(
