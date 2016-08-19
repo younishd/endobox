@@ -14,13 +14,13 @@ namespace endobox;
 /**
  * A Box factory that decides how to render a template based on their file extension.
  */
-class Engine
+class Factory
 {
 
     private $paths = [];
 
     /**
-     * Construct an Engine that looks into the given path for template files.
+     * Construct a Factory that looks into the given path for template files.
      */
     public function __construct(string $path)
     {
