@@ -52,10 +52,11 @@ class Box implements Renderable, \IteratorAggregate
     /**
      *
      */
-    public function __construct(Renderable $interior, Renderer $renderer = null, array &$data = null)
+    public function __construct(Renderable $interior, Renderer $renderer, array &$data = null)
     {
         $this->interior = $interior;
-        $this->renderer = $renderer ?? new NullRenderer();
+        $this->renderer = $renderer;
+
         if ($data !== null) {
             $this->data = &$data;
         }
@@ -85,6 +86,11 @@ class Box implements Renderable, \IteratorAggregate
      */
     public function render() : string
     {
+        // assign data if any
+        if (\func_num_args() > 0) {
+            $this->assign(\func_get_args()[0]);
+        }
+
         $result = '';
         $shared = [];
         foreach ($this as $box) {
