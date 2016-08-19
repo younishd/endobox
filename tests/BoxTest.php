@@ -78,13 +78,13 @@ class BoxTest extends TestCase
     /**
      * @requires PHP 7.0
      */
-    public function testChainedInvoke()
+    /*public function testChainedInvoke()
     {
         // append via __invoke
         $box = $this->endobox->make('first')($this->endobox->make('second'))($this->endobox->make('third'));
         $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
-    }
+    }*/
 
     public function testAssignData()
     {
