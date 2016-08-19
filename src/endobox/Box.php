@@ -185,29 +185,8 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
-     * Merge the linked list of Boxes into one Box and return this instance.
-     * TODO what about the data?
-     */
-    /*public function merge() : Box
-    {
-        $b = clone $this;
-
-        if ($this->prev !== null) {
-            $this->prev->next = $b;
-        }
-        if ($this->next !== null) {
-            $this->next->prev = $b;
-        }
-
-        $this->prev = $this->next = null;
-        $this->interior = $b;
-        $this->renderer = new NullRenderer();
-
-        return $this;
-    }*/
-
-    /**
      * Assign some data to this Box.
+     * TODO make sure keys are valid var names
      */
     public function assign(array $data) : Box
     {
