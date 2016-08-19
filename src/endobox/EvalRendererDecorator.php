@@ -23,7 +23,7 @@ class EvalRendererDecorator extends RendererDecorator
     public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
         $code = parent::render($input, $data, $shared);
-        if (\strpos($code, '<?php') !== false) {
+        if (\strpos($code, '<?') !== false) {
             return (function (&$_) use (&$data, &$shared) {
                 if ($data !== null) {
                     \extract($data, EXTR_SKIP | EXTR_REFS);

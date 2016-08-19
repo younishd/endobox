@@ -1,1 +1,1 @@
-<h1>Hello <?php= $subject ?></h1>
+<h1>Hello <?= $subject ?></h1>

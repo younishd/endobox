@@ -32,7 +32,7 @@ echo $box->render([ 'subject' => 'world' ]); // assign data directly via render
 The template `hello.php` could look like this:
 
 ```php
-<h1>Hello <?php= $subject ?></h1>
+<h1>Hello <?= $subject ?></h1>
 ```
 
 ### File extensions
@@ -73,7 +73,7 @@ You can assign data directly via `render()` by passing an optional argument.
 
 ```php
 <p>
-<?php= $foo ?>
+<?= $foo ?>
 </p>
 ```
 
@@ -115,7 +115,7 @@ Now, calling `render()` would return the concatenated results of the linked boxe
 
 ```php
 # Lorem ipsum
-<?php= $foo ?>
+<?= $foo ?>
 ```
 
 This template will first print the content of `$foo` then it is parsed as Markdown.
