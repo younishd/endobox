@@ -28,11 +28,11 @@ abstract class RendererDecorator implements Renderer
     }
 
     /**
-     * 
+     *
      */
-    public function render(Renderable $input, array &$data = null) : string
+    public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
-        return $this->renderer->render($input, $data);
+        return $this->renderer->render($input, $data, $shared);
     }
 
 }

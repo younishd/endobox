@@ -18,14 +18,21 @@ class EvalRendererDecorator extends RendererDecorator
 {
 
     /**
-     * 
+     *
      */
-    public function render(Renderable $input, array &$data = null) : string
+    public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
-        $code = parent::render($input, $data);
+        $code = parent::render($input, $data, $shared);
         if (\strpos($code, '<?php') !== false) {
             return (function (&$_) use (&$data) {
-                \extract($data, EXTR_SKIP | EXTR_REFS);
+                if ($data !== null) {
+                    \extract($data, EXTR_SKIP | EXTR_REFS);
+                }
+                if ($shared !== null) {
+                    foreach ($shared as &$x) {
+                        \extract($x, EXTR_SKIP | EXTR_REFS);
+                    }
+                }
                 \ob_start();
                 eval('?>' . $_);
                 return \ob_get_clean();

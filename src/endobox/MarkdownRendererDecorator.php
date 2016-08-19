@@ -18,11 +18,11 @@ class MarkdownRendererDecorator extends RendererDecorator
 {
 
     /**
-     * 
+     *
      */
-    public function render(Renderable $input, array &$data = null) : string
+    public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
-        return \Parsedown::instance()->text(parent::render($input, $data));
+        return \Parsedown::instance()->text(parent::render($input, $data, $shared));
     }
 
 }

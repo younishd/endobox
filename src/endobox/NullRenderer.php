@@ -18,9 +18,9 @@ class NullRenderer implements Renderer
 {
 
     /**
-     * 
+     *
      */
-    public function render(Renderable $input, array &$data = null) : string
+    public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
         return $input->render();
     }

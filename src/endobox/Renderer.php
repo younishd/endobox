@@ -20,6 +20,6 @@ interface Renderer
     /**
      * Render input using data and return the result.
      */
-    public function render(Renderable $input, array &$data = null) : string;
+    public function render(Renderable $input, array &$data = null, array $shared = null) : string;
 
 }
