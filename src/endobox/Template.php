@@ -18,27 +18,27 @@ class Template implements Renderable
     private $filename;
 
     /**
-     * 
+     *
      */
     public function __construct(string $filename)
     {
-
+        $this->filename = $filename;
     }
 
     /**
-     * 
+     *
      */
-    public function __toString()
+    public function __toString() : string
     {
-
+        return $this->render();
     }
 
     /**
-     * 
+     *
      */
-    public function render()
+    public function render() : string
     {
-
+        return \file_get_contents($this->filename);
     }
 
 }
