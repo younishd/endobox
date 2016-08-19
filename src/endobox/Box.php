@@ -203,7 +203,7 @@ class Box implements Renderable, \IteratorAggregate
     /**
      * Return next Box or null if this is the list's tail.
      */
-    public function next() : Box
+    public function next()
     {
         return $this->next;
     }
@@ -211,7 +211,7 @@ class Box implements Renderable, \IteratorAggregate
     /**
      * Return previous Box or null if this is the list's head.
      */
-    public function prev() : Box
+    public function prev()
     {
         return $this->prev;
     }
