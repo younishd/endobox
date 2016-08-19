@@ -211,7 +211,8 @@ class Box implements Renderable, \IteratorAggregate
      */
     public function assign(array $data) : Box
     {
-
+        \array_merge($this->data, $data);
+        return $this;
     }
 
     /**
