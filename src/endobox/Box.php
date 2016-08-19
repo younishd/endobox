@@ -23,8 +23,30 @@ class Box implements Renderable, \IteratorAggregate
 
     private $data = [];
 
+    /**
+     * Union-find rank.
+     */
+    private $rank = 0;
+
+    /**
+     * Union-find parent.
+     */
+    private $parent;
+
+    /**
+     * Union-find next child in circular linked list.
+     * This is used to be able to traverse the set.
+     */
+    private $child;
+
+    /**
+     * Next Box in linked list.
+     */
     private $next = null;
 
+    /**
+     * Previous Box in linked list.
+     */
     private $prev = null;
 
     /**
@@ -37,6 +59,9 @@ class Box implements Renderable, \IteratorAggregate
         if ($data !== null) {
             $this->data = &$data;
         }
+
+        $this->parent = $this;
+        $this->child = $this;
     }
 
     /**
@@ -61,8 +86,22 @@ class Box implements Renderable, \IteratorAggregate
     public function render() : string
     {
         $result = '';
+        $shared = [];
         foreach ($this as $box) {
-            $result .= $box->renderer->render($box->interior, $box->data);
+
+            // cache union sets of shared data arrays using root as key
+            $root = $box->find();
+            if (!isset($shared[$root])) {
+                $shared[$root] = [];
+                $shared[$root][] = &$root->data;
+                for ($i = $root->child; $i !== $root; $i = $i->child) {
+                    $shared[$root][] = &$i->data;
+                }
+            }
+
+            // render and concat results
+            $result .= $box->renderer->render($box->interior, $box->data, $shared[$root]);
+
         }
         return $result;
     }
@@ -96,10 +135,53 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
+     * Union by rank.
+     */
+    public function entangle(Box $b) : Box
+    {
+        $root1 = $this->find();
+        $root2 = $b->find();
+
+        // if already in same set then nothing to do
+        if ($root1 === $root2) {
+            return $this;
+        }
+
+        // union by rank
+        if ($root1->rank > $root2->rank) {
+            $root2->parent = $root1;
+        } elseif ($root2->rank > $root1->rank) {
+            $root1->parent = $root2;
+        } else {
+            $root2->parent = $root1;
+            ++$root1->rank;
+        }
+
+        // merge circular linked lists
+        $tmp = $this->child;
+        $this->child = $b->child;
+        $b->child = $tmp;
+
+        return $this;
+    }
+
+    /**
+     * Find with path compression.
+     */
+    private function find() : Box
+    {
+        // path compression
+        if ($this->parent !== $this) {
+            $this->parent = $this->parent.find();
+        }
+        return $this->parent;
+    }
+
+    /**
      * Merge the linked list of Boxes into one Box and return this instance.
      * TODO what about the data?
      */
-    public function merge() : Box
+    /*public function merge() : Box
     {
         $b = clone $this;
 
@@ -115,7 +197,7 @@ class Box implements Renderable, \IteratorAggregate
         $this->renderer = new NullRenderer();
 
         return $this;
-    }
+    }*/
 
     /**
      * Assign some data to this Box.
