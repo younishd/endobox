@@ -10,7 +10,7 @@ php:
 
 before_script: composer install
 
-script: phpunit --bootstrap vendor/autoload.php
+script: phpunit --bootstrap vendor/autoload.php tests
 
 matrix:
     fast-finish: true
