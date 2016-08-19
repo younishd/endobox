@@ -1,0 +1,19 @@
+language: php
+
+php:
+    - '5.4'
+    - '5.5'
+    - '5.6'
+    - '7.0'
+    - nightly
+    - hhvm
+
+before_script: composer install
+
+script: phpunit --bootstrap vendor/autoload.php
+
+matrix:
+    fast-finish: true
+    allow_failures:
+        - php: nightly
+        - php: hhvm
