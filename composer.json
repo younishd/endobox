@@ -1,7 +1,7 @@
 {
     "name": "younishd/endobox",
     "description": "Simple PHP template engine.",
-    "version": "2.0.0-dev",
+    "version": "2.0.1-dev",
     "type": "library",
     "keywords": ["template", "engine", "box"],
     "homepage": "https://github.com/younishd/endobox",
