@@ -27,11 +27,13 @@ class EvalRendererDecorator extends RendererDecorator
             return (function (&$_) use (&$data, &$shared) {
                 if ($data !== null) {
                     \extract($data, EXTR_SKIP | EXTR_REFS);
+                    unset($data);
                 }
                 if ($shared !== null) {
                     foreach ($shared as &$x) {
                         \extract($x, EXTR_SKIP | EXTR_REFS);
                     }
+                    unset($shared);
                 }
                 \ob_start();
                 eval('?>' . $_);
