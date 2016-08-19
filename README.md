@@ -2,6 +2,8 @@
 
 _Simple PHP template engine._
 
+![](https://travis-ci.org/younishd/endobox.svg?branch=v2)
+
 ---
 
 ## About
