@@ -103,4 +103,18 @@ class BoxTest extends TestCase
         $this->assertSame("<p>bar</p>\n", $result);
     }
 
+    public function testSimpleEntanglement()
+    {
+        $a = $this->endobox->make('foobar');
+        $b = $this->endobox->make('hello');
+
+        $a->entangle($b);
+
+        $b->assign(['foo' => 'bar']);
+
+        $result = $a->render();
+
+        $this->assertSame("<p>bar</p>\n", $result);
+    }
+
 }

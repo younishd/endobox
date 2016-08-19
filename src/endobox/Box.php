@@ -104,16 +104,17 @@ class Box implements Renderable, \IteratorAggregate
 
             // cache union sets of shared data arrays using root as key
             $root = $box->find();
-            if (!isset($shared[$root])) {
-                $shared[$root] = [];
-                $shared[$root][] = &$root->data;
+            $key = \spl_object_hash($root);
+            if (!isset($shared[$key])) {
+                $shared[$key] = [];
+                $shared[$key][] = &$root->data;
                 for ($i = $root->child; $i !== $root; $i = $i->child) {
-                    $shared[$root][] = &$i->data;
+                    $shared[$key][] = &$i->data;
                 }
             }
 
             // render with shared data and concat results
-            $result .= $box->renderer->render($box->interior, $box->data, $shared[$root]);
+            $result .= $box->renderer->render($box->interior, $box->data, $shared[$key]);
 
         }
         return $result;
