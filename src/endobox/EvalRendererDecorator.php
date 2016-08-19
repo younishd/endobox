@@ -24,7 +24,7 @@ class EvalRendererDecorator extends RendererDecorator
     {
         $code = parent::render($input, $data, $shared);
         if (\strpos($code, '<?php') !== false) {
-            return (function (&$_) use (&$data) {
+            return (function (&$_) use (&$data, &$shared) {
                 if ($data !== null) {
                     \extract($data, EXTR_SKIP | EXTR_REFS);
                 }
