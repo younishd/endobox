@@ -89,6 +89,13 @@ class Box implements Renderable, \IteratorAggregate
         $shared = [];
         foreach ($this as $box) {
 
+            // if box has no shared data
+            if ($box->child === $box) {
+                // render, concat, and continue
+                $result .= $box->renderer->render($box->interior, $box->data);
+                continue;
+            }
+
             // cache union sets of shared data arrays using root as key
             $root = $box->find();
             if (!isset($shared[$root])) {
@@ -99,7 +106,7 @@ class Box implements Renderable, \IteratorAggregate
                 }
             }
 
-            // render and concat results
+            // render with shared data and concat results
             $result .= $box->renderer->render($box->interior, $box->data, $shared[$root]);
 
         }
