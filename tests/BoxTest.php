@@ -36,38 +36,40 @@ class BoxTest extends TestCase
         $this->assertSame("<h1>Hello world</h1>\n", $result);
     }
 
-    public function testChaining()
+    public function testSimpleAppend()
     {
-        // simple append
         $box = $this->endobox->make('first')->append($this->endobox->make('second'));
         $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n", $result);
+    }
 
-        // simple prepend
+    public function testSimplePrepend()
+    {
         $box = $this->endobox->make('first')->prepend($this->endobox->make('second'));
         $result = $box->render();
         $this->assertSame("<p>Second</p>\n<p>First</p>\n", $result);
+    }
 
-        // chained append
+    public function testChainedAppend()
+    {
         $box = $this->endobox->make('first')
             ->append($this->endobox->make('second'))
             ->append($this->endobox->make('third'));
         $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
+    }
 
-        // chained prepend
+    public function testChainedPrepend()
+    {
         $box = $this->endobox->make('first')
             ->prepend($this->endobox->make('second'))
             ->prepend($this->endobox->make('third'));
         $result = $box->render();
         $this->assertSame("<p>Third</p>\n<p>Second</p>\n<p>First</p>\n", $result);
+    }
 
-        // append via __invoke
-        $box = $this->endobox->make('first')($this->endobox->make('second'))($this->endobox->make('third'));
-        $result = $box->render();
-        $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
-
-        // append and prepend mixed
+    public function testMixedAppendPrepend()
+    {
         $box = $this->endobox->make('first')
             ->append($this->endobox->make('second'))
             ->prepend($this->endobox->make('second'))
@@ -78,6 +80,13 @@ class BoxTest extends TestCase
         $this->assertSame(
             "<p>Third</p>\n<p>Second</p>\n<p>First</p>\n<p>Second</p>\n<p>First</p>\n<p>Third</p>\n",
             $result);
+    }
+
+    public function testInvokeAppend()
+    {
+        $box = $this->endobox->make('first')($this->endobox->make('second'))($this->endobox->make('third'));
+        $result = $box->render();
+        $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
     }
 
     public function testAssignData()
