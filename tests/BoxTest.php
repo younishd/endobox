@@ -62,11 +62,6 @@ class BoxTest extends TestCase
         $result = $box->render();
         $this->assertSame("<p>Third</p>\n<p>Second</p>\n<p>First</p>\n", $result);
 
-        // __invoke()
-        $box = $this->endobox->make('first')($this->endobox->make('second'))($this->endobox->make('third'));
-        $result = $box->render();
-        $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
-
         // append and prepend mixed
         $box = $this->endobox->make('first')
             ->append($this->endobox->make('second'))
@@ -78,6 +73,17 @@ class BoxTest extends TestCase
         $this->assertSame(
             "<p>Third</p>\n<p>Second</p>\n<p>First</p>\n<p>Second</p>\n<p>First</p>\n<p>Third</p>\n",
             $result);
+    }
+
+    /**
+     * @requires PHP 7.0
+     */
+    public function testChainedInvoke()
+    {
+        // append via __invoke
+        $box = $this->endobox->make('first')($this->endobox->make('second'))($this->endobox->make('third'));
+        $result = $box->render();
+        $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
     }
 
     public function testAssignData()
