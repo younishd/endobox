@@ -27,9 +27,6 @@ class MarkdownExtraRendererDecorator extends RendererDecorator
         return self::instance()->text(parent::render($input, $data, $shared));
     }
 
-    /**
-     * Workaround for https://github.com/erusev/parsedown-extra/issues/67
-     */
     private static function instance()
     {
         if (self::$instance === null) {
