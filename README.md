@@ -2,7 +2,7 @@
 
 _Simple PHP template engine._
 
-![](https://travis-ci.org/younishd/endobox.svg?branch=v2)
+[![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=v2)](https://travis-ci.org/younishd/endobox)
 
 ---
 
