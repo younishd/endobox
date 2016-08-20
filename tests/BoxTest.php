@@ -144,7 +144,19 @@ class BoxTest extends TestCase
         // expected behavior: they cannot be assigned and are not set inside the templates
         $result = $this->endobox->make('vars')->render([ '_' => 1, '__' => 2, '___' => 3 ]);
         // all three isset checks return false
-        $this->assertSame("bool(false)\nbool(false)\nbool(false)\n", $result);
+        $this->assertSame("FALSEFALSEFALSE", $result);
+    }
+
+    public function testMarkdown()
+    {
+        $this->assertSame(
+            "<p>The <em>quick</em> brown <strong>fox</strong> jumps over the lazy dog.</p>",
+            $this->endobox->make('markdown')->render());
+    }
+
+    public function testMarkdownExtra()
+    {
+        $this->assertSame("", $this->endobox->make('markdownextra')->render());
     }
 
 }

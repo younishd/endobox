@@ -1,1 +1,3 @@
-<?php var_dump(isset($_), isset($__), isset($___)) ?>
+<?= isset($_) ? 'TRUE' : 'FALSE' ?>
+<?= isset($__) ? 'TRUE' : 'FALSE' ?>
+<?= isset($___) ? 'TRUE' : 'FALSE' ?>
