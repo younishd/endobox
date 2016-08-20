@@ -124,6 +124,14 @@ This template will first print the content of `$foo` then it is parsed as Markdo
 
 > The same goes for Markdown _Extra_.
 
+### Folders
+
+```php
+$endobox->add_folder('another/path/to/templates');
+```
+
+TODO description
+
 ## License
 
 _endobox_ is open-sourced software licensed under the [MIT license](LICENSE).
