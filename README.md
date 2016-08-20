@@ -18,6 +18,11 @@ _endobox_ is a really simple template engine that uses native PHP syntax.
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
 [Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
 
+## Install
+
+```bash
+composer require younishd/endobox
+```
 
 ## Usage
 
