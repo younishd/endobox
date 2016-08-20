@@ -89,6 +89,17 @@ class BoxTest extends TestCase
         $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
     }
 
+    public function testInvokeMake()
+    {
+        // alias
+        $e = $this->endobox;
+
+        // make using __invoke shortcut
+        $result = $e('first')->render();
+
+        $this->assertSame("<p>First</p>\n", $result);
+    }
+
     public function testAssignData()
     {
         // explicit via assign()
@@ -115,6 +126,16 @@ class BoxTest extends TestCase
         $result = $a->render();
 
         $this->assertSame("<p>bar</p>\n", $result);
+    }
+
+    public function testAddFolder()
+    {
+        // trailing slash should not cause a problem
+        $this->endobox->add_folder(__DIR__ . '/resources/eddazk/');
+
+        $b = $this->endobox->make('empe');
+        $result = $b->render();
+        $this->assertSame("<p>tra8</p>\n", $result);
     }
 
 }
