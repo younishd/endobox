@@ -175,4 +175,35 @@ class BoxTest extends TestCase
             $this->endobox->make('jean')->render([ 'subject' => 'Llewyn' ]));
     }
 
+    public function testMixItAllTogether()
+    {
+        // alias
+        $e = $this->endobox;
+
+        // make some boxes
+        $jean = $e('jean');
+        $foobar = $e('foobar');
+        $hello = $e('hello');
+        $first = $e('first');
+        $another = $e('another');
+
+        // chaining
+        $hello($another)($jean);
+
+        // entanglement
+        $jean->entangle($foobar);
+        $another->entangle($first);
+
+        // assign
+        $foobar->assign([ 'foo' => 'bar', 'subject' => 'Jean' ]);
+        $first->assign([ 'yet' => 42, 'another' => 'ANOTHER', 'one' => 'lel' ]);
+        $hello->assign([ 'subject' => 'Jim' ]);
+
+        // render
+        $this->assertSame(
+            "<h1>Hello Jim</h1>\n<p>42</p>\n<p>ANOTHER</p>\n<p>lel</p>\n<div>\n<h1>Jean <em>has</em> the cat.</h1>\n</div>",
+            $jean->render()
+        );
+    }
+
 }
