@@ -24,21 +24,21 @@ class EvalRendererDecorator extends RendererDecorator
     {
         $code = parent::render($input, $data, $shared);
         if (\strpos($code, '<?') !== false) {
-            return (function (&$_) use (&$data, &$shared) {
-                if ($data !== null) {
-                    \extract($data, EXTR_SKIP | EXTR_REFS);
-                    unset($data);
+            return (function (&$_, &$__, &$___) {
+                if ($__ !== null) {
+                    \extract($__, EXTR_SKIP | EXTR_REFS);
                 }
-                if ($shared !== null) {
-                    foreach ($shared as &$x) {
+                if ($___ !== null) {
+                    foreach ($___ as &$x) {
                         \extract($x, EXTR_SKIP | EXTR_REFS);
                     }
-                    unset($shared);
                 }
+                unset($___);
+                unset($__);
                 \ob_start();
-                eval('?>' . $_);
+                eval('unset($_)?>' . $_);
                 return \ob_get_clean();
-            })($code);
+            })($code, $data, $shared);
         }
         return $code;
     }

@@ -138,4 +138,13 @@ class BoxTest extends TestCase
         $this->assertSame("<p>tra8</p>\n", $result);
     }
 
+    public function testVariableNames()
+    {
+        // these variables $_ $__ $___ are not available because they are internally needed for rendering
+        // expected behavior: they cannot be assigned and are not set inside the templates
+        $result = $this->endobox->make('vars')->render([ '_' => 1, '__' => 2, '___' => 3 ]);
+        // all three isset checks return false
+        $this->assertSame("bool(false)\nbool(false)\nbool(false)\n", $result);
+    }
+
 }
