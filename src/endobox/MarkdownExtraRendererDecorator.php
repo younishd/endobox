@@ -17,12 +17,25 @@ namespace endobox;
 class MarkdownExtraRendererDecorator extends RendererDecorator
 {
 
+    private static $instance = null;
+
     /**
      *
      */
     public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
-        return \ParsedownExtra::instance()->text(parent::render($input, $data, $shared));
+        return self::instance()->text(parent::render($input, $data, $shared));
+    }
+
+    /**
+     * Workaround for https://github.com/erusev/parsedown-extra/issues/67
+     */
+    private static function instance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new \ParsedownExtra();
+        }
+        return self::$instance;
     }
 
 }

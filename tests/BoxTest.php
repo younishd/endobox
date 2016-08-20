@@ -156,7 +156,9 @@ class BoxTest extends TestCase
 
     public function testMarkdownExtra()
     {
-        $this->assertSame("", $this->endobox->make('markdownextra')->render());
+        $this->assertSame(
+            "<div>\n<p>The <em>quick</em> brown <strong>fox</strong> jumps over the lazy dog.</p>\n</div>",
+            $this->endobox->make('markdownextra')->render());
     }
 
 }
