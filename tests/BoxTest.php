@@ -161,4 +161,18 @@ class BoxTest extends TestCase
             $this->endobox->make('markdownextra')->render());
     }
 
+    public function testMarkdownEval()
+    {
+        $this->assertSame(
+            "<h1>Llewyn is the cat.</h1>",
+            $this->endobox->make('llewyn')->render([ 'subject' => 'Llewyn' ]));
+    }
+
+    public function testMarkdownExtraEval()
+    {
+        $this->assertSame(
+            "<div>\n<h1>Llewyn <em>has</em> the cat.</h1>\n</div>",
+            $this->endobox->make('jean')->render([ 'subject' => 'Llewyn' ]));
+    }
+
 }
