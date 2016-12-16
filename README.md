@@ -1,19 +1,13 @@
 # endobox
 
-_Simple PHP template engine._
+A really simple template engine that uses native PHP syntax.
 
 [![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=v2)](https://travis-ci.org/younishd/endobox)
-
----
-
-## About
-
-_endobox_ is a really simple template engine that uses native PHP syntax.
 
 ## Highlights
 
 - Simple, concise API
-- Native PHP syntax
+- Native PHP7 syntax
 - [Shared data](#shared-data) across templates
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
 [Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
@@ -74,6 +68,14 @@ echo $box->render([ 'qux' => 'xyz' ]); // this is also possible
 
 You can assign data directly via `render()` by passing an optional argument.
 
+### Render
+
+```php
+echo $box->render();
+```
+
+Render a box along with everything that's linked to it.
+
 ### Access data from within template
 
 `template.php`
@@ -94,7 +96,7 @@ The simplest way to share data across templates is using the `entangle()` method
 $box->entangle($another);
 ```
 
-TODO more details here...
+Entangled boxes will share their data.
 
 ### Chaining
 
@@ -135,7 +137,7 @@ This template will first print the content of `$foo` then it is parsed as Markdo
 $endobox->add_folder('another/path/to/templates');
 ```
 
-TODO description
+Add a template folder.
 
 ## License
 
