@@ -3,7 +3,7 @@
 /**
  * This file is part of endobox.
  *
- * (c) 2015-2016 YouniS Bensalah <younis.bensalah@gmail.com>
+ * (c) 2015-2017 YouniS Bensalah <younis.bensalah@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,7 @@
 namespace endobox;
 
 /**
- *
+ * The fundamental data structure of endobox.
  */
 class Box implements Renderable, \IteratorAggregate
 {
@@ -49,9 +49,6 @@ class Box implements Renderable, \IteratorAggregate
      */
     private $prev = null;
 
-    /**
-     *
-     */
     public function __construct(Renderable $interior, Renderer $renderer, array &$data = null)
     {
         $this->interior = $interior;
@@ -66,7 +63,7 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
-     *
+     * Invoking a box object like a function is short for append.
      */
     public function __invoke(Box $b) : Box
     {
@@ -74,7 +71,7 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
-     *
+     * Treating a box object like a string calls render.
      */
     public function __toString() : string
     {
@@ -82,7 +79,7 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
-     *
+     * Render the box and everything attached to it then return the result.
      */
     public function render() : string
     {
