@@ -7,11 +7,12 @@ A really simple template engine that uses native PHP syntax.
 ## Highlights
 
 - Simple, concise API
-- Native PHP template syntax
+- Native PHP syntax
 - [Shared data](#shared-data) across templates
 - [Nesting](#nesting) and [Chaining](#chaining)
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
 [Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
+- Assign [Closures](#closures) just like data
 
 ## Install
 
@@ -81,6 +82,20 @@ $box->qux = 'xyz';
 ```
 
 It's really the same as using arrays.
+
+#### Closures
+
+You can assign __closures__ to a box just like data!
+
+```php
+$box->day = function(){ return date('l'); };
+```
+
+Inside your template file you do:
+
+```php
+<p>Today is <?= $day ?>.</p>
+```
 
 ### Render
 
