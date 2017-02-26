@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+Feature: Support assigning closures as data
 ### Changed
 
 ## [2.2.0] - 2017-02-26

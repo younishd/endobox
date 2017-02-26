@@ -250,4 +250,13 @@ class BoxTest extends TestCase
                 $this->endobox->make('foobar')->render([ 'foo' => $this->endobox->make('hi') ]));
     }
 
+    public function testAssignClosure()
+    {
+        $t = $this->endobox->make('foobar');
+
+        $t->assign([ 'foo' => function(){ return '42 is the answer.'; } ]);
+
+        $this->assertSame("<p>42 is the answer.</p>\n", $t->render());
+    }
+
 }
