@@ -9,6 +9,7 @@ A really simple template engine that uses native PHP syntax.
 - Simple, concise API
 - Native PHP7 syntax
 - [Shared data](#shared-data) across templates
+- [Nesting](#nesting) and [Chaining](#chaining)
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
 [Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
 
@@ -50,9 +51,11 @@ _endobox_ decides how to render a template according to the _file extension_:
 
 Any other extension is ignored.
 
-> If a template name matches more than one file, the behavior is undefined.
+_If a template name matches more than one file, the behavior is undefined. Just don't do it._
 
 ### Assign data
+
+#### "I like arrays"
 
 ```php
 $box->assign([ 'foo' => 'bar' ]);
@@ -60,13 +63,24 @@ $box->assign([ 'foo' => 'bar' ]);
 
 The array keys will appear as _simple variables_ inside the templates.
 
-> __Make sure to use valid PHP variable names as keys when assigning data!__
+_Make sure to use valid PHP variable names as keys when assigning data!_
 
 ```php
 echo $box->render([ 'qux' => 'xyz' ]); // this is also possible
 ```
 
 You can assign data directly via `render()` by passing an optional argument.
+
+#### "Property syntax is my thing"
+
+Alternatively, you can assign data using object property syntax.
+
+```php
+$box->foo = 'bar';
+$box->qux = 'xyz';
+```
+
+It's really the same as using arrays.
 
 ### Render
 
@@ -78,7 +92,7 @@ Render a box along with everything that's linked to it.
 
 ### Access data from within template
 
-`template.php`
+Let's say this is `template.php`:
 
 ```php
 <p>
@@ -86,7 +100,9 @@ Render a box along with everything that's linked to it.
 </p>
 ```
 
-Data is accessible via simple variables where the variable names correspond to the assigned array keys.
+Data is accessible via simple variables where the variable names correspond to the assigned array keys or properties.
+
+Yes, [shared data](#shared-data) will also be visible as variables.
 
 ### Shared data
 
@@ -116,11 +132,53 @@ These 3 lines are equivalent, obviously.
 
 Now, calling `render()` would return the concatenated results of the linked boxes.
 
-> Note that data is __not__ shared between chained boxes by default. Each box still has its own data. (See [Shared data](#shared-data))
+Note that data is __not__ shared between chained boxes by default. Each box still has its own data. (See [Shared data](#shared-data))
+
+### Nesting
+
+You can nest boxes by simply assigning them as data to another box.
+
+Let's say you have some template called `layout.php` that describes the page layout like this:
+
+```php
+<html>
+<head></head>
+<body>
+<header><?= $header ?></header>
+<article><?= $article ?></article>
+<footer><?= $footer ?></footer>
+</body>
+</html>
+```
+
+Now, you can just assign a box to each part as follows:
+
+```php
+$layout = $endobox('layout'); // create layout box
+
+$header = $endobox('header');
+$article = $endobox('article');
+$footer = $endobox('footer');
+
+// assign boxes like data
+$layout->header = $header;
+$layout->article = $article;
+$layout->footer = $footer;
+
+echo $layout->render(); // render whole page
+```
+
+Nothing new, really.
+
+...And as a one-liner:
+
+```php
+echo $endobox('layout')->render([ 'header' => $endobox('header'), 'article' => $endobox('article'), 'footer' => $endobox('footer') ]);
+```
 
 ### Markdown
 
-`template.md.php`
+Let's call this `template.md.php`:
 
 ```php
 # Lorem ipsum
@@ -129,7 +187,7 @@ Now, calling `render()` would return the concatenated results of the linked boxe
 
 This template will first print the content of `$foo` then it is parsed as Markdown.
 
-> The same goes for Markdown _Extra_.
+The same goes for Markdown _Extra_.
 
 ### Folders
 
