@@ -7,7 +7,7 @@ A really simple template engine that uses native PHP syntax.
 ## Highlights
 
 - Simple, concise API
-- Native PHP7 syntax
+- Native PHP template syntax
 - [Shared data](#shared-data) across templates
 - [Nesting](#nesting) and [Chaining](#chaining)
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
