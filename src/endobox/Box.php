@@ -79,6 +79,42 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
+     * Set data using property syntax.
+     */
+    public function __set(string $key, $value)
+    {
+        $this->assign([ $key => $value ]);
+    }
+
+    /**
+     * Get data using property syntax.
+     */
+    public function __get(string $key)
+    {
+        if (!isset($this->data[$key])) {
+            throw new \UnderflowException(\sprintf('Key "%s" does not exist.', $key));
+        }
+
+        return $this->data[$key];
+    }
+
+    /**
+     * Check if a key is set using property syntax.
+     */
+    public function __isset(string $key) : bool
+    {
+        return isset($this->data[$key]);
+    }
+
+    /**
+     * Unset a key using property syntax.
+     */
+    public function __unset(string $key)
+    {
+        unset($this->data[$key]);
+    }
+
+    /**
      * Render the box and everything attached to it then return the result.
      */
     public function render() : string
@@ -190,7 +226,6 @@ class Box implements Renderable, \IteratorAggregate
 
     /**
      * Assign some data to this Box.
-     * TODO make sure keys are valid var names
      */
     public function assign(array $data) : Box
     {

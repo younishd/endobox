@@ -206,4 +206,42 @@ class BoxTest extends TestCase
         );
     }
 
+    public function testPropertySyntaxSet()
+    {
+        $t = $this->endobox->make('foobar');
+
+        // property syntax: set
+        $t->foo = 'bar';
+
+        $this->assertSame("<p>bar</p>\n", $t->render());
+    }
+
+    public function testPropertySyntaxGet()
+    {
+        $t = $this->endobox->make('foobar')->assign([ 'foo' => 'bar' ]);
+
+        // property syntax: get
+        $this->assertSame($t->foo, 'bar');
+    }
+
+    public function testPropertySyntaxIsset()
+    {
+        $t = $this->endobox->make('foobar')->assign([ 'foo' => 'bar' ]);
+
+        // property syntax: isset
+        $this->assertTrue(isset($t->foo));
+        $this->assertFalse(isset($t->qux));
+    }
+
+    public function testPropertySyntaxUnset()
+    {
+        $t = $this->endobox->make('foobar')->assign([ 'foo' => 'bar' ]);
+
+        unset($t->foo);
+
+        // property syntax: isset
+        $this->assertFalse(isset($t->foo));
+        $this->assertFalse(isset($t->qux));
+    }
+
 }
