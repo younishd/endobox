@@ -244,4 +244,10 @@ class BoxTest extends TestCase
         $this->assertFalse(isset($t->qux));
     }
 
+    public function testNesting()
+    {
+        $this->assertSame("<p><h1>Hi</h1>\n</p>\n",
+                $this->endobox->make('foobar')->render([ 'foo' => $this->endobox->make('hi') ]));
+    }
+
 }
