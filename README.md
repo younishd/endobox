@@ -235,6 +235,23 @@ $endobox->add_folder('another/path/to/templates');
 
 Add a template folder.
 
+### Cloning
+
+You can easily clone a box using the `clone` keyword.
+
+```php
+$sheep = $endobox('sheep');
+
+$cloned = clone $sheep;
+```
+
+The cloned box will have the same content and data as the original one.
+
+However, it is completely __isolated__:
+
+- Appended/prepended boxes are lost.
+- Entangled boxes are lost.
+
 ## License
 
 _endobox_ is open-sourced software licensed under the [MIT license](LICENSE).
