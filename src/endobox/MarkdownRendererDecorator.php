@@ -17,22 +17,20 @@ namespace endobox;
 class MarkdownRendererDecorator extends RendererDecorator
 {
 
-    private static $instance = null;
+    private $parsedown;
+
+    public function __construct(Renderer $renderer, \Parsedown $parsedown)
+    {
+        parent::__construct($renderer);
+        $this->parsedown = $parsedown;
+    }
 
     /**
-     * Render by passing the inherited result through the markdown parser.
+     * Render by passing the inherited result through Parsedown.
      */
     public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
-        return self::instance()->text(parent::render($input, $data, $shared));
-    }
-
-    private static function instance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new \Parsedown();
-        }
-        return self::$instance;
+        return $this->parsedown->text(parent::render($input, $data, $shared));
     }
 
 }

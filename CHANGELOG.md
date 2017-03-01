@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 ### Changed
+- Cleaner box factory using a DI container ([pimple](http://pimple.sensiolabs.org)) for the Parsedown libs
+- Get rid of copy-paste `MarkdownExtraRendererDecorator` class
 
 ## [2.3.1] - 2017-03-01
 ### Added

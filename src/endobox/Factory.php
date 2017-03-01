@@ -11,6 +11,8 @@
 
 namespace endobox;
 
+use \Pimple\Container;
+
 /**
  * A Box factory that decides how to render a template based on their file extension.
  */
@@ -19,12 +21,28 @@ class Factory
 
     private $paths = [];
 
+    private $container;
+
     /**
      * Construct a Factory that looks into the given path for template files.
      */
     public function __construct(string $path)
     {
         $this->add_folder($path);
+
+        $this->container = new Container();
+
+        $this->container['parsedown'] = function () {
+            return new \Parsedown();
+        };
+        $this->container['parsedown_extra'] = function () {
+            return new \ParsedownExtra();
+        };
+
+        // Notice how we are using the same NullRenderer instance everywhere, because it has no state.
+        $this->container['null_renderer'] = function () {
+            return new NullRenderer();
+        };
     }
 
     /**
@@ -41,7 +59,7 @@ class Factory
     public function make(string $template) : Box
     {
         foreach ($this->paths as &$path) {
-
+            // full path to template file without extension
             $file = \rtrim($path, '/') . '/' . \trim($template, '/');
 
             if (\file_exists($t = $file . '.php')) {
@@ -49,27 +67,28 @@ class Factory
             }
 
             if (\file_exists($t = $file . '.md.php')) {
-                return new Box(new Template($t),
-                    new MarkdownRendererDecorator(new EvalRendererDecorator(new NullRenderer())));
+                return new Box(new Template($t), new MarkdownRendererDecorator(new EvalRendererDecorator(
+                        new NullRenderer()), $this->container['parsedown']));
             }
 
             if (\file_exists($t = $file . '.mdx.php')) {
-                return new Box(new Template($t),
-                    new MarkdownExtraRendererDecorator(new EvalRendererDecorator(new NullRenderer())));
+                return new Box(new Template($t), new MarkdownRendererDecorator(new EvalRendererDecorator(
+                        new NullRenderer()), $this->container['parsedown_extra']));
             }
 
             if (\file_exists($t = $file . '.md')) {
-                return new Box(new Template($t), new MarkdownRendererDecorator(new NullRenderer()));
+                return new Box(new Template($t), new MarkdownRendererDecorator(
+                        new NullRenderer(), $this->container['parsedown']));
             }
 
             if (\file_exists($t = $file . '.mdx')) {
-                return new Box(new Template($t), new MarkdownExtraRendererDecorator(new NullRenderer()));
+                return new Box(new Template($t), new MarkdownRendererDecorator(
+                        new NullRenderer(), $this->container['parsedown_extra']));
             }
 
             if (\file_exists($t = $file . '.html')) {
                 return new Box(new Template($t), new NullRenderer());
             }
-
         }
 
         throw new \RuntimeException(\sprintf('Template "%s" not found.', $template));
