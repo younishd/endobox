@@ -34,7 +34,8 @@ class EvalRendererDecorator extends RendererDecorator
         // The closure extracts the data and shared data arrays as variables.
         //
         // At the end of the day we want to unset any helper variable that we have used inside the closure.
-        // For the data and shared array, that's straightforward: we just call unset and we're good.
+        // For the foreach counter variable, the data, and shared array, that's straightforward:
+        // we just call unset and we're good.
         // The trickier one is the variable containing the code. We can't unset it just yet, because we still need
         // it for the eval()ing. The trick was to concat the unset code with the actual template code and pass it
         // to eval().
@@ -51,10 +52,11 @@ class EvalRendererDecorator extends RendererDecorator
                     \extract($__, EXTR_SKIP | EXTR_REFS);
                 }
                 if ($___ !== null) {
-                    foreach ($___ as &$x) {
-                        \extract($x, EXTR_SKIP | EXTR_REFS);
+                    foreach ($___ as &$____) {
+                        \extract($____, EXTR_SKIP | EXTR_REFS);
                     }
                 }
+                unset($____);
                 unset($___);
                 unset($__);
                 \ob_start();
