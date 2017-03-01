@@ -172,12 +172,7 @@ class Box implements Renderable, \IteratorAggregate
      */
     public function prepend(Box $b) : Box
     {
-        if ($this->prev === null && $b->next === null) {
-            $this->prev = $b;
-            $b->next = $this;
-        } else {
-            $this->head()->prepend($b->tail());
-        }
+        $b->append($this);
         return $this;
     }
 
