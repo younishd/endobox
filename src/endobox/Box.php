@@ -115,6 +115,22 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
+     * Clone a box.
+     */
+    public function __clone()
+    {
+        $this->interior = clone $this->interior;
+        $this->renderer = clone $this->renderer;
+
+        // detach the cloned box from any appended or entangled boxes
+        $this->rank = 0;
+        $this->parent = $this;
+        $this->child = $this;
+        $this->next = null;
+        $this->prev = null;
+    }
+
+    /**
      * Render the box and everything attached to it then return the result.
      */
     public function render() : string

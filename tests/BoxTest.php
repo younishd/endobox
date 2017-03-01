@@ -140,11 +140,15 @@ class BoxTest extends TestCase
 
     public function testVariableNames()
     {
-        // these variables $_ $__ $___ are not available because they are internally needed for rendering
-        // expected behavior: they cannot be assigned and are not set inside the templates
-        $result = $this->endobox->make('vars')->render([ '_' => 1, '__' => 2, '___' => 3 ]);
-        // all three isset checks return false
-        $this->assertSame("FALSEFALSEFALSE", $result);
+        // These variables $_, $__, $___, $____ are not available, because they are internally needed for rendering.
+        // Expected behavior: they cannot be assigned and are not set inside the templates.
+        $result = $this->endobox->make('vars')->render([
+            '_' => 1,
+            '__' => 2,
+            '___' => 3,
+            '____' => 4
+        ]);
+        $this->assertSame("FALSEFALSEFALSEFALSE", $result);
     }
 
     public function testMarkdown()
@@ -315,6 +319,30 @@ class BoxTest extends TestCase
 
         // no such key
         $x = $b->qux;
+    }
+
+    public function testClone()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $xyzzy = $e('xyzzy');
+        $a = $e('a');
+        $b = $e('b');
+        $c = $e('c');
+
+        $a($xyzzy)($b);
+        $xyzzy->entangle($c);
+
+        // The point is that the data that gets directly assigned to the box will be kept.
+        // However, any shared data will be lost.
+        $xyzzy->assign(['x' => 'foo']);
+        $c->assign(['y' => 'bar']);
+
+        $cloneofxyzzy = clone $xyzzy;
+
+        $this->assertSame("A\nx = foo y = barB\n", $xyzzy->render());
+        $this->assertSame("x = foo y = NOT SET", $cloneofxyzzy->render());
     }
 
 }
