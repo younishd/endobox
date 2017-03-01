@@ -1,7 +1,7 @@
 {
     "name": "younishd/endobox",
     "description": "Awww this PHP template engine is so cute.",
-    "version": "2.3.1",
+    "version": "2.3.2-dev",
     "type": "library",
     "keywords": ["template-engine", "php-template", "php", "parsedown", "markdown", "php7", "cute", "template", "closure", "box"],
     "homepage": "https://github.com/younishd/endobox",
@@ -18,7 +18,8 @@
     {
         "php": "^7.0",
         "erusev/parsedown": "^1.6",
-        "erusev/parsedown-extra": "^0.7.1"
+        "erusev/parsedown-extra": "^0.7.1",
+        "pimple/pimple": "~3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.4"
