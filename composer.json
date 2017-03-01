@@ -3,7 +3,7 @@
     "description": "Awww this PHP template engine is so cute.",
     "version": "2.3.1",
     "type": "library",
-    "keywords": ["template", "engine", "box", "markdown"],
+    "keywords": ["template-engine", "php-template", "php", "parsedown", "markdown", "php7", "cute", "template", "closure", "box"],
     "homepage": "https://github.com/younishd/endobox",
     "license": "MIT",
     "authors":
