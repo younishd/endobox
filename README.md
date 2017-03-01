@@ -3,6 +3,7 @@
 Awww this PHP template engine is so cute.
 
 [![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=v2)](https://travis-ci.org/younishd/endobox)
+[![Code Climate](https://codeclimate.com/github/younishd/endobox/badges/gpa.svg)](https://codeclimate.com/github/younishd/endobox)
 
 ## Highlights
 
