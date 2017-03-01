@@ -67,7 +67,7 @@ The array keys will appear as _simple variables_ inside the templates.
 _Make sure to use valid PHP variable names as keys when assigning data!_
 
 ```php
-echo $box->render([ 'qux' => 'xyz' ]); // this is also possible
+echo $box->render([ 'foo' => 'bar' ]); // this is also possible
 ```
 
 You can assign data directly via `render()` by passing an optional argument.
@@ -78,7 +78,6 @@ Alternatively, you can assign data using object property syntax.
 
 ```php
 $box->foo = 'bar';
-$box->qux = 'xyz';
 ```
 
 It's really the same as using arrays.
