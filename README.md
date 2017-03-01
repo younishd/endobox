@@ -1,13 +1,13 @@
 # endobox
 
-A really simple template engine that uses native PHP syntax.
+Awww this PHP template engine is so cute.
 
 [![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=v2)](https://travis-ci.org/younishd/endobox)
 
 ## Highlights
 
 - Simple, concise API
-- Native PHP syntax
+- Native PHP 7 syntax
 - [Shared data](#shared-data) across templates
 - [Nesting](#nesting) and [Chaining](#chaining)
 - [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
