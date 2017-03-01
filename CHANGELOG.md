@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 ### Changed
+
+## [2.3.1] - 2017-03-01
+### Added
+### Changed
 - Throw `RuntimeException` if cycle (endless loop) is detected at render time
+- More unit tests
 - Improved README with nice figures
 
 ## [2.3.0] - 2017-02-26
