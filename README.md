@@ -119,6 +119,30 @@ Data is accessible via simple variables where the variable names correspond to t
 
 Yes, [shared data](#shared-data) will also be visible as variables.
 
+### Chaining
+
+Linking some boxes together using `append()` and `prepend()`.
+
+![](doc/endobox_figure_01.png)
+
+```php
+$first->append($second)->append($third);
+```
+```php
+$first($second)($third); // short for append
+```
+```php
+$third->prepend($second)->prepend($first);
+```
+
+These 3 lines are equivalent, obviously.
+
+Now, calling `render()` would return the concatenated results of the linked boxes.
+
+![](doc/endobox_figure_02.png)
+
+Note that data is __not__ shared between chained boxes by default. Each box still has its own data. (See [Shared data](#shared-data))
+
 ### Shared data
 
 The way to share data across templates is called __entanglement__. Entangled boxes will share their data.
@@ -147,30 +171,6 @@ $first->foo = 'bar'; // also visible to third
 ```
 
 Notice that `first` does __not__ share data with `second` (neither does `third` with `fourth`) even though they are chained.
-
-### Chaining
-
-Linking some boxes together using `append()` and `prepend()`.
-
-![](doc/endobox_figure_01.png)
-
-```php
-$first->append($second)->append($third);
-```
-```php
-$first($second)($third); // short for append
-```
-```php
-$third->prepend($second)->prepend($first);
-```
-
-These 3 lines are equivalent, obviously.
-
-Now, calling `render()` would return the concatenated results of the linked boxes.
-
-![](doc/endobox_figure_02.png)
-
-Note that data is __not__ shared between chained boxes by default. Each box still has its own data. (See [Shared data](#shared-data))
 
 ### Nesting
 
