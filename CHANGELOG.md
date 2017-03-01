@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Boxes can now be cloned (using `clone`)
 ### Changed
+- Bugfix: Counter variable from foreach loop (called `$x`) was visible inside templates
 
 ## [2.3.2] - 2017-03-01
 ### Added
