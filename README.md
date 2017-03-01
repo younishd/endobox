@@ -121,17 +121,38 @@ Yes, [shared data](#shared-data) will also be visible as variables.
 
 ### Shared data
 
-The simplest way to share data across templates is using the `entangle()` method.
+The way to share data across templates is called __entanglement__. Entangled boxes will share their data.
+
+Just call the `entangle()` method and give it any other box as argument.
+
+Examples are best. Let's say we have this setup:
 
 ```php
-$box->entangle($another);
+$first($second);
+$third($fourth);
 ```
 
-Entangled boxes will share their data.
+Now, say we'd like to share the data between `first` and `third`.
+
+```php
+$first->entangle($third);
+```
+
+![](doc/endobox_figure_03.png)
+
+That's all! Any data that gets assigned to `first` will automagically be visible to `third` as well (and vice-versa).
+
+```php
+$first->foo = 'bar'; // also visible to third
+```
+
+Notice that `first` does __not__ share data with `second` (neither does `third` with `fourth`) even though they are chained.
 
 ### Chaining
 
 Linking some boxes together using `append()` and `prepend()`.
+
+![](doc/endobox_figure_01.png)
 
 ```php
 $first->append($second)->append($third);
@@ -146,6 +167,8 @@ $third->prepend($second)->prepend($first);
 These 3 lines are equivalent, obviously.
 
 Now, calling `render()` would return the concatenated results of the linked boxes.
+
+![](doc/endobox_figure_02.png)
 
 Note that data is __not__ shared between chained boxes by default. Each box still has its own data. (See [Shared data](#shared-data))
 
