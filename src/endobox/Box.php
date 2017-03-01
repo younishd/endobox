@@ -126,8 +126,8 @@ class Box implements Renderable, \IteratorAggregate
 
         $result = '';
         $shared = [];
-        foreach ($this as $box) {
 
+        foreach ($this as $box) {
             // if box has no shared data
             if ($box->child === $box) {
                 // render, concat, and continue
@@ -148,8 +148,8 @@ class Box implements Renderable, \IteratorAggregate
 
             // render with shared data and concat results
             $result .= $box->renderer->render($box->interior, $box->data, $shared[$key]);
-
         }
+
         return $result;
     }
 
@@ -208,18 +208,6 @@ class Box implements Renderable, \IteratorAggregate
     }
 
     /**
-     * Find with path compression.
-     */
-    private function find() : Box
-    {
-        // path compression
-        if ($this->parent !== $this) {
-            $this->parent = $this->parent.find();
-        }
-        return $this->parent;
-    }
-
-    /**
      * Assign some data to this Box.
      */
     public function assign(array $data) : Box
@@ -265,7 +253,9 @@ class Box implements Renderable, \IteratorAggregate
      */
     public function head() : Box
     {
-        for ($b = $this; $b->prev !== null; $b = $b->prev);
+        // keep track of visited boxes for cycle detection
+        $touched = [];
+        for ($b = $this; $b->prev !== null; $b = $b->visit($touched)->prev);
         return $b;
     }
 
@@ -274,7 +264,9 @@ class Box implements Renderable, \IteratorAggregate
      */
     public function tail() : Box
     {
-        for ($b = $this; $b->next !== null; $b = $b->next);
+        // keep track of visited boxes for cycle detection
+        $touched = [];
+        for ($b = $this; $b->next !== null; $b = $b->visit($touched)->next);
         return $b;
     }
 
@@ -284,6 +276,32 @@ class Box implements Renderable, \IteratorAggregate
     public function getIterator()
     {
         return new BoxIterator($this);
+    }
+
+    /**
+     * Find with path compression.
+     */
+    private function find() : Box
+    {
+        // path compression
+        if ($this->parent !== $this) {
+            $this->parent = $this->parent.find();
+        }
+        return $this->parent;
+    }
+
+    /**
+     * Mark this box as visited or throw a RuntimeException if we have detected a cycle in the graph.
+     */
+    private function visit(&$touched)
+    {
+        $key = \spl_object_hash($this);
+        if (isset($touched[$key])) {
+            throw new \RuntimeException("Cycle (endless loop) detected in box graph.");
+        }
+        $touched[$key] = true;
+        // just for convenience
+        return $this;
     }
 
 }

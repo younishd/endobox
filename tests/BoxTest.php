@@ -259,4 +259,62 @@ class BoxTest extends TestCase
         $this->assertSame("<p>42 is the answer.</p>\n", $t->render());
     }
 
+    public function testAppendConsistency()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $a = $e('a');
+        $b = $e('b');
+        $c = $e('c');
+        $d = $e('d');
+
+        $a($b)($c);
+
+        $this->assertSame("A\nB\nC\n", $a->render());
+        $this->assertSame("A\nB\nC\n", $b->render());
+        $this->assertSame("A\nB\nC\n", $c->render());
+        $this->assertSame("D\n", $d->render());
+
+        $a($d);
+
+        $this->assertSame("A\nB\nC\nD\n", $a->render());
+        $this->assertSame("A\nB\nC\nD\n", $b->render());
+        $this->assertSame("A\nB\nC\nD\n", $c->render());
+        $this->assertSame("A\nB\nC\nD\n", $d->render());
+    }
+
+    public function testEndlessLoopDetection()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $a = $e('a');
+        $b = $e('b');
+        $c = $e('c');
+        $d = $e('d');
+
+        // obviously creates endless loop
+        $a($b)($c)($d)($a);
+
+        $this->expectException(\RuntimeException::class);
+
+        // now render should throw the exception
+        $a->render();
+    }
+
+    public function testUnderflowExceptionOnGetInvalidKey()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $b = $e('b');
+        $b->foo = 'bar';
+
+        $this->expectException(\UnderflowException::class);
+
+        // no such key
+        $x = $b->qux;
+    }
+
 }
