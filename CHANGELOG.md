@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.4.0] - 2017-03-02
 ### Added
 - Boxes can now be cloned (using `clone`)
+
 ### Changed
 - Bugfix: Counter variable from foreach loop (called `$x`) was visible inside templates
 
@@ -30,8 +31,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.3.0] - 2017-02-26
 ### Added
 Feature: Support assigning closures as data
-### Changed
 
+### Changed
 ## [2.2.0] - 2017-02-26
 ### Added
 - Feature: Set data via object properties
