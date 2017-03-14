@@ -9,11 +9,10 @@ Awww this PHP template engine is so cute.
 
 - Simple, concise API
 - Native PHP 7 syntax
-- [Shared data](#shared-data) across templates
-- [Nesting](#nesting) and [Chaining](#chaining)
-- [Markdown](https://github.com/erusev/parsedown "using Parsedown") and
-[Markdown Extra](https://github.com/erusev/parsedown-extra "using Parsedown Extra") support
-- Assign [Closures](#closures) just like data
+- [Shared data](https://github.com/younishd/endobox/wiki/Shared-Data) across templates
+- [Chaining](https://github.com/younishd/endobox/wiki/Chaining-and-Nesting#chaining) and [Nesting](https://github.com/younishd/endobox/wiki/Chaining-and-Nesting#nesting)
+- [Markdown](https://github.com/younishd/endobox/wiki/Template-Types) support
+- Assign [Closures](https://github.com/younishd/endobox/wiki/Assign-Data#assign-closures) just like data
 
 ## Install
 
@@ -38,6 +37,10 @@ The template `hello.php` could look like this:
 ```
 
 Note that `<?=` is syntactic sugar for `<?php echo`.
+
+## Documentation
+
+See the [__wiki__](https://github.com/younishd/endobox/wiki).
 
 ## License
 
