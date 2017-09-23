@@ -10,7 +10,7 @@
  */
 
 use \PHPUnit\Framework\TestCase;
-use \endobox\Factory;
+use \endobox\Endobox;
 
 class BoxTest extends TestCase
 {
@@ -18,7 +18,7 @@ class BoxTest extends TestCase
 
     protected function setUp()
     {
-        $this->endobox = new Factory(__DIR__ . '/resources');
+        $this->endobox = Endobox::create(__DIR__ . '/resources');
     }
 
     public function testSimpleStaticRender()

@@ -6,9 +6,9 @@ php:
     - nightly
     - hhvm
 
-before_script: composer install --no-dev --ignore-platform-reqs
+before_script: composer install --ignore-platform-reqs
 
-script: phpunit --bootstrap vendor/autoload.php tests
+script: ./test.sh
 
 matrix:
     fast-finish: true

@@ -23,7 +23,7 @@ composer require younishd/endobox
 ## Hello world
 
 ```php
-$endobox = new endobox\Factory('path/to/templates');
+$endobox = endobox\Endobox::create('path/to/templates');
 
 $box = $endobox('hello'); // omit extension
 
