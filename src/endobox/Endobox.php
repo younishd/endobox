@@ -22,7 +22,7 @@ abstract class Endobox
     /**
      * Create and return a Factory that looks into the given path for template files.
      */
-    public function create(string $path)
+    public static function create(string $path)
     {
         return new Factory($path, new Container());
     }

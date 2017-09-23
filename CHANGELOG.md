@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 ### Changed
 
+## [3.0.1] - 2017-09-23
+### Added
+### Changed
+- Bugfix: `Endobox::create` should be static
+
 ## [3.0.0] - 2017-09-23
 ### Added
 - `Endobox` bootstrap class

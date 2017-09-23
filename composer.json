@@ -1,7 +1,7 @@
 {
     "name": "younishd/endobox",
     "description": "Awww this PHP template engine is so cute.",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "type": "library",
     "keywords": ["template-engine", "php-template", "php", "parsedown", "markdown", "php7", "cute", "simple", "template", "closure", "box"],
     "homepage": "https://github.com/younishd/endobox",
