@@ -22,8 +22,6 @@ composer require younishd/endobox
 
 ## Getting started
 
-Let's make a hello world example!
-
 ```php
 $factory = endobox\Endobox::create('path/to/templates');
 
@@ -40,11 +38,14 @@ The template `hello.php` could look like this:
 
 Note that `<?=` is syntactic sugar for `<?php echo`.
 
-This example would output:
+The output would be:
 
 ```html
 <h1>Hello world</h1>
 ```
+
+This example can be found in `demo/`.
+
 
 ## Documentation
 
