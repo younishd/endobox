@@ -1,6 +1,4 @@
-# endobox
-
-A cute PHP template engine.
+![endobox](endobox.png "endobox")
 
 [![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=v2)](https://travis-ci.org/younishd/endobox)
 [![Code Climate](https://codeclimate.com/github/younishd/endobox/badges/gpa.svg)](https://codeclimate.com/github/younishd/endobox)
@@ -14,20 +12,24 @@ A cute PHP template engine.
 - [Markdown](https://github.com/younishd/endobox/wiki/Template-Types) support
 - Assign [Closures](https://github.com/younishd/endobox/wiki/Assign-Data#assign-closures) just like data
 
-## Install
+## Installation
+
+Using [composer](https://getcomposer.org):
 
 ```bash
 composer require younishd/endobox
 ```
 
-## Hello world
+## Getting started
+
+Let's make a hello world example!
 
 ```php
-$endobox = endobox\Endobox::create('path/to/templates');
+$factory = endobox\Endobox::create('path/to/templates');
 
-$box = $endobox('hello'); // omit extension
+$box = $factory('hello'); // omit extension
 
-echo $box->render([ 'subject' => 'world' ]); // assign data directly via render
+echo $box->render( ['subject' => 'world'] ); // assign data directly via render
 ```
 
 The template `hello.php` could look like this:
@@ -38,9 +40,15 @@ The template `hello.php` could look like this:
 
 Note that `<?=` is syntactic sugar for `<?php echo`.
 
+This example would output:
+
+```html
+<h1>Hello world</h1>
+```
+
 ## Documentation
 
-See the [__wiki__](https://github.com/younishd/endobox/wiki).
+Check out the [__wiki__](https://github.com/younishd/endobox/wiki).
 
 ## License
 
