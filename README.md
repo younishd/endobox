@@ -27,7 +27,7 @@ $factory = endobox\Endobox::create('path/to/templates');
 
 $box = $factory('hello'); // omit extension
 
-echo $box->render( ['subject' => 'world'] ); // assign data directly via render
+echo $box->render([ 'subject' => 'world' ]); // assign data directly via render
 ```
 
 The template `hello.php` could look like this:
