@@ -137,7 +137,9 @@ class Box implements Renderable, \IteratorAggregate
     {
         // assign data if any
         if (\func_num_args() > 0) {
-            $this->assign(\func_get_args()[0]);
+            // php 7.2.0 is crazy
+            $args = \func_get_args();
+            $this->assign($args[0]);
         }
 
         $result = '';
