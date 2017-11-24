@@ -11,6 +11,7 @@
 - [Chaining](https://github.com/younishd/endobox/wiki/Chaining-and-Nesting#chaining) and [Nesting](https://github.com/younishd/endobox/wiki/Chaining-and-Nesting#nesting)
 - [Markdown](https://github.com/younishd/endobox/wiki/Template-Types) support
 - Assign [Closures](https://github.com/younishd/endobox/wiki/Assign-Data#assign-closures) just like data
+- [DI friendly](http://blog.ploeh.dk/2014/05/19/di-friendly-library)
 
 ## Installation
 
