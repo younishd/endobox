@@ -1,6 +1,6 @@
 {
     "name": "younishd/endobox",
-    "description": "Awww this PHP template engine is so cute.",
+    "description": "A clean PHP template engine.",
     "version": "3.0.1",
     "type": "library",
     "keywords": ["template-engine", "php-template", "php", "parsedown", "markdown", "php7", "cute", "simple", "template", "closure", "box"],
@@ -11,21 +11,23 @@
         {
             "name": "YouniS Bensalah",
             "email": "younis.bensalah@gmail.com",
-            "homepage": "http://younishd.fr"
+            "homepage": "https://younishd.fr"
         }
     ],
     "require":
     {
         "php": "^7.0",
-        "erusev/parsedown": "^1.6",
-        "erusev/parsedown-extra": "^0.7.1",
-        "pimple/pimple": "~3.0"
+        "erusev/parsedown": "^1.6"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.3"
+        "phpunit/phpunit": "^6.4"
     },
     "autoload":
     {
         "psr-4": {"endobox\\": "src/endobox/"}
+    },
+    "scripts":
+    {
+        "test": "phpunit --bootstrap vendor/autoload.php tests"
     }
 }
