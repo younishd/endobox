@@ -23,14 +23,14 @@ class BoxTest extends TestCase
 
     public function testSimpleStaticRender()
     {
-        $box = $this->endobox->make('hi');
+        $box = $this->endobox->create('hi');
         $result = $box->render();
         $this->assertSame("<h1>Hi</h1>\n", $result);
     }
 
     public function testSimpleDynamicRender()
     {
-        $box = $this->endobox->make('hello');
+        $box = $this->endobox->create('hello');
         $box->assign([ 'subject' => 'world' ]);
         $result = $box->render();
         $this->assertSame("<h1>Hello world</h1>\n", $result);
@@ -38,44 +38,44 @@ class BoxTest extends TestCase
 
     public function testSimpleAppend()
     {
-        $box = $this->endobox->make('first')->append($this->endobox->make('second'));
+        $box = $this->endobox->create('first')->append($this->endobox->create('second'));
         $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n", $result);
     }
 
     public function testSimplePrepend()
     {
-        $box = $this->endobox->make('first')->prepend($this->endobox->make('second'));
+        $box = $this->endobox->create('first')->prepend($this->endobox->create('second'));
         $result = $box->render();
         $this->assertSame("<p>Second</p>\n<p>First</p>\n", $result);
     }
 
     public function testChainedAppend()
     {
-        $box = $this->endobox->make('first')
-            ->append($this->endobox->make('second'))
-            ->append($this->endobox->make('third'));
+        $box = $this->endobox->create('first')
+            ->append($this->endobox->create('second'))
+            ->append($this->endobox->create('third'));
         $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
     }
 
     public function testChainedPrepend()
     {
-        $box = $this->endobox->make('first')
-            ->prepend($this->endobox->make('second'))
-            ->prepend($this->endobox->make('third'));
+        $box = $this->endobox->create('first')
+            ->prepend($this->endobox->create('second'))
+            ->prepend($this->endobox->create('third'));
         $result = $box->render();
         $this->assertSame("<p>Third</p>\n<p>Second</p>\n<p>First</p>\n", $result);
     }
 
     public function testMixedAppendPrepend()
     {
-        $box = $this->endobox->make('first')
-            ->append($this->endobox->make('second'))
-            ->prepend($this->endobox->make('second'))
-            ->append($this->endobox->make('first'))
-            ->prepend($this->endobox->make('third'))
-            ->append($this->endobox->make('third'));
+        $box = $this->endobox->create('first')
+            ->append($this->endobox->create('second'))
+            ->prepend($this->endobox->create('second'))
+            ->append($this->endobox->create('first'))
+            ->prepend($this->endobox->create('third'))
+            ->append($this->endobox->create('third'));
         $result = $box->render();
         $this->assertSame(
             "<p>Third</p>\n<p>Second</p>\n<p>First</p>\n<p>Second</p>\n<p>First</p>\n<p>Third</p>\n",
@@ -84,7 +84,7 @@ class BoxTest extends TestCase
 
     public function testInvokeAppend()
     {
-        $box = $this->endobox->make('first')($this->endobox->make('second'))($this->endobox->make('third'));
+        $box = $this->endobox->create('first')($this->endobox->create('second'))($this->endobox->create('third'));
         $result = $box->render();
         $this->assertSame("<p>First</p>\n<p>Second</p>\n<p>Third</p>\n", $result);
     }
@@ -103,21 +103,21 @@ class BoxTest extends TestCase
     public function testAssignData()
     {
         // explicit via assign()
-        $box = $this->endobox->make('foobar');
+        $box = $this->endobox->create('foobar');
         $box->assign([ 'foo' => 'bar' ]);
         $result = $box->render();
         $this->assertSame("<p>bar</p>\n", $result);
 
         // implicit via render()
-        $box = $this->endobox->make('foobar');
+        $box = $this->endobox->create('foobar');
         $result = $box->render([ 'foo' => 'bar' ]);
         $this->assertSame("<p>bar</p>\n", $result);
     }
 
     public function testSimpleEntanglement()
     {
-        $a = $this->endobox->make('foobar');
-        $b = $this->endobox->make('hello');
+        $a = $this->endobox->create('foobar');
+        $b = $this->endobox->create('hello');
 
         $a->entangle($b);
 
@@ -133,7 +133,7 @@ class BoxTest extends TestCase
         // trailing slash should not cause a problem
         $this->endobox->add_folder(__DIR__ . '/resources/eddazk/');
 
-        $b = $this->endobox->make('empe');
+        $b = $this->endobox->create('empe');
         $result = $b->render();
         $this->assertSame("<p>tra8</p>\n", $result);
     }
@@ -142,7 +142,7 @@ class BoxTest extends TestCase
     {
         // These variables $_, $__, $___, $____ are not available, because they are internally needed for rendering.
         // Expected behavior: they cannot be assigned and are not set inside the templates.
-        $result = $this->endobox->make('vars')->render([
+        $result = $this->endobox->create('vars')->render([
             '_' => 1,
             '__' => 2,
             '___' => 3,
@@ -155,28 +155,14 @@ class BoxTest extends TestCase
     {
         $this->assertSame(
             "<p>The <em>quick</em> brown <strong>fox</strong> jumps over the lazy dog.</p>",
-            $this->endobox->make('markdown')->render());
-    }
-
-    public function testMarkdownExtra()
-    {
-        $this->assertSame(
-            "<div>\n<p>The <em>quick</em> brown <strong>fox</strong> jumps over the lazy dog.</p>\n</div>",
-            $this->endobox->make('markdownextra')->render());
+            $this->endobox->create('markdown')->render());
     }
 
     public function testMarkdownEval()
     {
         $this->assertSame(
             "<h1>Llewyn is the cat.</h1>",
-            $this->endobox->make('llewyn')->render([ 'subject' => 'Llewyn' ]));
-    }
-
-    public function testMarkdownExtraEval()
-    {
-        $this->assertSame(
-            "<div>\n<h1>Llewyn <em>has</em> the cat.</h1>\n</div>",
-            $this->endobox->make('jean')->render([ 'subject' => 'Llewyn' ]));
+            $this->endobox->create('llewyn')->render([ 'subject' => 'Llewyn' ]));
     }
 
     public function testMixItAllTogether()
@@ -205,14 +191,14 @@ class BoxTest extends TestCase
 
         // render
         $this->assertSame(
-            "<h1>Hello Jim</h1>\n<p>42</p>\n<p>ANOTHER</p>\n<p>lel</p>\n<div>\n<h1>Jean <em>has</em> the cat.</h1>\n</div>",
+            "<h1>Hello Jim</h1>\n<p>42</p>\n<p>ANOTHER</p>\n<p>lel</p>\n<h1>Jean <em>has</em> the cat.</h1>",
             $jean->render()
         );
     }
 
     public function testPropertySyntaxSet()
     {
-        $t = $this->endobox->make('foobar');
+        $t = $this->endobox->create('foobar');
 
         // property syntax: set
         $t->foo = 'bar';
@@ -222,7 +208,7 @@ class BoxTest extends TestCase
 
     public function testPropertySyntaxGet()
     {
-        $t = $this->endobox->make('foobar')->assign([ 'foo' => 'bar' ]);
+        $t = $this->endobox->create('foobar')->assign([ 'foo' => 'bar' ]);
 
         // property syntax: get
         $this->assertSame($t->foo, 'bar');
@@ -230,7 +216,7 @@ class BoxTest extends TestCase
 
     public function testPropertySyntaxIsset()
     {
-        $t = $this->endobox->make('foobar')->assign([ 'foo' => 'bar' ]);
+        $t = $this->endobox->create('foobar')->assign([ 'foo' => 'bar' ]);
 
         // property syntax: isset
         $this->assertTrue(isset($t->foo));
@@ -239,7 +225,7 @@ class BoxTest extends TestCase
 
     public function testPropertySyntaxUnset()
     {
-        $t = $this->endobox->make('foobar')->assign([ 'foo' => 'bar' ]);
+        $t = $this->endobox->create('foobar')->assign([ 'foo' => 'bar' ]);
 
         unset($t->foo);
 
@@ -251,12 +237,12 @@ class BoxTest extends TestCase
     public function testNesting()
     {
         $this->assertSame("<p><h1>Hi</h1>\n</p>\n",
-                $this->endobox->make('foobar')->render([ 'foo' => $this->endobox->make('hi') ]));
+                $this->endobox->create('foobar')->render([ 'foo' => $this->endobox->create('hi') ]));
     }
 
     public function testAssignClosure()
     {
-        $t = $this->endobox->make('foobar');
+        $t = $this->endobox->create('foobar');
 
         $t->assign([ 'foo' => function(){ return '42 is the answer.'; } ]);
 

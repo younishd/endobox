@@ -11,20 +11,18 @@
 
 namespace endobox;
 
-use \Pimple\Container;
-
 /**
- * Bootstrap code.
+ * Facade with a good default combination of appropriate dependencies.
  */
 abstract class Endobox
 {
 
     /**
-     * Create and return a Factory that looks into the given path for template files.
+     * Create and return a BoxFactory that looks into the given path for template files.
      */
     public static function create(string $path)
     {
-        return new Factory($path, new Container());
+        return new BoxFactory($path, new \Parsedown());
     }
 
 }

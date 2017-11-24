@@ -12,7 +12,7 @@
 namespace endobox;
 
 /**
- * This decorator adds a markdown functionality to a renderer.
+ * This decorator adds markdown functionality to a renderer using Parsedown.
  */
 class MarkdownRendererDecorator extends RendererDecorator
 {
