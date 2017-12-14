@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - `composer test` replacing `test.sh`
 ### Changed
+- Fix sneaky bug in union-find path compression
 - Make library (even more) DI-friendly: Get rid of container code and provide a Facade with a good default combination of appropriate dependencies (We learn something every day.)
 
 ## [3.0.1] - 2017-09-23

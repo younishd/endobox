@@ -303,7 +303,7 @@ class Box implements Renderable, \IteratorAggregate
     {
         // path compression
         if ($this->parent !== $this) {
-            $this->parent = $this->parent.find();
+            $this->parent = $this->parent->find();
         }
         return $this->parent;
     }

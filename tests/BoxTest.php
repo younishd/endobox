@@ -128,6 +128,20 @@ class BoxTest extends TestCase
         $this->assertSame("<p>bar</p>\n", $result);
     }
 
+    public function testNestedEntanglement()
+    {
+        $a = $this->endobox->create('a');
+        $b = $this->endobox->create('foobar');
+
+        $a->entangle($b);
+
+        $b->assign(['foo' => $a]);
+
+        $result = $b->render();
+
+        $this->assertSame("<p>A\n</p>\n", $result);
+    }
+
     public function testAddFolder()
     {
         // trailing slash should not cause a problem
