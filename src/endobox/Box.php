@@ -232,7 +232,7 @@ class Box implements Renderable, \IteratorAggregate
     {
         // Allow passing closures as data.
         // The trick is to wrap the closure in an anonymous class instance that takes the closure and calls it
-        // when it is invoked as a string.
+        // when it is invoked as a string or as a function.
         // We only support real closures (i.e., instance of Closure), not just any callable,
         // because there is no way to know if "time" is supposed to be data or a function name.
         foreach ($data as $k => &$v) {
@@ -241,6 +241,7 @@ class Box implements Renderable, \IteratorAggregate
                     private $closure;
                     public function __construct($c) { $this->closure = $c; }
                     public function __toString() { return \call_user_func($this->closure); }
+                    public function __invoke(...$args) { return \call_user_func_array($this->closure, $args); }
                 };
             }
         }

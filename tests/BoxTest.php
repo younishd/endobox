@@ -258,9 +258,18 @@ class BoxTest extends TestCase
     {
         $t = $this->endobox->create('foobar');
 
-        $t->assign([ 'foo' => function(){ return '42 is the answer.'; } ]);
+        $t->assign([ 'foo' => function () { return '42 is the answer.'; } ]);
 
         $this->assertSame("<p>42 is the answer.</p>\n", $t->render());
+    }
+
+    public function testAssignClosureWithArgs()
+    {
+        $t = $this->endobox->create('invoke');
+
+        $t->assign([ 'f' => function ($a, $b, $c) { return \sprintf('a=%s, b=%s, c=%s', $a, $b, $c); } ]);
+
+        $this->assertSame("invoking f (a=42, b=1337, c=c47f00d) as function\n", $t->render());
     }
 
     public function testAppendConsistency()
