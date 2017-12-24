@@ -16,6 +16,7 @@ namespace endobox;
  */
 class Template implements Renderable
 {
+    
     private $filename;
 
     public function __construct(string $filename)
@@ -31,6 +32,11 @@ class Template implements Renderable
     public function render() : string
     {
         return \file_get_contents($this->filename);
+    }
+
+    public function get_context() : string
+    {
+        return $this->filename;
     }
 
 }
