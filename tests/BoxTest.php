@@ -354,4 +354,19 @@ class BoxTest extends TestCase
         $this->assertSame("x = foo y = NOT SET", $cloneofxyzzy->render());
     }
 
+    public function testErrorHandling()
+    {
+        // alias
+        $e = $this->endobox;
+
+        // undefined variable
+        $hello = $e('hello');
+
+        // parse error
+        $echoecho = $e('echoecho');
+
+        $this->assertRegExp('/<h1>Hello <p>ErrorException/', $hello->render());
+        $this->assertRegExp('/<p>ParseError/', $echoecho->render());
+    }
+
 }

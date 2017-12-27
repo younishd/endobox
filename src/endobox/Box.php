@@ -171,6 +171,11 @@ class Box implements Renderable, \IteratorAggregate
         return $result;
     }
 
+    public function get_context() : string
+    {
+        return $this->interior->get_context();
+    }
+
     /**
      * Append a Box to the end of the linked list and return this instance.
      */

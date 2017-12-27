@@ -46,24 +46,43 @@ class EvalRendererDecorator extends RendererDecorator
         // The reason why we use a closure for this job is that we don't want to eval() the templates in the scope
         // of the render() method.
         $code = parent::render($input, $data, $shared);
-        if (\strpos($code, '<?') !== false) {
-            return (function (&$_, &$__, &$___) {
-                if ($__ !== null) {
-                    \extract($__, EXTR_SKIP | EXTR_REFS);
-                }
-                if ($___ !== null) {
-                    foreach ($___ as &$____) {
-                        \extract($____, EXTR_SKIP | EXTR_REFS);
+
+        $context = $input->get_context();
+
+        \set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
+            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
+
+        try {
+            if (\strpos($code, '<?') !== false) {
+                $code = (function (&$_, &$__, &$___) {
+                    if ($__ !== null) {
+                        \extract($__, EXTR_SKIP | EXTR_REFS);
                     }
-                }
-                unset($____);
-                unset($___);
-                unset($__);
-                \ob_start();
-                eval('unset($_)?>' . $_);
-                return \ob_get_clean();
-            })($code, $data, $shared);
+                    if ($___ !== null) {
+                        foreach ($___ as &$____) {
+                            \extract($____, EXTR_SKIP | EXTR_REFS);
+                        }
+                    }
+                    unset($____);
+                    unset($___);
+                    unset($__);
+                    \ob_start();
+                    eval('unset($_)?>' . $_);
+                    return \ob_get_clean();
+                })($code, $data, $shared);
+            }
+        } catch (\Throwable $e) {
+            $code = \sprintf('%s<p>%s <strong>"%s"</strong> in %s line <strong>%d</strong></p>',
+                    \ob_get_clean(),
+                    \get_class($e),
+                    $e->getMessage(),
+                    $context,
+                    $e->getLine());
         }
+
+        \restore_error_handler();
+
         return $code;
     }
 
