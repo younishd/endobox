@@ -1,9 +1,9 @@
 {
     "name": "younishd/endobox",
     "description": "A clean PHP template engine.",
-    "version": "3.0.1",
+    "version": "3.0.1-dev",
     "type": "library",
-    "keywords": ["template-engine", "php-template", "php", "parsedown", "markdown", "php7", "cute", "simple", "template", "closure", "box"],
+    "keywords": ["template", "engine", "php7", "markdown"],
     "homepage": "https://github.com/younishd/endobox",
     "license": "MIT",
     "authors":
