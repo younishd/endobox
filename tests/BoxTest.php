@@ -369,4 +369,14 @@ class BoxTest extends TestCase
         $this->assertRegExp('/<p>ParseError/', $echoecho->render());
     }
 
+    public function testStfuOperator()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $stfu = $e('stfu');
+
+        $this->assertSame("test\n", $stfu->render());
+    }
+
 }

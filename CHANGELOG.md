@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Assigned closures can now be called like a function and be given arguments. What a time we live in!
 - `composer test` replacing `test.sh`
 ### Changed
+- PHP template will now stfu when `@` operator is used
 - Fix sneaky bug in union-find path compression
 - Make library (even more) DI-friendly: Get rid of container code and provide a Facade with a good default combination of appropriate dependencies (We learn something every day.)
 

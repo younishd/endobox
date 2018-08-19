@@ -50,7 +50,9 @@ class EvalRendererDecorator extends RendererDecorator
         $context = $input->get_context();
 
         \set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
-            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+            if (\error_reporting() !== 0) {
+                throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+            }
         });
 
         try {
