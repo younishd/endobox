@@ -379,4 +379,16 @@ class BoxTest extends TestCase
         $this->assertSame("test\n", $stfu->render());
     }
 
+    public function testExplicitMarkdownWrapper()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $mark = $e('mark')->assign([
+            'foo' => "Hello, _world_!"
+        ]);
+
+        $this->assertSame("<p>Hello, <em>world</em>!\n", $mark->render());
+    }
+
 }
