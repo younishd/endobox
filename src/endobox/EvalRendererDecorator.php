@@ -47,7 +47,7 @@ class EvalRendererDecorator extends RendererDecorator
         // of the render() method.
         $code = parent::render($input, $data, $shared);
 
-        $context = $input->get_context();
+        $context = $input->getContext();
 
         \set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
             if (\error_reporting() !== 0) {

@@ -145,7 +145,7 @@ class BoxTest extends TestCase
     public function testAddFolder()
     {
         // trailing slash should not cause a problem
-        $this->endobox->add_folder(__DIR__ . '/resources/eddazk/');
+        $this->endobox->addFolder(__DIR__ . '/resources/eddazk/');
 
         $b = $this->endobox->create('empe');
         $result = $b->render();

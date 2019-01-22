@@ -171,9 +171,9 @@ class Box implements Renderable, \IteratorAggregate
         return $result;
     }
 
-    public function get_context() : string
+    public function getContext() : string
     {
-        return $this->interior->get_context();
+        return $this->interior->getContext();
     }
 
     /**

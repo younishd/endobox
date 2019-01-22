@@ -34,7 +34,7 @@ class Template implements Renderable
         return \file_get_contents($this->filename);
     }
 
-    public function get_context() : string
+    public function getContext() : string
     {
         return $this->filename;
     }

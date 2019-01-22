@@ -26,7 +26,7 @@ class BoxFactory
      */
     public function __construct(string $path, \Parsedown $parsedown)
     {
-        $this->add_folder($path);
+        $this->addFolder($path);
         $this->parsedown = $parsedown;
     }
 
@@ -72,7 +72,7 @@ class BoxFactory
     /**
      * Add another folder to the list of template paths.
      */
-    public function add_folder(string $path)
+    public function addFolder(string $path)
     {
         if (!\is_dir($path)) {
             throw new \RuntimeException(\sprintf('The path "%s" does not exist or is not a directory.', $path));

@@ -31,6 +31,6 @@ interface Renderable
     /**
      * Get some meta info about what this renderable object is and where it came from.
      */
-    public function get_context() : string;
+    public function getContext() : string;
 
 }
