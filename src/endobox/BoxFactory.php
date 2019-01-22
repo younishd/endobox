@@ -3,7 +3,7 @@
 /**
  * This file is part of endobox.
  *
- * (c) 2015-2017 YouniS Bensalah <younis.bensalah@gmail.com>
+ * (c) 2015-2019 YouniS Bensalah <younis.bensalah@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -26,7 +26,7 @@ class BoxFactory
      */
     public function __construct(string $path, \Parsedown $parsedown)
     {
-        $this->add_folder($path);
+        $this->addFolder($path);
         $this->parsedown = $parsedown;
     }
 
@@ -48,21 +48,47 @@ class BoxFactory
             $file = \rtrim($path, '/') . '/' . \trim($template, '/');
 
             if (\file_exists($t = $file . '.php')) {
-                return new Box(new Template($t), new EvalRendererDecorator(new NullRenderer()));
+                return (new Box(
+                        new Template($t),
+                        new EvalRendererDecorator(
+                            new NullRenderer())))
+                            ->assign([
+                                'markdown' => function($md) {
+                                    return new Box(
+                                        new Atom($md),
+                                        new MarkdownRendererDecorator(
+                                            new NullRenderer(), $this->parsedown));
+                                }
+                            ]);
             }
 
             if (\file_exists($t = $file . '.md.php')) {
-                return new Box(new Template($t), new MarkdownRendererDecorator(
-                        new EvalRendererDecorator(new NullRenderer()), $this->parsedown));
+                return (new Box(
+                        new Template($t),
+                        new MarkdownRendererDecorator(
+                            new EvalRendererDecorator(
+                                new NullRenderer()), $this->parsedown)))
+                                ->assign([
+                                    'markdown' => function($md) {
+                                        return new Box(
+                                            new Atom($md),
+                                            new MarkdownRendererDecorator(
+                                                new NullRenderer(), $this->parsedown));
+                                    }
+                                ]);
             }
 
             if (\file_exists($t = $file . '.md')) {
-                return new Box(new Template($t), new MarkdownRendererDecorator(
-                        new NullRenderer(), $this->parsedown));
+                return new Box(
+                        new Template($t),
+                        new MarkdownRendererDecorator(
+                            new NullRenderer(), $this->parsedown));
             }
 
             if (\file_exists($t = $file . '.html')) {
-                return new Box(new Template($t), new NullRenderer());
+                return new Box(
+                        new Template($t),
+                        new NullRenderer());
             }
         }
 
@@ -72,7 +98,7 @@ class BoxFactory
     /**
      * Add another folder to the list of template paths.
      */
-    public function add_folder(string $path)
+    public function addFolder(string $path)
     {
         if (!\is_dir($path)) {
             throw new \RuntimeException(\sprintf('The path "%s" does not exist or is not a directory.', $path));

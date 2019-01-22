@@ -3,7 +3,7 @@
 /**
  * This file is part of endobox.
  *
- * (c) 2015-2017 YouniS Bensalah <younis.bensalah@gmail.com>
+ * (c) 2015-2019 YouniS Bensalah <younis.bensalah@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -47,7 +47,7 @@ class EvalRendererDecorator extends RendererDecorator
         // of the render() method.
         $code = parent::render($input, $data, $shared);
 
-        $context = $input->get_context();
+        $context = $input->getContext();
 
         \set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
             if (\error_reporting() !== 0) {

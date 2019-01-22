@@ -3,7 +3,7 @@
 /**
  * This file is part of endobox.
  *
- * (c) 2015-2017 YouniS Bensalah <younis.bensalah@gmail.com>
+ * (c) 2015-2019 YouniS Bensalah <younis.bensalah@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -171,9 +171,9 @@ class Box implements Renderable, \IteratorAggregate
         return $result;
     }
 
-    public function get_context() : string
+    public function getContext() : string
     {
-        return $this->interior->get_context();
+        return $this->interior->getContext();
     }
 
     /**

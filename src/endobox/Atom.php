@@ -12,31 +12,31 @@
 namespace endobox;
 
 /**
- * Template wraps a plain text file as a renderable object.
+ * Atom is just a snippet of plain text.
  */
-class Template implements Renderable
+class Atom implements Renderable
 {
-    
-    private $filename;
 
-    public function __construct(string $filename)
+    private $text;
+
+    public function __construct(string $text)
     {
-        $this->filename = $filename;
+        $this->text = $text;
     }
 
     public function __toString() : string
     {
-        return $this->render();
+        return $this->text;
     }
 
     public function render() : string
     {
-        return \file_get_contents($this->filename);
+        return $this->text;
     }
 
     public function getContext() : string
     {
-        return $this->filename;
+        return "atom";
     }
 
 }

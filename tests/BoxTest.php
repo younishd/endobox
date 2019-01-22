@@ -3,7 +3,7 @@
 /**
  * This file is part of endobox.
  *
- * (c) 2015-2017 YouniS Bensalah <younis.bensalah@gmail.com>
+ * (c) 2015-2019 YouniS Bensalah <younis.bensalah@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -145,7 +145,7 @@ class BoxTest extends TestCase
     public function testAddFolder()
     {
         // trailing slash should not cause a problem
-        $this->endobox->add_folder(__DIR__ . '/resources/eddazk/');
+        $this->endobox->addFolder(__DIR__ . '/resources/eddazk/');
 
         $b = $this->endobox->create('empe');
         $result = $b->render();
@@ -377,6 +377,18 @@ class BoxTest extends TestCase
         $stfu = $e('stfu');
 
         $this->assertSame("test\n", $stfu->render());
+    }
+
+    public function testExplicitMarkdownWrapper()
+    {
+        // alias
+        $e = $this->endobox;
+
+        $mark = $e('mark')->assign([
+            'foo' => "Hello, _world_!"
+        ]);
+
+        $this->assertSame("<div><p>Hello, <em>world</em>!</p></div>\n", $mark->render());
     }
 
 }
