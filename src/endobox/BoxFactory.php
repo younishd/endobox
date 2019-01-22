@@ -48,21 +48,47 @@ class BoxFactory
             $file = \rtrim($path, '/') . '/' . \trim($template, '/');
 
             if (\file_exists($t = $file . '.php')) {
-                return new Box(new Template($t), new EvalRendererDecorator(new NullRenderer()));
+                return (new Box(
+                        new Template($t),
+                        new EvalRendererDecorator(
+                            new NullRenderer())))
+                            ->assign([
+                                'markdown' => function($md) {
+                                    return new Box(
+                                        new Atom($md),
+                                        new MarkdownRendererDecorator(
+                                            new NullRenderer(), $this->parsedown));
+                                }
+                            ]);
             }
 
             if (\file_exists($t = $file . '.md.php')) {
-                return new Box(new Template($t), new MarkdownRendererDecorator(
-                        new EvalRendererDecorator(new NullRenderer()), $this->parsedown));
+                return (new Box(
+                        new Template($t),
+                        new MarkdownRendererDecorator(
+                            new EvalRendererDecorator(
+                                new NullRenderer()), $this->parsedown)))
+                                ->assign([
+                                    'markdown' => function($md) {
+                                        return new Box(
+                                            new Atom($md),
+                                            new MarkdownRendererDecorator(
+                                                new NullRenderer(), $this->parsedown));
+                                    }
+                                ]);
             }
 
             if (\file_exists($t = $file . '.md')) {
-                return new Box(new Template($t), new MarkdownRendererDecorator(
-                        new NullRenderer(), $this->parsedown));
+                return new Box(
+                        new Template($t),
+                        new MarkdownRendererDecorator(
+                            new NullRenderer(), $this->parsedown));
             }
 
             if (\file_exists($t = $file . '.html')) {
-                return new Box(new Template($t), new NullRenderer());
+                return new Box(
+                        new Template($t),
+                        new NullRenderer());
             }
         }
 

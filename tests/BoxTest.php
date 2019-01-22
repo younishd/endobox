@@ -388,7 +388,7 @@ class BoxTest extends TestCase
             'foo' => "Hello, _world_!"
         ]);
 
-        $this->assertSame("<p>Hello, <em>world</em>!\n", $mark->render());
+        $this->assertSame("<div><p>Hello, <em>world</em>!</p></div>\n", $mark->render());
     }
 
 }

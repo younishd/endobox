@@ -1,1 +1,1 @@
-<p><?= markdown($foo) ?></p>
+<div><?= $markdown($foo) ?></div>
