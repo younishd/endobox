@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Render variable as `$markdown()`
 - Assigned closures can now be called like a function and be given arguments. What a time we live in!
 - `composer test` replacing `test.sh`
 ### Changed
