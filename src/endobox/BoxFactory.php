@@ -19,7 +19,7 @@ class BoxFactory
 
     private $paths = [];
 
-    private $parsedown_factory;
+    private $parsedown;
 
     /**
      * The factory will look into the given path for template files.
@@ -48,34 +48,22 @@ class BoxFactory
             $file = \rtrim($path, '/') . '/' . \trim($template, '/');
 
             if (\file_exists($t = $file . '.php')) {
-                return (new Box(
+                $box = new Box(
                         new Template($t),
                         new EvalRendererDecorator(
-                            new NullRenderer())))
-                            ->assign([
-                                'markdown' => function($md) {
-                                    return new Box(
-                                        new Atom($md),
-                                        new MarkdownRendererDecorator(
-                                            new NullRenderer(), $this->parsedown));
-                                }
-                            ]);
+                            new NullRenderer()));
+                $this->assignDefaults($box);
+                return $box;
             }
 
             if (\file_exists($t = $file . '.md.php')) {
-                return (new Box(
+                $box = new Box(
                         new Template($t),
                         new MarkdownRendererDecorator(
                             new EvalRendererDecorator(
-                                new NullRenderer()), $this->parsedown)))
-                                ->assign([
-                                    'markdown' => function($md) {
-                                        return new Box(
-                                            new Atom($md),
-                                            new MarkdownRendererDecorator(
-                                                new NullRenderer(), $this->parsedown));
-                                    }
-                                ]);
+                                new NullRenderer()), $this->parsedown));
+                $this->assignDefaults($box);
+                return $box;
             }
 
             if (\file_exists($t = $file . '.md')) {
@@ -104,6 +92,23 @@ class BoxFactory
             throw new \RuntimeException(\sprintf('The path "%s" does not exist or is not a directory.', $path));
         }
         $this->paths[] = $path;
+    }
+
+    private function assignDefaults(Box $box) : Box
+    {
+        return $box->assign([
+            'markdown' => function($md) {
+                return new Box(
+                    new Atom($md),
+                    new MarkdownRendererDecorator(
+                        new NullRenderer(), $this->parsedown));
+            },
+            'box' => function($t) use ($box) {
+                $b = $this->create($t);
+                $b->entangle($box);
+                return $b;
+            }
+        ]);
     }
 
 }
