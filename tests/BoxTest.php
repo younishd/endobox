@@ -297,23 +297,32 @@ class BoxTest extends TestCase
         $this->assertSame("A\nB\nC\nD\n", $d->render());
     }
 
-    public function testEndlessLoopDetection()
+    public function testCycleDetectionOnRender()
     {
-        // alias
-        $e = $this->endobox;
+        $a = $this->endobox->create('a');
+        $b = $this->endobox->create('b');
+        $c = $this->endobox->create('c');
+        $d = $this->endobox->create('d');
 
-        $a = $e('a');
-        $b = $e('b');
-        $c = $e('c');
-        $d = $e('d');
-
-        // obviously creates endless loop
+        // create a cycle
         $a($b)($c)($d)($a);
 
         $this->expectException(\RuntimeException::class);
 
-        // now render should throw the exception
         $a->render();
+    }
+
+    public function testCycleDetectionOnAppend()
+    {
+        $a = $this->endobox->create('a');
+        $b = $this->endobox->create('b');
+        $c = $this->endobox->create('c');
+        $d = $this->endobox->create('d');
+
+        $this->expectException(\RuntimeException::class);
+
+        // create a cycle
+        $a($b)($c)($d)($a)($b);
     }
 
     public function testUnderflowExceptionOnGetInvalidKey()
@@ -389,6 +398,28 @@ class BoxTest extends TestCase
         ]);
 
         $this->assertSame("<div><p>Hello, <em>world</em>!</p></div>\n", $mark->render());
+    }
+
+    public function testPartialTemplate()
+    {
+        $box = $this->endobox->create('partial');
+        $this->assertSame("<p><h1>Hello world</h1>\n</p>\n", $box->render());
+    }
+
+    public function testPartialTemplateForeach()
+    {
+        $box = $this->endobox->create('partial_foreach');
+        $box->assign([
+            'subjects' => ["foo", "bar", "qux"]
+        ]);
+        $this->assertSame("<ul>\n<li><h1>Hello foo</h1>\n</li>\n<li><h1>Hello bar</h1>\n</li>\n<li><h1>Hello qux</h1>\n</li>\n</ul>\n", $box->render());
+    }
+
+    public function testPartialTemplateSharedData()
+    {
+        $box = $this->endobox->create('partial_shared');
+        $box->assign(['subject' => 'world']);
+        $this->assertSame("<p><h1>Hello world</h1>\n</p>\n", $box->render());
     }
 
 }
