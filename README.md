@@ -1,17 +1,24 @@
 ![endobox](endobox.png "made with ♥")
 
-[![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=v2)](https://travis-ci.org/younishd/endobox)
+# ENDOBOX
+
+[![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=master)](https://travis-ci.org/younishd/endobox)
 [![Code Climate](https://codeclimate.com/github/younishd/endobox/badges/gpa.svg)](https://codeclimate.com/github/younishd/endobox)
+[![Latest Stable Version](https://poser.pugx.org/younishd/endobox/version)](https://packagist.org/packages/younishd/endobox)
+[![Total Downloads](https://poser.pugx.org/younishd/endobox/downloads)](https://packagist.org/packages/younishd/endobox)
+[![License](https://poser.pugx.org/younishd/endobox/license)](https://packagist.org/packages/younishd/endobox)
 
-## Highlights
+###### Native PHP syntax
 
-- Simple, concise API
-- Native PHP 7 syntax
-- [Shared data](https://github.com/younishd/endobox/wiki/Shared-Data) across templates
-- [Chaining](https://github.com/younishd/endobox/wiki/Chaining-and-Nesting#chaining) and [Nesting](https://github.com/younishd/endobox/wiki/Chaining-and-Nesting#nesting)
-- [Markdown](https://github.com/younishd/endobox/wiki/Template-Types) support
-- Assign [Closures](https://github.com/younishd/endobox/wiki/Assign-Data#assign-closures) just like data
-- [DI friendly](http://blog.ploeh.dk/2014/05/19/di-friendly-library)
+Write templates in vanilla PHP. No need to learn a new syntax.
+
+###### Markdown support
+
+A full-blown Markdown parser ([Parsedown](https://github.com/erusev/parsedown)) is built right in. Yes, it can be combined with PHP!
+
+###### Efficient API
+
+Do powerful things with just a handful of elementary methods.
 
 ## Installation
 
@@ -21,37 +28,12 @@ Using [composer](https://getcomposer.org):
 composer require younishd/endobox
 ```
 
-## Getting started
+## Get started
 
 ```php
-$factory = endobox\Endobox::create('path/to/templates');
-
-$box = $factory('hello'); // omit extension
-
-echo $box->render([ 'subject' => 'world' ]); // assign data directly via render
+foo();
 ```
-
-The template `hello.php` could look like this:
-
-```php
-<h1>Hello <?= $subject ?></h1>
-```
-
-Note that `<?=` is syntactic sugar for `<?php echo`.
-
-The output would be:
-
-```html
-<h1>Hello world</h1>
-```
-
-This example can be found in `demo/`.
-
-
-## Documentation
-
-Check out the [__wiki__](https://github.com/younishd/endobox/wiki).
 
 ## License
 
-_endobox_ is open-sourced software licensed under the [MIT license](LICENSE).
+_ENDOBOX_ is open-sourced software licensed under the [MIT license](LICENSE).
