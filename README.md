@@ -12,17 +12,21 @@
 
 Write templates in vanilla PHP. No need to learn a new syntax.
 
-###### Markdown support
+###### Markdown on-board
 
-A full-blown Markdown parser ([Parsedown](https://github.com/erusev/parsedown)) is built right in. Yes, it can be combined with PHP!
+A full-blown Markdown parser is built right in. Yes, it can be combined with PHP!
 
 ###### Efficient API
 
-Do powerful things with just a handful of elementary methods.
+Do powerful things with just a handful of elementary functions: _Less is more._
+
+## Prerequisites
+
+ENDOBOX needs at least __PHP 7.0.0__ to run.
 
 ## Installation
 
-Using [composer](https://getcomposer.org):
+The recommended way to install ENDOBOX is via [Composer](https://getcomposer.org):
 
 ```bash
 composer require younishd/endobox
@@ -32,6 +36,210 @@ composer require younishd/endobox
 
 ```php
 foo();
+```
+
+## File extensions
+
+ENDOBOX decides how to render a template based on the __file extension__.
+
+When you instantiate the template box however, the extension is omitted.
+
+```php
+$members = $endobox('members'); // no file extension
+```
+
+### PHP: `.php`
+
+PHP templates are processed by evaluating the code between the PHP tags (i.e., `<? … ?>`) and returning the result.
+
+
+###### `members.php`
+
+```php
+<h1>Members</h1>
+<ul>
+    <?php foreach ($users as $u): ?>
+        <li><?= $u->name ?></li>
+    <?php endforeach ?>
+</ul>
+```
+
+> __Protip:__ `<?=` is syntactic sugar for `<?php echo`.
+
+### Markdown: `.md`
+
+Markdown templates are processed by a Markdown parser ([Parsedown](https://github.com/erusev/parsedown)) which produces the corresponding HTML code. This can be used for static content.
+
+###### `members.md`
+
+```markdown
+# Members
+
+- Alice
+- Bob
+- Carol
+```
+
+### PHP+Markdown: `.md.php`
+
+As the name suggests, this template type combines both PHP and Markdown: The template gets evaluated as PHP first, then parsed as Markdown. Pretty neat.
+
+###### `members.md.php`
+
+```php
+# Members
+
+<?php foreach ($users as $u): ?>
+    - <?= $u->name ?>
+<?php endforeach ?>
+```
+
+### HTML: `.html`
+
+HTML templates are always printed as is. No further processing takes place.
+
+###### `members.html`
+
+```html
+<h1>Members</h1>
+<ul>
+    <li>Alice</li>
+    <li>Bob</li>
+    <li>Carol</li>
+</ul>
+```
+
+## Data
+
+Data is accessible inside a template as simple __variables__ (e.g., `$foo`) where the variable name corresponds to the assigned array key or property.
+
+```php
+<h1>Hello, <?= $username ?>!</h1>
+```
+
+### Assign data
+
+There are several ways to assign data to a template box:
+
+```php
+// via assign(…)
+$welcome->assign([ "username" => "eve" ]);
+
+// via object property
+$welcome->username = "eve";
+
+// via render(…)
+$welcome->render([ "username" => "eve" ]);
+```
+
+Notice that `assign()` and `render()` both receive an `array` as argument.
+
+### Shared data
+
+Usually, template boxes are isolated from each other. Data that's been assigned to one box, will not be visible from another.
+
+```php
+$welcome->username = "eve";          // not accessible to 'profile'
+$profile->email = "eve@example.com"; // not accessible to 'welcome'
+```
+
+If they should share their data however, you can __link__ them together:
+
+```php
+$welcome->link($profile);
+```
+
+Now, these template boxes are linked and they share the same data.
+
+###### `welcome.php`
+
+```php
+<h1>Hello, <?= $username ?>!</h1>
+<p>Your email address is: <code><?= $email ?></code></p>
+```
+
+###### `profile.php`
+
+```php
+<h1>Profile</h1>
+<ul>
+    <li>Username: <strong><?= $username ?></strong></li>
+    <li>Email: <strong><?= $email ?></strong></li>
+</ul>
+```
+
+Notice how `welcome.php` prints out `$email` which was initially assigned to `$profile` and `profile.php` echoes `$username` even though it was assigned to `$welcome`.
+
+## Chaining & Nesting
+
+Something that is pretty much always needed one way or another is a method of combining templates by either nesting them or gluing them together.
+
+### The _Developer_ Way
+
+### The _Template Designer_ Way
+
+
+
+A poor way to achieve that would be the following, somewhere inside a controller:
+
+```php
+$header = $header->render();
+$nav = $nav->render();
+$content = $content->render();
+$footer = $footer->render();
+
+return $header . $nav . $content . $footer;
+```
+
+Yuck. That's gonna be a lot of boilerplate copy-and-paste code.
+
+First of all:
+
+```php
+return $header($nav)($content)($footer);
+```
+
+Yet much cleaner would be to have a reusable layout template:
+
+###### `layout.php`
+
+```php
+<html>
+<head></head>
+<body>
+<header><?= $header ?></header>
+<nav><?= $nav ?></nav>
+<?= $content ?>
+<footer><?= $footer ?></footer>
+```
+
+Then…
+
+```php
+$layout->assign([
+    'header' => $header,
+    'nav' => $nav,
+    'content' => $content,
+    'footer' => $footer
+]);
+```
+
+Again, that's too much boilerplate.
+
+```php
+<html>
+<head></head>
+<body>
+<header><?= $box('header') ?></header>
+<nav><?= $box('nav') ?></nav>
+<?= $content ?>
+<footer><?= $box('footer') ?></footer>
+```
+
+Then…
+
+```php
+$layout->content = $content;
 ```
 
 ## License
