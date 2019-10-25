@@ -8,21 +8,11 @@
 [![Total Downloads](https://poser.pugx.org/younishd/endobox/downloads)](https://packagist.org/packages/younishd/endobox)
 [![License](https://poser.pugx.org/younishd/endobox/license)](https://packagist.org/packages/younishd/endobox)
 
-###### Native PHP syntax
+![endobox](code.png "made with ♥")
 
-Write templates in vanilla PHP. No need to learn a new syntax.
-
-###### Markdown on-board
-
-A full-blown Markdown parser is built right in. Yes, it can be combined with PHP!
-
-###### Efficient API
-
-Do powerful things with just a handful of elementary functions: _Less is more._
-
-## Prerequisites
-
-ENDOBOX needs at least __PHP 7.0.0__ to run.
+| Native PHP syntax | Markdown on-board | Efficient API |
+| :---: | :---: | :---: |
+| Write templates in vanilla PHP. No need to learn a new syntax. | A full-blown Markdown parser is built right in. Yes, it can be combined with PHP! | Do powerful things with just a handful of elementary methods. |
 
 ## Installation
 
@@ -34,11 +24,19 @@ composer require younishd/endobox
 
 ## Get started
 
+
+
 ```php
-foo();
+require_once '/path/to/vendor/autoload.php';
+
+$endobox = \endobox\Endobox::create('path/to/templates');
+
+echo $endobox('welcome')->render([ 'name' => "Alice" ]);
 ```
 
-## File extensions
+## Documentation
+
+### File extensions
 
 ENDOBOX decides how to render a template based on the __file extension__.
 
@@ -48,9 +46,9 @@ When you instantiate the template box however, the extension is omitted.
 $members = $endobox('members'); // no file extension
 ```
 
-### PHP: `.php`
+#### PHP: `.php`
 
-PHP templates are processed by evaluating the code between the PHP tags (i.e., `<? … ?>`) and returning the result.
+PHP templates are processed by evaluating the code between PHP tags (i.e., `<? … ?>`) and returning the result.
 
 
 ###### `members.php`
@@ -64,9 +62,9 @@ PHP templates are processed by evaluating the code between the PHP tags (i.e., `
 </ul>
 ```
 
-> __Protip:__ `<?=` is syntactic sugar for `<?php echo`.
+> :information_source: __Protip:__ The `<?=` is syntactic sugar for `<?php echo`.
 
-### Markdown: `.md`
+#### Markdown: `.md`
 
 Markdown templates are processed by a Markdown parser ([Parsedown](https://github.com/erusev/parsedown)) which produces the corresponding HTML code. This can be used for static content.
 
@@ -80,7 +78,7 @@ Markdown templates are processed by a Markdown parser ([Parsedown](https://githu
 - Carol
 ```
 
-### PHP+Markdown: `.md.php`
+#### PHP+Markdown: `.md.php`
 
 As the name suggests, this template type combines both PHP and Markdown: The template gets evaluated as PHP first, then parsed as Markdown. Pretty neat.
 
@@ -94,7 +92,7 @@ As the name suggests, this template type combines both PHP and Markdown: The tem
 <?php endforeach ?>
 ```
 
-### HTML: `.html`
+#### HTML: `.html`
 
 HTML templates are always printed as is. No further processing takes place.
 
@@ -109,7 +107,7 @@ HTML templates are always printed as is. No further processing takes place.
 </ul>
 ```
 
-## Data
+### Data
 
 Data is accessible inside a template as simple __variables__ (e.g., `$foo`) where the variable name corresponds to the assigned array key or property.
 
@@ -117,7 +115,7 @@ Data is accessible inside a template as simple __variables__ (e.g., `$foo`) wher
 <h1>Hello, <?= $username ?>!</h1>
 ```
 
-### Assign data
+#### Assign data
 
 There are several ways to assign data to a template box:
 
@@ -134,7 +132,7 @@ $welcome->render([ "username" => "eve" ]);
 
 Notice that `assign()` and `render()` both receive an `array` as argument.
 
-### Shared data
+#### Shared data
 
 Usually, template boxes are isolated from each other. Data that's been assigned to one box, will not be visible from another.
 
@@ -170,13 +168,40 @@ Now, these template boxes are linked and they share the same data.
 
 Notice how `welcome.php` prints out `$email` which was initially assigned to `$profile` and `profile.php` echoes `$username` even though it was assigned to `$welcome`.
 
-## Chaining & Nesting
+#### Escaping
+
+Escaping is a form of data filtering which sanitizes unsafe, user supplied input prior to outputting it as HTML.
+
+ENDOBOX provides two shortcuts to the `htmlspecialchars()` function: `$escape()` and its shorthand version `$e()`
+
+```php
+<h1>Hello, <?= $escape($username) ?>!</h1>
+
+<h1>Hello, <?= $e($username) ?>!</h1>
+```
+
+##### Escaping HTML attributes
+
+> :warning: __Warning:__ It's VERY important to always double quote HTML attributes that contain escaped variables, otherwise your template will still be open to injection attacks (e.g., [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS))).
+
+```php
+<!-- Good -->
+<img src="portrait.jpg" alt="<?= $e($name) ?>">
+
+<!-- BAD -->
+<img src="portrait.jpg" alt='<?= $e($name) ?>'>
+
+<!-- BAD -->
+<img src="portrait.jpg" alt=<?= $e($name) ?>>
+```
+
+### Chaining & Nesting
 
 Something that is pretty much always needed one way or another is a method of combining templates by either nesting them or gluing them together.
 
-### The _Developer_ Way
+#### The _Developer_ Way
 
-### The _Template Designer_ Way
+#### The _Template Designer_ Way
 
 
 
