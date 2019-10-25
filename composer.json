@@ -1,8 +1,8 @@
 {
     "name": "younishd/endobox",
-    "description": "dope ass PHP template engine",
+    "description": "clean af template engine.",
     "type": "library",
-    "keywords": ["template", "engine", "markdown", "view"],
+    "keywords": ["template", "engine", "markdown", "php"],
     "homepage": "https://github.com/younishd/endobox",
     "license": "MIT",
     "authors":
