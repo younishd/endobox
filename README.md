@@ -16,6 +16,8 @@ __clean af template engine.__
 | :---: | :---: | :---: |
 | Write templates in vanilla PHP. No need to learn a new syntax. | A full-blown Markdown parser is built right in. Yes, it can be combined with PHP! | Do powerful things with just a handful of elementary methods. |
 
+---
+
 ## Installation
 
 The recommended way to install ENDOBOX is via [Composer](https://getcomposer.org):
@@ -25,8 +27,6 @@ composer require younishd/endobox
 ```
 
 ## Get started
-
-
 
 ```php
 require_once '/path/to/vendor/autoload.php';
