@@ -56,6 +56,14 @@ To render the template with some variables call the `render()` method:
 echo $welcome->render([ 'name' => "Alice" ]);
 ```
 
+The template file itself could look like this:
+
+###### `welcome.php`
+
+```
+<h1>Hello, <?= $name ?>!</h1>
+```
+
 ### File extensions
 
 ENDOBOX decides how to render a template based on the __file extension__.
