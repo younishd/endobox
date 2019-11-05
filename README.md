@@ -20,6 +20,13 @@ __clean af template engine.__
 
 ## Documentation
 
+- [Installation](#installation)
+- [Get started](#get-started)
+- [Render templates](#render-templates)
+- [File extensions](#file-extensions)
+- [Data](#data)
+- [Chaining & Nesting](#chaining--nesting)
+
 ### Installation
 
 The recommended way to install ENDOBOX is via [Composer](https://getcomposer.org):
