@@ -96,19 +96,26 @@ class BoxFactory
 
     private function assignDefaults(Box $box) : Box
     {
-        return $box->assign([
-            'markdown' => function($md) {
-                return new Box(
-                    new Atom($md),
-                    new MarkdownRendererDecorator(
-                        new NullRenderer(), $this->parsedown));
-            },
-            'box' => function($t) use ($box) {
-                $b = $this->create($t);
-                $b->entangle($box);
-                return $b;
-            }
-        ]);
+        $defaults = [];
+
+        $defaults['markdown'] = $defaults['m'] = function($md) {
+            return new Box(
+                new Atom($md),
+                new MarkdownRendererDecorator(
+                    new NullRenderer(), $this->parsedown));
+        };
+
+        $defaults['escape'] = $defaults['e'] = function($var) {
+            return \htmlspecialchars($var);
+        };
+
+        $defaults['box'] = $defaults['b'] = function($t) use ($box) {
+            $b = $this->create($t);
+            $b->link($box);
+            return $b;
+        };
+
+        return $box->assign($defaults);
     }
 
 }
