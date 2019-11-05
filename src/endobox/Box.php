@@ -122,7 +122,7 @@ class Box implements Renderable, \IteratorAggregate
         $this->interior = clone $this->interior;
         $this->renderer = clone $this->renderer;
 
-        // detach the cloned box from any appended or entangled boxes
+        // detach the cloned box from any appended or linked boxes
         $this->rank = 0;
         $this->parent = $this;
         $this->child = $this;
@@ -202,7 +202,7 @@ class Box implements Renderable, \IteratorAggregate
     /**
      * Union by rank.
      */
-    public function entangle(Box $b) : Box
+    public function link(Box $b) : Box
     {
         $root1 = $this->find();
         $root2 = $b->find();
@@ -228,6 +228,14 @@ class Box implements Renderable, \IteratorAggregate
         $b->child = $tmp;
 
         return $this;
+    }
+
+    /**
+     * Deprecated. Use link() instead.
+     */
+    public function entangle(Box $b) : Box
+    {
+        return $this->link($b);
     }
 
     /**
