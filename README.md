@@ -186,14 +186,14 @@ Now, these template boxes are linked and they share the same data.
 
 ###### `welcome.php`
 
-```php
+```
 <h1>Hello, <?= $username ?>!</h1>
 <p>Your email address is: <code><?= $email ?></code></p>
 ```
 
 ###### `profile.php`
 
-```php
+```
 <h1>Profile</h1>
 <ul>
     <li>Username: <strong><?= $username ?></strong></li>
@@ -209,7 +209,7 @@ Escaping is a form of data filtering which sanitizes unsafe, user supplied input
 
 ENDOBOX provides two shortcuts to the `htmlspecialchars()` function: `$escape()` and its shorthand version `$e()`
 
-```php
+```
 <h1>Hello, <?= $escape($username) ?>!</h1>
 
 <h1>Hello, <?= $e($username) ?>!</h1>
@@ -219,7 +219,7 @@ ENDOBOX provides two shortcuts to the `htmlspecialchars()` function: `$escape()`
 
 > :warning: __Warning:__ It's VERY important to always double quote HTML attributes that contain escaped variables, otherwise your template will still be open to injection attacks (e.g., [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS))).
 
-```php
+```
 <!-- Good -->
 <img src="portrait.jpg" alt="<?= $e($name) ?>">
 
