@@ -244,7 +244,7 @@ $header($article);
 
 Now, calling `->render()` on either `$header` or `$article` will render both templates and return the concatenated result.
 
-The benefit of not having to render the templates to strings right away is _flexibility_: You can define the layout made out of your templates before knowing the concrete values of their variables.
+> :information_source: __Protip:__ The benefit of not having to render the templates to strings right away is _flexibility_: You can define the layout made out of your templates before knowing the concrete values of their variables.
 
 The general syntax for chaining a bunch of templates is simply:
 
