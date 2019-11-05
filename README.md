@@ -307,9 +307,9 @@ echo $endobox('layout')->render([
 ]);
 ```
 
-This is already much cleaner, but it gets even better: Since we have used `$box()` to nest a template `Box` inside another these two boxes are __linked__ by default!
+This is already much cleaner, but it gets even better: By using `$box()` to nest a template `Box` inside another these two boxes will be __linked__ by default!
 
-Check it out:
+That allows us to condense this even further. Check it out:
 
 ###### `layout.php`
 
@@ -322,13 +322,15 @@ Check it out:
 <footer><?= $box('footer') ?></footer>
 ```
 
-Then one line…
+All three templates are now nested using `$box()` and therefore linked to their parent (i.e., `$layout`).
+
+This reduces our controller code to one line:
 
 ```php
 echo $endobox('layout')->render([ 'title' => "How to make Lasagna" ]);
 ```
 
-Just clean af.
+Notice how we are assigning a title to the `layout` template even though the actual `$title` variable occurs in the nested `article` template.
 
 ## License
 
