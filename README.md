@@ -12,13 +12,15 @@ __clean af template engine.__
 
 ![endobox](code.png "made with ♥")
 
-| Native PHP syntax | Markdown on-board | Efficient API |
+| :seedling: Native PHP syntax | :pencil: Markdown on-board | :rocket: Efficient API |
 | :---: | :---: | :---: |
 | Write templates in vanilla PHP. No need to learn a new syntax. | A full-blown Markdown parser is built right in. Yes, it can be combined with PHP! | Do powerful things with just a handful of elementary methods. |
 
 ---
 
-## Installation
+## Documentation
+
+### Installation
 
 The recommended way to install ENDOBOX is via [Composer](https://getcomposer.org):
 
@@ -26,23 +28,39 @@ The recommended way to install ENDOBOX is via [Composer](https://getcomposer.org
 composer require younishd/endobox
 ```
 
-## Get started
+You will need at least __PHP 7.0.0__.
+
+### Get started
+
+The typical way to configure ENDOBOX to load templates for an application looks like this:
 
 ```php
 require_once '/path/to/vendor/autoload.php';
 
 $endobox = \endobox\Endobox::create('path/to/templates');
 
-echo $endobox('welcome')->render([ 'name' => "Alice" ]);
+$endobox->addFolder('another/path/to/templates'); // optional
 ```
 
-## Documentation
+### Render templates
+
+The first thing you want to do is instantiate a template `Box` as follows:
+
+```php
+$welcome = $endobox('welcome');
+```
+
+To render the template with some variables call the `render()` method:
+
+```php
+echo $welcome->render([ 'name' => "Alice" ]);
+```
 
 ### File extensions
 
 ENDOBOX decides how to render a template based on the __file extension__.
 
-When you instantiate the template box however, the extension is omitted.
+When you instantiate the template `Box` however, the extension is omitted.
 
 ```php
 $members = $endobox('members'); // no file extension
@@ -55,7 +73,7 @@ PHP templates are processed by evaluating the code between PHP tags (i.e., `<? �
 
 ###### `members.php`
 
-```php
+```
 <h1>Members</h1>
 <ul>
     <?php foreach ($users as $u): ?>
@@ -86,7 +104,7 @@ As the name suggests, this template type combines both PHP and Markdown: The tem
 
 ###### `members.md.php`
 
-```php
+```
 # Members
 
 <?php foreach ($users as $u): ?>
@@ -113,7 +131,7 @@ HTML templates are always printed as is. No further processing takes place.
 
 Data is accessible inside a template as simple __variables__ (e.g., `$foo`) where the variable name corresponds to the assigned array key or property.
 
-```php
+```
 <h1>Hello, <?= $username ?>!</h1>
 ```
 
