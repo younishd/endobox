@@ -217,75 +217,103 @@ ENDOBOX provides two shortcuts to the `htmlspecialchars()` function: `$escape()`
 
 ### Chaining & Nesting
 
-Something that is pretty much always needed one way or another is a method of combining templates by either nesting them or gluing them together.
+Since you're rarely dealing with just a single template you might be looking for a method that combines multiple templates in a meaningful way.
 
-#### The _Developer_ Way
+By __chaining__ we mean concatenating templates without rendering them.
 
-#### The _Template Designer_ Way
-
-
-
-A poor way to achieve that would be the following, somewhere inside a controller:
+Chaining two templates is as simple as:
 
 ```php
-$header = $header->render();
-$nav = $nav->render();
-$content = $content->render();
-$footer = $footer->render();
-
-return $header . $nav . $content . $footer;
+$header($article);
 ```
 
-Yuck. That's gonna be a lot of boilerplate copy-and-paste code.
+Now, calling `->render()` on either `$header` or `$article` will render both templates and return the concatenated result.
 
-First of all:
+The benefit of not having to render the templates to strings right away is _flexibility_: You can define the layout made out of your templates before knowing the concrete values of their variables.
+
+The general syntax for chaining a bunch of templates is simply:
 
 ```php
-return $header($nav)($content)($footer);
+$first($second)($third)($fourth); // and so on
 ```
 
-Yet much cleaner would be to have a reusable layout template:
+Neat.
+
+A different approach (probably the _template designer_ rather than the _developer_ way) would be to define some sort of __layout template__ instead:
 
 ###### `layout.php`
 
-```php
+```
 <html>
 <head></head>
 <body>
 <header><?= $header ?></header>
-<nav><?= $nav ?></nav>
-<?= $content ?>
+<article><?= $article ?></article>
 <footer><?= $footer ?></footer>
 ```
 
-Then…
+Then somewhere in controller land:
 
 ```php
-$layout->assign([
+$layout = $endobox('layout');
+$header = $endobox('header');   // header.html
+$article = $endobox('article'); // article.php
+$footer = $endobox('footer');   // footer.html
+
+echo $layout->render([
     'header' => $header,
-    'nav' => $nav,
-    'content' => $content,
+    'article' => $article->assign([ 'title' => "How to make Lasagna" ]),
     'footer' => $footer
 ]);
 ```
 
-Again, that's too much boilerplate.
+This should be fine, but we can get rid of some boilerplate code here: `$header` and `$footer` really don't need to be variables.
 
-```php
+That's where __nesting__ comes into play!
+
+Use the `$box()` function to instantiate a template `Box` from _inside_ another template:
+
+###### `layout.php`
+
+```
 <html>
 <head></head>
 <body>
 <header><?= $box('header') ?></header>
-<nav><?= $box('nav') ?></nav>
-<?= $content ?>
+<article><?= $article ?></article>
 <footer><?= $box('footer') ?></footer>
 ```
 
-Then…
+Then simply…
 
 ```php
-$layout->content = $content;
+echo $endobox('layout')->render([
+    'article' => $endobox('article')->assign([ 'title' => "How to make Lasagna" ])
+]);
 ```
+
+This is already much cleaner, but it gets even better: Since we have used `$box()` to nest a template `Box` inside another these two boxes are __linked__ by default!
+
+Check it out:
+
+###### `layout.php`
+
+```
+<html>
+<head></head>
+<body>
+<header><?= $box('header') ?></header>
+<article><?= $box('article') ?></article>
+<footer><?= $box('footer') ?></footer>
+```
+
+Then one line…
+
+```php
+echo $endobox('layout')->render([ 'title' => "How to make Lasagna" ]);
+```
+
+Just clean af.
 
 ## License
 
