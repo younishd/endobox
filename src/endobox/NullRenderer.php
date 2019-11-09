@@ -11,14 +11,12 @@
 
 namespace endobox;
 
-/**
- * The most basic renderer that simply takes a renderable object and calls render.
- */
 class NullRenderer implements Renderer
 {
 
     public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
+        // do nothing
         return $input->render();
     }
 

@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * This decorator adds markdown functionality to a renderer using Parsedown.
- */
 class MarkdownRendererDecorator extends RendererDecorator
 {
 
@@ -25,9 +22,6 @@ class MarkdownRendererDecorator extends RendererDecorator
         $this->parsedown = $parsedown;
     }
 
-    /**
-     * Render by passing the inherited result through Parsedown.
-     */
     public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
         return $this->parsedown->text(parent::render($input, $data, $shared));

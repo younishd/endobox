@@ -11,12 +11,9 @@
 
 namespace endobox;
 
-/**
- * Template wraps a plain text file as a renderable object.
- */
 class Template implements Renderable
 {
-    
+
     private $filename;
 
     public function __construct(string $filename)

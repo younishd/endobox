@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * Box factory that decides how to construct a Box based on the template's file extension.
- */
 class BoxFactory
 {
 
@@ -21,26 +18,17 @@ class BoxFactory
 
     private $parsedown;
 
-    /**
-     * The factory will look into the given path for template files.
-     */
     public function __construct(string $path, \Parsedown $parsedown)
     {
         $this->addFolder($path);
         $this->parsedown = $parsedown;
     }
 
-    /**
-     * Shortcut for create.
-     */
     public function __invoke(string $template) : Box
     {
         return $this->create($template);
     }
 
-    /**
-     * Create a Box based on the given template and return it.
-     */
     public function create(string $template) : Box
     {
         foreach ($this->paths as &$path) {
@@ -83,9 +71,6 @@ class BoxFactory
         throw new \RuntimeException(\sprintf('Template "%s" not found.', $template));
     }
 
-    /**
-     * Add another folder to the list of template paths.
-     */
     public function addFolder(string $path)
     {
         if (!\is_dir($path)) {

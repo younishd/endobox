@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * Render as a PHP template with data variables.
- */
 class EvalRendererDecorator extends RendererDecorator
 {
 
