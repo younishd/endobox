@@ -11,15 +11,9 @@
 
 namespace endobox;
 
-/**
- * Facade with a good default combination of appropriate dependencies.
- */
 abstract class Endobox
 {
 
-    /**
-     * Create and return a BoxFactory that looks into the given path for template files.
-     */
     public static function create(string $path)
     {
         return new BoxFactory($path, new \Parsedown());

@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * Iterator for linked list of Boxes.
- */
 class BoxIterator implements \Iterator
 {
 

@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * The fundamental data structure of endobox.
- */
 class Box implements Renderable, \IteratorAggregate
 {
 
@@ -23,30 +20,14 @@ class Box implements Renderable, \IteratorAggregate
 
     private $data = [];
 
-    /**
-     * Union-find rank.
-     */
     private $rank = 0;
 
-    /**
-     * Union-find parent.
-     */
     private $parent;
 
-    /**
-     * Union-find next child in circular linked list.
-     * This is used to be able to traverse the set.
-     */
     private $child;
 
-    /**
-     * Next Box in linked list.
-     */
     private $next = null;
 
-    /**
-     * Previous Box in linked list.
-     */
     private $prev = null;
 
     public function __construct(Renderable $interior, Renderer $renderer, array &$data = null)
@@ -62,33 +43,21 @@ class Box implements Renderable, \IteratorAggregate
         $this->child = $this;
     }
 
-    /**
-     * Invoking a box object like a function is short for append.
-     */
     public function __invoke(Box $b) : Box
     {
         return $this->append($b);
     }
 
-    /**
-     * Treating a box object like a string calls render.
-     */
     public function __toString() : string
     {
         return $this->render();
     }
 
-    /**
-     * Set data using property syntax.
-     */
     public function __set(string $key, $value)
     {
         $this->assign([ $key => $value ]);
     }
 
-    /**
-     * Get data using property syntax.
-     */
     public function __get(string $key)
     {
         if (!isset($this->data[$key])) {
@@ -98,25 +67,16 @@ class Box implements Renderable, \IteratorAggregate
         return $this->data[$key];
     }
 
-    /**
-     * Check if a key is set using property syntax.
-     */
     public function __isset(string $key) : bool
     {
         return isset($this->data[$key]);
     }
 
-    /**
-     * Unset a key using property syntax.
-     */
     public function __unset(string $key)
     {
         unset($this->data[$key]);
     }
 
-    /**
-     * Clone a box.
-     */
     public function __clone()
     {
         $this->interior = clone $this->interior;
@@ -130,9 +90,6 @@ class Box implements Renderable, \IteratorAggregate
         $this->prev = null;
     }
 
-    /**
-     * Render the box and everything attached to it then return the result.
-     */
     public function render() : string
     {
         // assign data if any
@@ -176,9 +133,6 @@ class Box implements Renderable, \IteratorAggregate
         return $this->interior->getContext();
     }
 
-    /**
-     * Append a Box to the end of the linked list and return this instance.
-     */
     public function append(Box $b) : Box
     {
         if ($this->next === null && $b->prev === null) {
@@ -190,20 +144,15 @@ class Box implements Renderable, \IteratorAggregate
         return $this;
     }
 
-    /**
-     * Prepend a Box to the beginning of the linked list and return this instance.
-     */
     public function prepend(Box $b) : Box
     {
         $b->append($this);
         return $this;
     }
 
-    /**
-     * Union by rank.
-     */
     public function link(Box $b) : Box
     {
+        // union by rank
         $root1 = $this->find();
         $root2 = $b->find();
 
@@ -230,17 +179,12 @@ class Box implements Renderable, \IteratorAggregate
         return $this;
     }
 
-    /**
-     * Deprecated. Use link() instead.
-     */
     public function entangle(Box $b) : Box
     {
+        // DEPRECATED - use link() instead
         return $this->link($b);
     }
 
-    /**
-     * Assign some data to this Box.
-     */
     public function assign(array $data) : Box
     {
         // Allow passing closures as data.
@@ -264,25 +208,16 @@ class Box implements Renderable, \IteratorAggregate
         return $this;
     }
 
-    /**
-     * Return next Box or null if this is the list's tail.
-     */
     public function next()
     {
         return $this->next;
     }
 
-    /**
-     * Return previous Box or null if this is the list's head.
-     */
     public function prev()
     {
         return $this->prev;
     }
 
-    /**
-     * Return the head of the list.
-     */
     public function head() : Box
     {
         // keep track of visited boxes for cycle detection
@@ -291,9 +226,6 @@ class Box implements Renderable, \IteratorAggregate
         return $b;
     }
 
-    /**
-     * Return the tail of the list.
-     */
     public function tail() : Box
     {
         // keep track of visited boxes for cycle detection
@@ -302,34 +234,26 @@ class Box implements Renderable, \IteratorAggregate
         return $b;
     }
 
-    /**
-     * Get a BoxIterator instance.
-     */
     public function getIterator()
     {
         return new BoxIterator($this);
     }
 
-    /**
-     * Find with path compression.
-     */
     private function find() : Box
     {
-        // path compression
+        // find with path compression
         if ($this->parent !== $this) {
             $this->parent = $this->parent->find();
         }
         return $this->parent;
     }
 
-    /**
-     * Mark this box as visited or throw a RuntimeException if we have detected a cycle in the graph.
-     */
     private function visit(&$touched)
     {
+        // detect cycle
         $key = \spl_object_hash($this);
         if (isset($touched[$key])) {
-            throw new \RuntimeException("Cycle (endless loop) detected in box graph.");
+            throw new \RuntimeException("Cycle detected in box graph.");
         }
         $touched[$key] = true;
         // just for convenience

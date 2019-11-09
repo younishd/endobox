@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * Atom is just a snippet of plain text.
- */
 class Atom implements Renderable
 {
 

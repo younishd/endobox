@@ -11,9 +11,6 @@
 
 namespace endobox;
 
-/**
- * Decorator for Renderer class.
- */
 abstract class RendererDecorator implements Renderer
 {
 
@@ -24,9 +21,6 @@ abstract class RendererDecorator implements Renderer
         $this->renderer = $renderer;
     }
 
-    /**
-     * Delegate render functionality to renderer.
-     */
     public function render(Renderable $input, array &$data = null, array $shared = null) : string
     {
         return $this->renderer->render($input, $data, $shared);
