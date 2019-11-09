@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-- Render partial templates with `$box()`
+- Add `link()` as alias for the cryptic (and now deprecated) `entangle()`
+- Render partial templates with `$box()` or `$b()` (i.e., nesting)
 
 ### Changed
+- Improved documentation in single README file
 
 
 ## [4.0.0] - 2019-01-23
