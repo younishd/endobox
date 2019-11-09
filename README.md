@@ -26,6 +26,8 @@ __clean af template engine.__
 - [File extensions](#file-extensions)
 - [Data](#data)
 - [Chaining & Nesting](#chaining--nesting)
+- [Functions](#functions)
+- [Cloning](#cloning)
 
 ### Installation
 
@@ -331,6 +333,79 @@ echo $endobox('layout')->render([ 'title' => "How to make Lasagna" ]);
 ```
 
 Notice how we are assigning a title to the `layout` template even though the actual `$title` variable occurs in the nested `article` template.
+
+### Functions
+
+Functions are a cool and handy way of adding reusable functionality to your templates (e.g., filters, URL builders…).
+
+#### Registering functions
+
+You can register your own custom function (i.e., [closure](https://www.php.net/manual/en/functions.anonymous.php)) by simply assigning it to a template `Box` __just like data!__
+
+Here is a simple function `$day()` which returns the day of the week:
+
+```php
+$calendar->day = function () { return date('l'); };
+```
+
+Inside your template file you can then use it in the same fashion as any variable:
+
+```
+<p>Today is <?= $day ?>.</p>
+```
+
+This would look like this (at least sometimes):
+
+```html
+<p>Today is Tuesday.</p>
+```
+
+You can go even further and actually invoke the variable just like any function and actually __pass some arguments__ along the way.
+
+Below is a simple closure `$a()` that wraps and escapes some text in a hyperlink tag:
+
+```php
+$profile->a = function ($text, $href) {
+    return sprintf('<a href="%s">%s</a>',
+            htmlspecialchars($href),
+            htmlspecialchars($text));
+};
+```
+
+Calling this function inside your template would look like this:
+
+```
+<p>Follow me on <?= $a("GitHub", "https://github.com/younishd") ?></p>
+```
+
+This would produce something like this:
+
+```html
+<p>Follow me on <a href="https://github.com/younishd">GitHub</a></p>
+```
+
+#### Default functions
+
+There are a couple of default helper functions that you can use out of the box (some of which you may have already seen):
+
+|Function|Description|Example|
+|--|--|--|
+|`$box()` or `$b()`|Instantiate a `Box` from within another template. (See [Nesting](#chaining--nesting).)|`<article><?= $box('article') ?></article>`|
+|`$markdown()` or `$m()`|Render some text as Markdown. Useful when the text is user input/stored in a database.|`<?= $markdown('This is some _crazy comment_!') ?>`|
+|`$escape()` or `$e()`|Sanitize unsafe user input using `htmlspecialchars()`. (See [Escaping](#escaping).)|`<img src="portrait.jpg" alt="<?= $e($name) ?>">`|
+
+### Cloning
+
+You can easily clone a template `Box` using the built-in `clone` keyword.
+
+```php
+$sheep = $endobox('sheep');
+
+$cloned = clone $sheep;
+```
+
+The cloned box will have the same content and data as the original one. However, chained or linked boxes are discarded.
+
 
 ## License
 
