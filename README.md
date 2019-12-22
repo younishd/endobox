@@ -334,6 +334,8 @@ echo $endobox('layout')->render([ 'title' => "How to make Lasagna" ]);
 
 Notice how we are assigning a title to the `layout` template even though the actual `$title` variable occurs in the nested `article` template.
 
+> :information_source: __Protip:__ The `$box()` function is also available as a method of `Box` objects (i.e., outside templates): You can instantiate new boxes with `$box->create('template')` or its shorthand `$box('template')` where `$box` is some `Box` object that has already been created.
+
 ### Functions
 
 Functions are a cool and handy way of adding reusable functionality to your templates (e.g., filters, URL builders…).
