@@ -153,10 +153,14 @@ class Box implements Renderable, \IteratorAggregate
         return $this->append($this->create((string)$arg));
     }
 
-    public function prepend(Box $b) : Box
+    public function prepend($arg) : Box
     {
-        $b->append($this);
-        return $this;
+        if ($arg instanceof Box) {
+            $arg->append($this);
+            return $this;
+        }
+
+        return $this->prepend($this->create((string)$arg));
     }
 
     public function link(Box $b) : Box
