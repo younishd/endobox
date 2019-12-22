@@ -205,6 +205,8 @@ Now, these template boxes are linked and they share the same data.
 
 Notice how `welcome.php` prints out `$email` which was initially assigned to `$profile` and `profile.php` echoes `$username` even though it was assigned to `$welcome`.
 
+> :information_source: __Protip:__ You can create template boxes using an existing `Box` object (instead of using the `BoxFactory` object) with `$box->create('template')` which has the advantage of __linking the two boxes__ together by default.
+
 #### Escaping
 
 Escaping is a form of data filtering which sanitizes unsafe, user supplied input prior to outputting it as HTML.
@@ -256,7 +258,55 @@ $first($second)($third)($fourth); // and so on
 
 Neat.
 
-A different approach (probably the _template designer_ rather than the _developer_ way) would be to define some sort of __layout template__ instead:
+The more explicit (and strictly equivalent) form would be using `append()` or `prepend()` as follows:
+
+```php
+$first->append($second)->append($third)->append($fourth);
+```
+
+Or…
+
+```php
+$fourth->prepend($third)->prepend($second)->prepend($first);
+```
+
+> :information_source: __Protip:__ Note that the previously seen `Box::__invoke()` is simply an alias of `Box::append()`.
+
+
+You have now seen how you can append (or prepend) `Box`es together.
+
+Notice however that the variables `$first`, `$second`, `$third`, and `$fourth` were objects of type `Box` which means they needed to be brought to life at some point —
+probably using the `BoxFactory` object created in the very beginning (which we kept calling `$endobox` in this document).
+
+In other words the complete code would probably look something like this:
+
+```php
+$first = $endobox('first');
+$second = $endobox('second');
+$third = $endobox('third');
+$fourth = $endobox('fourth');
+
+echo $first($second)($third)($fourth);
+```
+
+It turns out there is a way to avoid this kind of boilerplate code: You can directly pass the name of the template (a `string`) to the `append()` method instead of the `Box` object!
+
+So, instead you could just write:
+
+```php
+$first = $endobox('first');
+echo $first('second')('third')('fourth');
+```
+
+Or even shorter:
+
+```php
+echo $endobox('first')('second')('third')('fourth');
+```
+
+Notice that unlike before these (implicitly created) boxes are now all __linked__ together automatically, meaning they share the same data.
+
+A fairly different approach (probably the _template designer_ rather than the _developer_ way) would be to define some sort of __layout template__ instead:
 
 ###### `layout.php`
 
@@ -334,7 +384,7 @@ echo $endobox('layout')->render([ 'title' => "How to make Lasagna" ]);
 
 Notice how we are assigning a title to the `layout` template even though the actual `$title` variable occurs in the nested `article` template.
 
-> :information_source: __Protip:__ The `$box()` function is also available as a method of `Box` objects (i.e., outside templates): You can instantiate new boxes with `$box->create('template')` or its shorthand `$box('template')` where `$box` is some `Box` object that has already been created.
+> :information_source: __Protip:__ The `$box()` function is also available as a method of `Box` objects (i.e., outside templates): You can instantiate new boxes with `$box->create('template')` where `$box` is some `Box` object that has already been created.
 
 ### Functions
 
