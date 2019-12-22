@@ -422,4 +422,28 @@ class BoxTest extends TestCase
         $this->assertSame("<p><h1>Hello world</h1>\n</p>\n", $box->render());
     }
 
+    public function testBoxCreate()
+    {
+        $a = $this->endobox->create('a');
+        $b = $a->create('b');
+        $this->assertSame("B", \trim($b->render()));
+    }
+
+    public function testBoxInvoke()
+    {
+        $a = $this->endobox->create('a');
+        $b = $a('b');
+        $this->assertSame("B", \trim($b->render()));
+    }
+
+    public function testBoxCreateSharedData()
+    {
+        $a = $this->endobox->create('a');
+        $a->assign([
+            'foo' => "bar"
+        ]);
+        $b = $a->create('foobar');
+        $this->assertSame("<p>bar</p>", \trim($b->render()));
+    }
+
 }
