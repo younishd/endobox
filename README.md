@@ -294,14 +294,13 @@ It turns out there is a way to avoid this kind of boilerplate code: You can dire
 So, instead you could just write:
 
 ```php
-$first = $endobox('first');
-echo $first('second')('third')('fourth');
+echo $endobox('first')('second')('third')('fourth');
 ```
 
-Or even shorter:
+It looks trivial, but there is a lot going on here. The explicit form should shed some light on things:
 
 ```php
-echo $endobox('first')('second')('third')('fourth');
+echo $endobox->create('first')->append('second')->append('third')->append('fourth');
 ```
 
 Notice that unlike before these (implicitly created) boxes are now all __linked__ together automatically, meaning they share the same data.
