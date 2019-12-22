@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Overload `Box::append()` and `Box::prepend()`: argument can now be of type `Box` or `string` where the latter will instantiate a new `Box` before appending/prepending it
+- Add `Box::create()` in the same fashion as the `$box()` function within templates
 ### Changed
 
 

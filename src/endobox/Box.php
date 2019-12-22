@@ -45,10 +45,7 @@ class Box implements Renderable, \IteratorAggregate
 
     public function __invoke($arg) : Box
     {
-        if ($arg instanceof Box) {
-            return $this->append($arg);
-        }
-        return $this->create((string)$arg);
+        return $this->append($arg);
     }
 
     public function __toString() : string
@@ -141,21 +138,29 @@ class Box implements Renderable, \IteratorAggregate
         return $this->interior->getContext();
     }
 
-    public function append(Box $b) : Box
+    public function append($arg) : Box
     {
-        if ($this->next === null && $b->prev === null) {
-            $this->next = $b;
-            $b->prev = $this;
-        } else {
-            $this->tail()->append($b->head());
+        if ($arg instanceof Box) {
+            if ($this->next === null && $arg->prev === null) {
+                $this->next = $arg;
+                $arg->prev = $this;
+            } else {
+                $this->tail()->append($arg->head());
+            }
+            return $this;
         }
-        return $this;
+
+        return $this->append($this->create((string)$arg));
     }
 
-    public function prepend(Box $b) : Box
+    public function prepend($arg) : Box
     {
-        $b->append($this);
-        return $this;
+        if ($arg instanceof Box) {
+            $arg->append($this);
+            return $this;
+        }
+
+        return $this->prepend($this->create((string)$arg));
     }
 
     public function link(Box $b) : Box

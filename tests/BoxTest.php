@@ -433,7 +433,7 @@ class BoxTest extends TestCase
     {
         $a = $this->endobox->create('a');
         $b = $a('b');
-        $this->assertSame("B", \trim($b->render()));
+        $this->assertSame("A\nB", \trim($b->render()));
     }
 
     public function testBoxCreateSharedData()
