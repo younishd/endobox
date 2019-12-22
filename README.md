@@ -238,6 +238,8 @@ ENDOBOX provides two shortcuts to the `htmlspecialchars()` function: `$escape()`
 
 Since you're rarely dealing with just a single template you might be looking for a method that combines multiple templates in a meaningful way.
 
+#### Chaining
+
 By __chaining__ we mean concatenating templates without rendering them.
 
 Chaining two templates is as simple as:
@@ -304,6 +306,8 @@ echo $endobox->create('first')->append('second')->append('third')->append('fourt
 ```
 
 Notice that unlike before these (implicitly created) boxes are now all __linked__ together automatically, meaning they share the same data.
+
+#### Nesting
 
 A fairly different approach (probably the _template designer_ rather than the _developer_ way) would be to define some sort of __layout template__ instead:
 
