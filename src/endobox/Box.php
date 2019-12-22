@@ -43,9 +43,12 @@ class Box implements Renderable, \IteratorAggregate
         $this->child = $this;
     }
 
-    public function __invoke(Box $b) : Box
+    public function __invoke($arg) : Box
     {
-        return $this->append($b);
+        if ($arg instanceof Box) {
+            return $this->append($arg);
+        }
+        return $this->create((string)$arg);
     }
 
     public function __toString() : string
@@ -126,6 +129,11 @@ class Box implements Renderable, \IteratorAggregate
         }
 
         return $result;
+    }
+
+    public function create(string $template) : Box
+    {
+        return ($this->box)($template);
     }
 
     public function getContext() : string

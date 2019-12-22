@@ -31,8 +31,7 @@ class BoxFactory
 
     public function create(string $template) : Box
     {
-        foreach ($this->paths as &$path) {
-            // full path to template file without extension
+        foreach ($this->paths as $path) {
             $file = \rtrim($path, '/') . '/' . \trim($template, '/');
 
             if (\file_exists($t = $file . '.php')) {
@@ -55,16 +54,20 @@ class BoxFactory
             }
 
             if (\file_exists($t = $file . '.md')) {
-                return new Box(
+                $box = new Box(
                         new Template($t),
                         new MarkdownRendererDecorator(
                             new NullRenderer(), $this->parsedown));
+                $this->assignDefaults($box);
+                return $box;
             }
 
             if (\file_exists($t = $file . '.html')) {
-                return new Box(
+                $box = new Box(
                         new Template($t),
                         new NullRenderer());
+                $this->assignDefaults($box);
+                return $box;
             }
         }
 
