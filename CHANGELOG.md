@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Overload `Box::append()` and `Box::prepend()`: argument can now be of type `Box` or `string` where the latter will instantiate a new `Box` before appending/prepending it
-- Add `Box::create()` in the same fashion as the `$box()` function within templates
 ### Changed
+
+
+## [4.2.0] - 2020-01-01
+
+### Added
+- `$endobox('foo')('bar')` is now equivalent to `($foo = $endobox->create('foo'))->append($endobox->create('bar')->link($foo))`
+- Add `Box::create()` in the same fashion as the `$box()` function within templates
+
+### Changed
+- Overload `Box::append()` and `Box::prepend()`: argument can now be of type `Box` or `string` where the latter will instantiate a new `Box` before appending/prepending it
 
 
 ## [4.1.0] - 2019-11-09
