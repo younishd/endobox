@@ -286,9 +286,8 @@ In other words the complete code would probably look something like this:
 $first = $endobox('first');
 $second = $endobox('second');
 $third = $endobox('third');
-$fourth = $endobox('fourth');
 
-echo $first($second)($third)($fourth);
+echo $first($second)($third);
 ```
 
 It turns out there is a way to avoid this kind of boilerplate code: You can directly pass the name of the template (a `string`) to the `append()` method instead of the `Box` object!
@@ -296,16 +295,26 @@ It turns out there is a way to avoid this kind of boilerplate code: You can dire
 So, instead you could just write:
 
 ```php
-echo $endobox('first')('second')('third')('fourth');
+echo $endobox('first')('second')('third');
 ```
 
-It looks trivial, but there is a lot going on here. The explicit form should shed some light on things:
+It looks trivial, but there is a lot going on here. The more verbose form would look as follows:
 
 ```php
-echo $endobox->create('first')->append('second')->append('third')->append('fourth');
+echo $endobox->create('first')->append('second')->append('third');
+```
+
+This is – in turn – equivalent to the following lines:
+
+```php
+echo ($_ = $endobox->create('first'))
+        ->append($endobox->create('second')->link($_))
+        ->append($endobox->create('third')->link($_));
 ```
 
 Notice that unlike before these (implicitly created) boxes are now all __linked__ together automatically, meaning they share the same data.
+
+The rule of thumb is: _`Box`es created from other `Box`es are linked by default._
 
 #### Nesting
 
