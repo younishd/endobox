@@ -207,6 +207,14 @@ Notice how `welcome.php` prints out `$email` which was initially assigned to `$p
 
 > :information_source: __Protip:__ You can create template boxes using an existing `Box` object (instead of using the `BoxFactory` object) with `$box->create('template')` which has the advantage of __linking the two boxes__ together by default.
 
+#### Default values
+
+Sometimes it can be useful to supply a __default value__ to be printed in case a variable has not been assigned. You can easily achieve that using PHP 7's [__null coalescing operator__](https://en.wikipedia.org/wiki/Null_coalescing_operator#PHP): `??`
+
+```
+<title><?= $title ?? "Default" ?></title>
+```
+
 #### Escaping
 
 Escaping is a form of data filtering which sanitizes unsafe, user supplied input prior to outputting it as HTML.
