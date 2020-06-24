@@ -45,6 +45,9 @@ class Box implements Renderable, \IteratorAggregate
 
     public function __invoke($arg) : Box
     {
+        if (\is_array($arg)) {
+            return $this->assign($arg);
+        }
         return $this->append($arg);
     }
 
