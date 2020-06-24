@@ -1,6 +1,6 @@
 {
     "name": "younishd/endobox",
-    "description": "clean af template engine.",
+    "description": "minimal template engine.",
     "type": "library",
     "keywords": ["template", "engine", "markdown", "php"],
     "homepage": "https://github.com/younishd/endobox",
@@ -8,7 +8,7 @@
     "authors":
     [
         {
-            "name": "YouniS Bensalah",
+            "name": "Younis Bensalah",
             "email": "younis.bensalah@gmail.com",
             "homepage": "https://younishd.fr"
         }
