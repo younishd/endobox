@@ -1,8 +1,8 @@
 ![endobox](endobox.png "made with ♥")
 
-# ENDOBOX
+# endobox
 
-__clean af template engine.__
+__minimal template engine.__
 
 [![Build Status](https://travis-ci.org/younishd/endobox.svg?branch=master)](https://travis-ci.org/younishd/endobox)
 [![Code Climate](https://codeclimate.com/github/younishd/endobox/badges/gpa.svg)](https://codeclimate.com/github/younishd/endobox)
@@ -12,7 +12,7 @@ __clean af template engine.__
 
 ![endobox](code.png "made with ♥")
 
-| :seedling: Native PHP syntax | :pencil: Markdown on-board | :rocket: Efficient API |
+| :seedling: Native PHP syntax | :pencil: Markdown on-board | :rocket: Minimal API |
 | :---: | :---: | :---: |
 | Write templates in vanilla PHP. No need to learn a new syntax. | A full-blown Markdown parser is built right in. Yes, it can be combined with PHP! | Do powerful things with just a handful of elementary methods. |
 
@@ -31,35 +31,41 @@ __clean af template engine.__
 
 ### Installation
 
-The recommended way to install ENDOBOX is via [Composer](https://getcomposer.org):
+Install endobox is via [Composer](https://getcomposer.org):
 
 ```bash
 composer require younishd/endobox
 ```
 
-You will need at least __PHP 7.0.0__.
+You will need __PHP 7.0+__.
 
 ### Get started
 
-The typical way to configure ENDOBOX to load templates for an application looks like this:
+The typical way to configure endobox to load templates for an application looks like this:
 
 ```php
 require_once '/path/to/vendor/autoload.php';
 
-$endobox = \endobox\Endobox::create('path/to/templates');
+use endobox\Endobox;
 
-$endobox->addFolder('another/path/to/templates'); // optional
+$endobox = Endobox::create('path/to/templates');
+```
+
+You can add additional template locations:
+
+```php
+$endobox->addFolder('another/path/to/templates');
 ```
 
 ### Render templates
 
-The first thing you want to do is instantiate a template `Box` as follows:
+Instantiate a `Box` for your template:
 
 ```php
 $welcome = $endobox('welcome');
 ```
 
-To render the template with some variables call the `render()` method:
+Render the template with some variables by calling `render()`:
 
 ```php
 echo $welcome->render([ 'name' => "Alice" ]);
@@ -75,7 +81,7 @@ The template file itself could look like this:
 
 ### File extensions
 
-ENDOBOX decides how to render a template based on the __file extension__.
+endobox decides how to render a template based on the __file extension__.
 
 When you instantiate the template `Box` however, the extension is omitted.
 
@@ -219,7 +225,7 @@ Sometimes it can be useful to supply a __default value__ to be printed in case a
 
 Escaping is a form of data filtering which sanitizes unsafe, user supplied input prior to outputting it as HTML.
 
-ENDOBOX provides two shortcuts to the `htmlspecialchars()` function: `$escape()` and its shorthand version `$e()`
+endobox provides two shortcuts to the `htmlspecialchars()` function: `$escape()` and its shorthand version `$e()`
 
 ```
 <h1>Hello, <?= $escape($username) ?>!</h1>
@@ -481,4 +487,4 @@ The cloned box will have the same content and data as the original one. However,
 
 ## License
 
-_ENDOBOX_ is open-sourced software licensed under the [MIT license](LICENSE).
+_endobox_ is open-sourced software licensed under the [MIT license](LICENSE).
