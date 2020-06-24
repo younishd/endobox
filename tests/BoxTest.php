@@ -3,7 +3,7 @@
 /**
  * This file is part of endobox.
  *
- * (c) 2015-2019 YouniS Bensalah <younis.bensalah@gmail.com>
+ * (c) 2015-2020 Younis Bensalah <younis.bensalah@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -444,6 +444,14 @@ class BoxTest extends TestCase
         ]);
         $b = $a->create('foobar');
         $this->assertSame("<p>bar</p>", \trim($b->render()));
+    }
+
+    public function testInvokeAssign()
+    {
+        $box = $this->endobox->create('hello');
+        $box([ 'subject' => 'world' ]);
+        $result = $box->render();
+        $this->assertSame("<h1>Hello world</h1>\n", $result);
     }
 
 }
