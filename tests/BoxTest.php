@@ -446,4 +446,12 @@ class BoxTest extends TestCase
         $this->assertSame("<p>bar</p>", \trim($b->render()));
     }
 
+    public function testInvokeAssign()
+    {
+        $box = $this->endobox->create('hello');
+        $box([ 'subject' => 'world' ]);
+        $result = $box->render();
+        $this->assertSame("<h1>Hello world</h1>\n", $result);
+    }
+
 }
