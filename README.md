@@ -171,9 +171,10 @@ $welcome->username = "eve";
 
 // via render(…)
 $welcome->render([ "username" => "eve" ]);
-```
 
-Notice that `assign()` and `render()` both receive an `array` as argument.
+// implicitly
+$welcome([ "username" => "eve" ]);
+```
 
 #### Shared data
 
@@ -328,7 +329,7 @@ echo ($_ = $endobox->create('first'))
 
 Notice that unlike before these (implicitly created) boxes are now all __linked__ together automatically, meaning they share the same data.
 
-The rule of thumb is: _`Box`es created from other `Box`es are linked by default._
+The rule of thumb is: _Boxes created from other boxes are linked by default._
 
 #### Nesting
 
