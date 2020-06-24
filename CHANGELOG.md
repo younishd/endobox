@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [Unreleased]
+### Added
+### Changed
+
+
+## [4.3.0] - 2020-06-24
 
 ### Added
 - Invoke `Box` with `array` to assign data.
