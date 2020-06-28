@@ -11,13 +11,12 @@
 
 namespace endobox;
 
-class NullRenderer implements Renderer
+class NullRenderer implements BoxRenderer
 {
 
-    public function render(Renderable $input, array &$data = null, array $shared = null) : string
+    public function render(Box $box, array $shared = null) : string
     {
-        // do nothing
-        return $input->render();
+        return $box->getInterior()->render();
     }
 
 }

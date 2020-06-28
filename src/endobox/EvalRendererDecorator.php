@@ -14,11 +14,13 @@ namespace endobox;
 class EvalRendererDecorator extends RendererDecorator
 {
 
-    public function render(Renderable $input, array &$data = null, array $shared = null) : string
-    {
-        $code = parent::render($input, $data, $shared);
+    private $box = null;
 
-        $context = $input->getContext();
+    public function render(Box $box, array $shared = null) : string
+    {
+        $code = parent::render($box, $shared);
+
+        $context = $box->getContext();
 
         \set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
             if (\error_reporting() !== 0) {
@@ -28,7 +30,7 @@ class EvalRendererDecorator extends RendererDecorator
 
         try {
             if (\strpos($code, '<?') !== false) {
-                $code = (function (&$_, &$__, &$___) {
+                $code = \Closure::bind(function (&$_, &$__, &$___) {
                     if ($__ !== null) {
                         \extract($__, EXTR_SKIP | EXTR_REFS);
                     }
@@ -43,7 +45,7 @@ class EvalRendererDecorator extends RendererDecorator
                     \ob_start();
                     eval('unset($_)?>' . $_);
                     return \ob_get_clean();
-                })($code, $data, $shared);
+                }, $box)($code, $box->getData(), $shared);
             }
         } catch (\Throwable $e) {
             $code = \sprintf('%s<p>%s <strong>"%s"</strong> in %s line <strong>%d</strong></p>',
