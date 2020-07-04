@@ -30,9 +30,9 @@ class Box implements Renderable, \IteratorAggregate
 
     private $prev = null;
 
-    private $late = false;
+    private $late_assign_flag = false;
 
-    private $dirty = false;
+    private static $render_root_box = null;
 
     public function __construct(
         Renderable $interior,
@@ -92,135 +92,48 @@ class Box implements Renderable, \IteratorAggregate
         $this->interior = clone $this->interior;
         $this->renderer = clone $this->renderer;
 
-        // detach the cloned box from any appended or linked boxes
+        // detach the cloned box
         $this->rank = 0;
         $this->parent = $this;
         $this->child = $this;
         $this->next = null;
         $this->prev = null;
+        $this->late_assign_flag = false;
     }
 
-    public function render() : string
+    public function render(array $data = null) : string
     {
-        // var_dump("render1: " . $this->getContext());
+        try {
 
-        $this->setDirty();
+            self::$render_root_box = self::$render_root_box ?? $this;
 
-        // assign data if any
-        if (\func_num_args() > 0) {
-            $args = \func_get_args();
-            $this->assign($args[0]);
-        }
-
-        $result = '';
-        $shared = [];
-
-        foreach ($this as $box) {
-            // if box has no shared data
-            if ($box->child === $box) {
-                $result .= $box->renderSelf();
-                continue;
+            if ($data !== null) {
+                $this->assign($data);
             }
 
-            // cache union sets of shared data arrays using root as key
-            $root = $box->find();
-            $key = \spl_object_hash($root);
-            if (!isset($shared[$key])) {
-                $shared[$key] = [];
-                $shared[$key][] = &$root->data;
-                for ($i = $root->child; $i !== $root; $i = $i->child) {
-                    $shared[$key][] = &$i->data;
-                }
+            $result = $this->renderAll();
+
+            // 2 pass render
+            if (
+                self::$render_root_box === $this
+                && $this->getLateAssignFlag()
+            ) {
+                $result = $this->renderAll();
             }
 
-            $result .= $box->renderSelf($shared[$key]);
-        }
+            return $result;
 
-        // var_dump("is late: " . (int)$this->isLate() . " " . $this->getContext());
-        // $r = $this->find();
-        // $foo = [];
-        // $foo[] = $r;
-        // for ($i = $r->child; $i !== $r; $i = $i->child) {
-        //     $foo[] = $i;
-        // }
-        // var_dump("dump0: " . $foo[0]->getContext() . ", late=" . (int)$foo[0]->isLate());
-        // var_dump("dump1: " . $foo[1]->getContext() . ", late=" . (int)$foo[1]->isLate());
+        } catch (\Throwable $e) {
 
-        // TODO if late assign then render again
+            throw new $e;
 
-        // TODO only rerender if you are the box that got called to render (not a nested box)
-        if ($this->isLate()) {
-            // var_dump("render2: " . $this->getContext());
+        } finally {
 
-            $result = '';
-            $shared = [];
-
-            foreach ($this as $box) {
-                // if box has no shared data
-                if ($box->child === $box) {
-                    $result .= $box->renderSelf();
-                    continue;
-                }
-
-                // cache union sets of shared data arrays using root as key
-                $root = $box->find();
-                $key = \spl_object_hash($root);
-                if (!isset($shared[$key])) {
-                    $shared[$key] = [];
-                    $shared[$key][] = &$root->data;
-                    for ($i = $root->child; $i !== $root; $i = $i->child) {
-                        $shared[$key][] = &$i->data;
-                    }
-                }
-
-                // print_r(array_keys($shared[$key][0]));
-                // var_dump($this->getContext());
-
-                $result .= $box->renderSelf($shared[$key]);
+            if (self::$render_root_box === $this) {
+                self::$render_root_box = null;
             }
 
-            //$this->resetLate();
         }
-
-        $this->resetDirty();
-
-        return $result;
-    }
-
-    // a--b--c
-    //  \--d
-    //
-    // TODO find better naming for "late" and "dirty"
-    //
-    //
-    private function isLate() : bool
-    {
-        return $this->find()->late;
-    }
-
-    private function setLate()
-    {
-        $this->find()->late = true;
-    }
-
-    private function resetLate()
-    {
-        $this->find()->late = false;
-    }
-
-    private function isDirty() : bool
-    {
-        return $this->head()->dirty;
-    }
-
-    private function setDirty()
-    {
-        $this->head()->dirty = true;
-    }
-
-    private function resetDirty()
-    {
-        $this->head()->dirty = false;
     }
 
     public function create(string $template) : Box
@@ -236,10 +149,6 @@ class Box implements Renderable, \IteratorAggregate
     public function append($arg) : Box
     {
         if ($arg instanceof Box) {
-            if ($this->isDirty()) {
-                $arg->setDirty();
-            }
-
             if ($this->next === null && $arg->prev === null) {
                 $this->next = $arg;
                 $arg->prev = $this;
@@ -264,19 +173,21 @@ class Box implements Renderable, \IteratorAggregate
 
     public function link(Box $b) : Box
     {
-        // union by rank
         $root1 = $this->find();
         $root2 = $b->find();
 
-        // if already in same set then nothing to do
         if ($root1 === $root2) {
             return $this;
         }
 
-        if ($root1->isLate()) {
-            $root2->setLate();
-        } elseif ($root2->isLate()) {
-            $root1->setLate();
+        $late = false;
+        if ($root1->getLateAssignFlag()) {
+            $root1->resetLateAssignFlag();
+            $late = true;
+        }
+        if ($root2->getLateAssignFlag()) {
+            $root2->resetLateAssignFlag();
+            $late = true;
         }
 
         // union by rank
@@ -294,6 +205,10 @@ class Box implements Renderable, \IteratorAggregate
         $this->child = $b->child;
         $b->child = $tmp;
 
+        if ($late) {
+            $this->setLateAssignFlag();
+        }
+
         return $this;
     }
 
@@ -305,16 +220,12 @@ class Box implements Renderable, \IteratorAggregate
 
     public function assign(array $data) : Box
     {
-        if ($this->isDirty()) {
-            $this->setLate();
+        if (self::$render_root_box !== null) {
+            $this->setLateAssignFlag();
         }
 
-        // Allow passing closures as data.
-        // The trick is to wrap the closure in an anonymous class instance that takes the closure and calls it
-        // when it is invoked as a string or as a function.
-        // We only support real closures (i.e., instance of Closure), not just any callable,
-        // because there is no way to know if "time" is supposed to be data or a function name.
         foreach ($data as $k => &$v) {
+            // allow passing closures as data by wrapping it in an anonymous object
             if ($v instanceof \Closure) {
                 $data[$k] = new class($v) {
                     private $closure;
@@ -371,12 +282,56 @@ class Box implements Renderable, \IteratorAggregate
         return $this->data;
     }
 
+    private function renderAll() : string
+    {
+        $result = '';
+        $shared = [];
+
+        foreach ($this as $box) {
+            // if box has no shared data
+            if ($box->child === $box) {
+                $result .= $box->renderSelf();
+                continue;
+            }
+
+            // cache union sets of shared data arrays using root as key
+            $root = $box->find();
+            $key = \spl_object_hash($root);
+            if (!isset($shared[$key])) {
+                $shared[$key] = [];
+                $shared[$key][] = &$root->data;
+                for ($i = $root->child; $i !== $root; $i = $i->child) {
+                    $shared[$key][] = &$i->data;
+                }
+            }
+
+            $result .= $box->renderSelf($shared[$key]);
+        }
+
+        return $result;
+    }
+
     private function renderSelf(array $shared = null) : string
     {
         if ($shared === null) {
             return $this->renderer->render($this);
         }
         return $this->renderer->render($this, $shared);
+    }
+
+    private function getLateAssignFlag() : bool
+    {
+        return $this->find()->late_assign_flag;
+    }
+
+    private function setLateAssignFlag()
+    {
+        $this->find()->late_assign_flag = true;
+    }
+
+    private function resetLateAssignFlag()
+    {
+        $this->find()->late_assign_flag = false;
     }
 
     private function find() : Box
