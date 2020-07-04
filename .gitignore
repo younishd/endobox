@@ -1,3 +1,4 @@
 /vendor/
 .directory
 .DS_Store
+/.idea/

@@ -11,9 +11,12 @@
 
 namespace endobox;
 
-interface Renderer
+// TODO perhaps rename all implementations accordingly as well
+// or revert back to just Renderer
+//
+interface BoxRenderer
 {
 
-    public function render(Renderable $input, array &$data = null, array $shared = null) : string;
+    public function render(Box $box, array $shared = null) : string;
 
 }

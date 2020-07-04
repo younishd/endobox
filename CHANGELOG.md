@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [Unreleased]
+
 ### Added
+- Inside templates, bind `$this` to corresponding `Box` object.
+- Late data assignment during render. You can assign data at render time and it will be taken into account by the engine.
+
 ### Changed
 
 

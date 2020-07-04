@@ -451,7 +451,32 @@ class BoxTest extends TestCase
         $box = $this->endobox->create('hello');
         $box([ 'subject' => 'world' ]);
         $result = $box->render();
-        $this->assertSame("<h1>Hello world</h1>\n", $result);
+        $this->assertSame("<h1>Hello world</h1>", \trim($result));
+    }
+
+    public function testThisInstance()
+    {
+        $e = $this->endobox;
+        $box = $e('assign_this')('hello_this');
+        $result = $box->render();
+        $this->assertSame("Hello world", \trim($result));
+    }
+
+    public function testThisInstanceAssignOutOfOrder()
+    {
+        $e = $this->endobox;
+        $box = $e('hello_this')('assign_this');
+        $result = $box->render();
+        $this->assertSame("Hello world", \trim($result));
+    }
+
+    public function testThisAssignNested()
+    {
+        $e = $this->endobox;
+        $box = $e('hello_this_nested');
+        $box(['nested' => $box->create('assign_this')]);
+        $result = $box->render();
+        $this->assertSame("Hello world", \trim($result));
     }
 
 }

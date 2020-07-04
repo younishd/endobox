@@ -16,15 +16,15 @@ class MarkdownRendererDecorator extends RendererDecorator
 
     private $parsedown;
 
-    public function __construct(Renderer $renderer, \Parsedown $parsedown)
+    public function __construct(BoxRenderer $renderer, \Parsedown $parsedown)
     {
         parent::__construct($renderer);
         $this->parsedown = $parsedown;
     }
 
-    public function render(Renderable $input, array &$data = null, array $shared = null) : string
+    public function render(Box $box, array $shared = null) : string
     {
-        return $this->parsedown->text(parent::render($input, $data, $shared));
+        return $this->parsedown->text(parent::render($box, $shared));
     }
 
 }
