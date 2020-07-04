@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Late data assignment during render. You can assign data at render time and it will be taken into account by the engine.
 
 ### Changed
+- Auto link assigned boxes. Assigning an object of type `Box` will automatically link it. This is analogous to linking nested boxes.
 
 
 ## [4.3.0] - 2020-06-24

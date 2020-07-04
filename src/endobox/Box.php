@@ -227,6 +227,7 @@ class Box implements Renderable, \IteratorAggregate
         }
 
         foreach ($data as $k => &$v) {
+
             // allow passing closures as data by wrapping it in an anonymous object
             if ($v instanceof \Closure) {
                 $data[$k] = new class($v) {
@@ -235,7 +236,12 @@ class Box implements Renderable, \IteratorAggregate
                     public function __toString() { return \call_user_func($this->closure); }
                     public function __invoke(...$args) { return \call_user_func_array($this->closure, $args); }
                 };
+
+            // auto link boxes
+            } elseif ($v instanceof Box) {
+                $v->link($this);
             }
+
         }
 
         $this->data = \array_merge($this->data, $data);
