@@ -494,7 +494,11 @@ class BoxTest extends TestCase
     {
         $e = $this->endobox;
 
-        $result = ($e('foo')('bar')('qux')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"]))
+        $foo = $e('foo');
+        $bar = $e('bar');
+        $qux = $e('qux');
+
+        $result = $foo($bar)($qux)(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])
                 ->link()
                 ->render();
 
@@ -505,7 +509,11 @@ class BoxTest extends TestCase
     {
         $e = $this->endobox;
 
-        $result = ($e('foo')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])('bar')('qux'))
+        $foo = $e('foo');
+        $bar = $e('bar');
+        $qux = $e('qux');
+
+        $result = $foo(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])($bar)($qux)
                 ->link()
                 ->render();
 
@@ -516,9 +524,13 @@ class BoxTest extends TestCase
     {
         $e = $this->endobox;
 
-        $result = $e('foo')('bar')('qux')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])();
+        $foo = $e('foo');
+        $bar = $e('bar');
+        $qux = $e('qux');
 
-        $this->assertSame("foobarqux", \trim($result->render()));
+        $result = $foo($bar)($qux)(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])()->render();
+
+        $this->assertSame("foobarqux", \trim($result));
     }
 
 }

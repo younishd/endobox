@@ -75,8 +75,8 @@ trait UnionFind
 
     private function unionAll() : Box
     {
-        for ($b = $this->child; $b !== $this; $b = $b->child) {
-            $this->link($b);
+        foreach ($this as $box) {
+            $this->link($box);
         }
 
         return $this;
