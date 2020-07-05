@@ -479,4 +479,35 @@ class BoxTest extends TestCase
         $this->assertSame("Hello world", \trim($result));
     }
 
+    public function testLinkAll()
+    {
+        $e = $this->endobox;
+
+        $result = $e('foo')('bar')('qux')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])
+                ->link()
+                ->render();
+
+        $this->assertSame("foobarqux", \trim($result));
+    }
+
+    public function testLinkAll2()
+    {
+        $e = $this->endobox;
+
+        $result = $e('foo')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])('bar')('qux')
+                ->link()
+                ->render();
+
+        $this->assertSame("foobarqux", \trim($result));
+    }
+
+    public function testInvokeLinkAll()
+    {
+        $e = $this->endobox;
+
+        $result = $e('foo')('bar')('qux')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])();
+
+        $this->assertSame("foobarqux", \trim($result->render()));
+    }
+
 }

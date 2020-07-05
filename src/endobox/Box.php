@@ -52,11 +52,16 @@ class Box implements Renderable, \IteratorAggregate
         $this->child = $this;
     }
 
-    public function __invoke($arg) : Box
+    public function __invoke($arg = null) : Box
     {
+        if ($arg === null) {
+            return $this->linkAll();
+        }
+
         if (\is_array($arg)) {
             return $this->assign($arg);
         }
+
         return $this->append($arg);
     }
 
@@ -173,8 +178,12 @@ class Box implements Renderable, \IteratorAggregate
         return $this->prepend($this->create((string)$arg));
     }
 
-    public function link(Box $b) : Box
+    public function link(Box $b = null) : Box
     {
+        if ($b === null) {
+            return $this->linkAll();
+        }
+
         $root1 = $this->find();
         $root2 = $b->find();
 
@@ -360,6 +369,15 @@ class Box implements Renderable, \IteratorAggregate
         }
         $touched[$key] = true;
         // just for convenience
+        return $this;
+    }
+
+    private function linkAll() : Box
+    {
+        for ($b = $this->child; $b !== $this; $b = $b->child) {
+            $this->link($b);
+        }
+
         return $this;
     }
 
