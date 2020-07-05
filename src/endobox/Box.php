@@ -223,12 +223,6 @@ class Box implements Renderable, \IteratorAggregate
         return $this;
     }
 
-    public function entangle(Box $b) : Box
-    {
-        // DEPRECATED - use link() instead
-        return $this->link($b);
-    }
-
     public function assign(array $data) : Box
     {
         if (self::$render_root_box !== null) {
