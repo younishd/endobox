@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-- Inside templates, bind `$this` to corresponding `Box` object.
-- Late data assignment during render. You can assign data at render time and it will be taken into account by the engine.
 - Link all chained boxes by calling `->link()` or its shorthand `()` on a `Box` object.
+- Late data assignment during render. You can assign data at render time and it will be taken into account by the engine.
+- Inside templates, bind `$this` to corresponding `Box` object.
 
 ### Changed
+- Drop deprecated `entangle()` in favor of `link()`
 - Auto link assigned boxes. Assigning an object of type `Box` will automatically link it. This is analogous to linking nested boxes.
 
 
