@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
  * This file is part of endobox.
  *
@@ -11,14 +9,17 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace endobox;
+declare(strict_types = 1);
 
-class NullRenderer implements BoxRenderer
+namespace endobox\renderable;
+
+interface Renderable
 {
 
-    public function render(Box $box, array $shared = null) : string
-    {
-        return $box->getInterior()->render();
-    }
+    public function __toString() : string;
+
+    public function render() : string;
+
+    public function getContext() : string;
 
 }

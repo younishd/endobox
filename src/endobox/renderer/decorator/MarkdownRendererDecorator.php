@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
  * This file is part of endobox.
  *
@@ -11,14 +9,19 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace endobox;
+declare(strict_types = 1);
+
+namespace endobox\renderer\decorator;
+
+use endobox\renderable\Box;
+use endobox\renderer\Renderer;
 
 class MarkdownRendererDecorator extends RendererDecorator
 {
 
     private $parsedown;
 
-    public function __construct(BoxRenderer $renderer, \Parsedown $parsedown)
+    public function __construct(Renderer $renderer, \Parsedown $parsedown)
     {
         parent::__construct($renderer);
         $this->parsedown = $parsedown;

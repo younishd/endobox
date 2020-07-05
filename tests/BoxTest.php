@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-use \PHPUnit\Framework\TestCase;
-use \endobox\Endobox;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use endobox\Endobox;
 
 class BoxTest extends TestCase
 {
@@ -46,6 +48,15 @@ class BoxTest extends TestCase
     public function testSimplePrepend()
     {
         $box = $this->endobox->create('first')->prepend($this->endobox->create('second'));
+        $result = $box->render();
+        $this->assertSame("<p>Second</p>\n<p>First</p>\n", $result);
+    }
+
+    public function testPrependString()
+    {
+        $e = $this->endobox;
+
+        $box = $e('first')->prepend('second');
         $result = $box->render();
         $this->assertSame("<p>Second</p>\n<p>First</p>\n", $result);
     }
@@ -483,7 +494,7 @@ class BoxTest extends TestCase
     {
         $e = $this->endobox;
 
-        $result = $e('foo')('bar')('qux')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])
+        $result = ($e('foo')('bar')('qux')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"]))
                 ->link()
                 ->render();
 
@@ -494,7 +505,7 @@ class BoxTest extends TestCase
     {
         $e = $this->endobox;
 
-        $result = $e('foo')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])('bar')('qux')
+        $result = ($e('foo')(['foo' => "foo", 'bar' => "bar", 'qux' => "qux"])('bar')('qux'))
                 ->link()
                 ->render();
 

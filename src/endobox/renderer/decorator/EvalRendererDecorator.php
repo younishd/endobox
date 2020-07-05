@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
  * This file is part of endobox.
  *
@@ -11,7 +9,11 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace endobox;
+declare(strict_types = 1);
+
+namespace endobox\renderer\decorator;
+
+use endobox\renderable\Box;
 
 class EvalRendererDecorator extends RendererDecorator
 {

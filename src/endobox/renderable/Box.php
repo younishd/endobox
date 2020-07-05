@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
  * This file is part of endobox.
  *
@@ -11,10 +9,21 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace endobox;
+declare(strict_types = 1);
+
+namespace endobox\renderable;
+
+use endobox\iterator\BoxIterator;
+use endobox\renderer\Renderer;
+use endobox\structure\LinkedList;
+use endobox\structure\UnionFind;
 
 class Box implements Renderable, \IteratorAggregate
 {
+
+    use LinkedList;
+
+    use UnionFind;
 
     private $interior;
 
@@ -22,23 +31,11 @@ class Box implements Renderable, \IteratorAggregate
 
     private $data = [];
 
-    private $rank = 0;
-
-    private $parent;
-
-    private $child;
-
-    private $next = null;
-
-    private $prev = null;
-
-    private $late_assign_flag = false;
-
     private static $render_root_box = null;
 
     public function __construct(
         Renderable $interior,
-        BoxRenderer $renderer,
+        Renderer $renderer,
         array &$data = null
     ) {
         $this->interior = $interior;
@@ -55,7 +52,7 @@ class Box implements Renderable, \IteratorAggregate
     public function __invoke($arg = null) : Box
     {
         if ($arg === null) {
-            return $this->linkAll();
+            return $this->link();
         }
 
         if (\is_array($arg)) {
@@ -112,6 +109,7 @@ class Box implements Renderable, \IteratorAggregate
     {
         try {
 
+            // mark as render root unless already set
             self::$render_root_box = self::$render_root_box ?? $this;
 
             if ($data !== null) {
@@ -156,12 +154,7 @@ class Box implements Renderable, \IteratorAggregate
     public function append($arg) : Box
     {
         if ($arg instanceof Box) {
-            if ($this->next === null && $arg->prev === null) {
-                $this->next = $arg;
-                $arg->prev = $this;
-            } else {
-                $this->tail()->append($arg->head());
-            }
+            $this->appendBox($arg);
             return $this;
         }
 
@@ -171,56 +164,20 @@ class Box implements Renderable, \IteratorAggregate
     public function prepend($arg) : Box
     {
         if ($arg instanceof Box) {
-            $arg->append($this);
+            $arg->appendBox($this);
             return $this;
         }
 
         return $this->prepend($this->create((string)$arg));
     }
 
-    public function link(Box $b = null) : Box
+    public function link(Box $box = null) : Box
     {
-        if ($b === null) {
-            return $this->linkAll();
+        if ($box === null) {
+            return $this->unionAll();
         }
 
-        $root1 = $this->find();
-        $root2 = $b->find();
-
-        if ($root1 === $root2) {
-            return $this;
-        }
-
-        $late = false;
-        if ($root1->getLateAssignFlag()) {
-            $root1->resetLateAssignFlag();
-            $late = true;
-        }
-        if ($root2->getLateAssignFlag()) {
-            $root2->resetLateAssignFlag();
-            $late = true;
-        }
-
-        // union by rank
-        if ($root1->rank > $root2->rank) {
-            $root2->parent = $root1;
-        } elseif ($root2->rank > $root1->rank) {
-            $root1->parent = $root2;
-        } else {
-            $root2->parent = $root1;
-            ++$root1->rank;
-        }
-
-        // merge circular linked lists
-        $tmp = $this->child;
-        $this->child = $b->child;
-        $b->child = $tmp;
-
-        if ($late) {
-            $this->setLateAssignFlag();
-        }
-
-        return $this;
+        return $this->union($box);
     }
 
     public function assign(array $data) : Box
@@ -252,33 +209,7 @@ class Box implements Renderable, \IteratorAggregate
         return $this;
     }
 
-    public function next()
-    {
-        return $this->next;
-    }
-
-    public function prev()
-    {
-        return $this->prev;
-    }
-
-    public function head() : Box
-    {
-        // keep track of visited boxes for cycle detection
-        $touched = [];
-        for ($b = $this; $b->prev !== null; $b = $b->visit($touched)->prev);
-        return $b;
-    }
-
-    public function tail() : Box
-    {
-        // keep track of visited boxes for cycle detection
-        $touched = [];
-        for ($b = $this; $b->next !== null; $b = $b->visit($touched)->next);
-        return $b;
-    }
-
-    public function getIterator()
+    public function getIterator() : \Iterator
     {
         return new BoxIterator($this);
     }
@@ -327,52 +258,8 @@ class Box implements Renderable, \IteratorAggregate
         if ($shared === null) {
             return $this->renderer->render($this);
         }
+
         return $this->renderer->render($this, $shared);
-    }
-
-    private function getLateAssignFlag() : bool
-    {
-        return $this->find()->late_assign_flag;
-    }
-
-    private function setLateAssignFlag()
-    {
-        $this->find()->late_assign_flag = true;
-    }
-
-    private function resetLateAssignFlag()
-    {
-        $this->find()->late_assign_flag = false;
-    }
-
-    private function find() : Box
-    {
-        // find with path compression
-        if ($this->parent !== $this) {
-            $this->parent = $this->parent->find();
-        }
-        return $this->parent;
-    }
-
-    private function visit(&$touched)
-    {
-        // detect cycle
-        $key = \spl_object_hash($this);
-        if (isset($touched[$key])) {
-            throw new \RuntimeException("Cycle detected in box graph.");
-        }
-        $touched[$key] = true;
-        // just for convenience
-        return $this;
-    }
-
-    private function linkAll() : Box
-    {
-        for ($b = $this->child; $b !== $this; $b = $b->child) {
-            $this->link($b);
-        }
-
-        return $this;
     }
 
 }

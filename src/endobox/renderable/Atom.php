@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
  * This file is part of endobox.
  *
@@ -11,31 +9,33 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace endobox;
+declare(strict_types = 1);
 
-class Template implements Renderable
+namespace endobox\renderable;
+
+class Atom implements Renderable
 {
 
-    private $filename;
+    private $text;
 
-    public function __construct(string $filename)
+    public function __construct(string $text)
     {
-        $this->filename = $filename;
+        $this->text = $text;
     }
 
     public function __toString() : string
     {
-        return $this->render();
+        return $this->text;
     }
 
     public function render() : string
     {
-        return \file_get_contents($this->filename);
+        return $this->text;
     }
 
     public function getContext() : string
     {
-        return $this->filename;
+        return "atom";
     }
 
 }

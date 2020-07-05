@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
  * This file is part of endobox.
  *
@@ -11,7 +9,16 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace endobox;
+declare(strict_types = 1);
+
+namespace endobox\factory;
+
+use endobox\renderable\Atom;
+use endobox\renderable\Box;
+use endobox\renderable\Template;
+use endobox\renderer\decorator\EvalRendererDecorator;
+use endobox\renderer\decorator\MarkdownRendererDecorator;
+use endobox\renderer\NullRenderer;
 
 class BoxFactory
 {
