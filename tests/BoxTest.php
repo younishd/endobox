@@ -119,7 +119,7 @@ class BoxTest extends TestCase
         $a = $this->endobox->create('foobar');
         $b = $this->endobox->create('hello');
 
-        $a->entangle($b);
+        $a->link($b);
 
         $b->assign(['foo' => 'bar']);
 
@@ -133,7 +133,7 @@ class BoxTest extends TestCase
         $a = $this->endobox->create('a');
         $b = $this->endobox->create('foobar');
 
-        $a->entangle($b);
+        $a->link($b);
 
         $b->assign(['foo' => $a]);
 
@@ -195,8 +195,8 @@ class BoxTest extends TestCase
         $hello($another)($jean);
 
         // entanglement
-        $jean->entangle($foobar);
-        $another->entangle($first);
+        $jean->link($foobar);
+        $another->link($first);
 
         // assign
         $foobar->assign([ 'foo' => 'bar', 'subject' => 'Jean' ]);
@@ -350,7 +350,7 @@ class BoxTest extends TestCase
         $c = $e('c');
 
         $a($xyzzy)($b);
-        $xyzzy->entangle($c);
+        $xyzzy->link($c);
 
         // The point is that the data that gets directly assigned to the box will be kept.
         // However, any shared data will be lost.
