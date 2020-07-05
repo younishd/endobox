@@ -174,7 +174,7 @@ class Box implements Renderable, \IteratorAggregate
     public function link(Box $box = null) : Box
     {
         if ($box === null) {
-            return $this->unionAll();
+            return $this->linkAll();
         }
 
         return $this->union($box);
@@ -222,6 +222,15 @@ class Box implements Renderable, \IteratorAggregate
     public function &getData() : array
     {
         return $this->data;
+    }
+
+    private function linkAll() : Box
+    {
+        foreach ($this as $box) {
+            $this->link($box);
+        }
+
+        return $this;
     }
 
     private function renderAll() : string

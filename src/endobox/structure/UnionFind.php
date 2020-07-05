@@ -73,15 +73,6 @@ trait UnionFind
         return $this->parent;
     }
 
-    private function unionAll() : Box
-    {
-        foreach ($this as $box) {
-            $this->link($box);
-        }
-
-        return $this;
-    }
-
     private function getLateAssignFlag() : bool
     {
         return $this->find()->late_assign_flag;
